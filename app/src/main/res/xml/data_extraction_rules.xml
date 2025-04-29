@@ -5,10 +5,16 @@
 -->
 <data-extraction-rules>
     <cloud-backup>
-        <!-- TODO: Use <include> and <exclude> to control what is backed up.
-        <include .../>
-        <exclude .../>
-        -->
+        <!-- Include SharedPreferences for user settings (e.g., API keys, preferences) -->
+        <include domain="sharedpref" path="." />
+        <!-- Include Room database if you're storing speed limit data locally -->
+        <include domain="database" path="." />
+        <!-- Include app-specific files, e.g., for offline data -->
+        <include domain="file" path="app_data/" />
+        <!-- Exclude cache files to reduce backup size -->
+        <exclude domain="file" path="cache/" />
+        <!-- Exclude temporary files -->
+        <exclude domain="file" path="temp/" />
     </cloud-backup>
     <!--
     <device-transfer>
