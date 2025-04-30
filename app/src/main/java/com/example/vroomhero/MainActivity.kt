@@ -131,6 +131,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
     override fun onLocationChanged(location: Location) {
         try {
             val speedMph = location.speed * 2.23694 // m/s to MPH
+            val formattedSpeed = String.format("%02d", speedMph.toInt() % 100)
+            binding.speedNumberTextView.text = formattedSpeed
             binding.speedNumberTextView.text = String.format("%.1f", speedMph)
             binding.speedUnitsTextView.text = "mph"
             isGpsActive = true
