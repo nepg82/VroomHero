@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             Toast.makeText(this, "Location permissions denied. Speedometer disabled.", Toast.LENGTH_LONG).show()
             binding.speedNumberTextView.text = "N/A"
             binding.speedUnitsTextView.text = ""
-            binding.speedLimitTextView.text = "Speed Limit: --"
+            binding.speedLimitTextView.text = "Speed Limit\n--"
             isGpsActive = false
             updateGpsIndicator()
         }
@@ -131,16 +131,16 @@ class MainActivity : AppCompatActivity(), LocationListener {
     override fun onLocationChanged(location: Location) {
         try {
             val speedMph = location.speed * 2.23694 // m/s to MPH
-            val formattedSpeed = String.format("%02d", speedMph.toInt() % 100)
+            val formattedSpeed = String.format("%02d", speedMph.toInt() % 100) // Integer, padded to 2 digits
             binding.speedNumberTextView.text = formattedSpeed
-            binding.speedNumberTextView.text = String.format("%.1f", speedMph)
+            // binding.speedNumberTextView.text = String.format("%.1f", speedMph) // Decimal with 1 decimal place
             binding.speedUnitsTextView.text = "mph"
             isGpsActive = true
             updateGpsIndicator()
 
             val lat = location.latitude
             val lon = location.longitude
-            Toast.makeText(this, "Location: ($lat, $lon)", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Location: ($lat, $lon)", Toast.LENGTH_SHORT).show()
             val newRoadId = "way_${UUID.randomUUID().toString().substring(0, 8)}" // Temporary UUID
             if (newRoadId != currentRoadId) {
                 currentRoadId = newRoadId
@@ -185,11 +185,11 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 )
             } else {
                 Log.w("MainActivity", "No valid maxspeed found in response")
-                binding.speedLimitTextView.text = "Speed Limit: --"
+                binding.speedLimitTextView.text = "Speed Limit\n--"
             }
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to fetch speed limit: ${e.message}", e)
-            binding.speedLimitTextView.text = "Speed Limit: --"
+            binding.speedLimitTextView.text = "Speed Limit\n--"
             Toast.makeText(this, "Failed to fetch speed limit: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }

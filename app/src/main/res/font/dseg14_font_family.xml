@@ -4,5 +4,9 @@
         android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/dseg14classic_regular" />
-    <!-- Add more <font> entries for bold, italic, etc., if needed -->
+
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="400"
+        android:font="@font/dseg14classic_italic" />
 </font-family>
