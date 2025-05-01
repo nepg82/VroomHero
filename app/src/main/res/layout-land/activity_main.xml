@@ -17,8 +17,8 @@
     <!-- Speed Number (large) -->
     <TextView
         android:id="@+id/speedNumberTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/dseg14_font_family"
         android:gravity="top|center_horizontal"
         android:maxLines="1"
@@ -43,21 +43,40 @@
         app:layout_constraintStart_toEndOf="@id/speedNumberTextView"
         app:layout_constraintBottom_toBottomOf="@id/speedNumberTextView" />
 
-    <!-- Speed Limit -->
+    <!-- Speed Limit Label -->
+    <TextView
+        android:id="@+id/speedLimitLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SPEED\nLIMIT"
+        android:textAllCaps="true"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:typeface="sans"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_66"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <!-- Speed Limit Value -->
     <TextView
         android:id="@+id/speedLimitTextView"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-    android:gravity="center_horizontal|top"
-    android:maxLines="2"
-    android:text=""
-    android:textSize="24sp"
-    android:visibility="visible"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toEndOf="@id/guideline_66"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintVertical_bias="0"
-    app:layout_constraintBottom_toTopOf="@id/gpsIndicator" />
+        android:layout_height="wrap_content"
+        android:text="XX"
+        android:textSize="48sp"
+        android:gravity="center"
+        android:typeface="sans"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/speedLimitLabelTextView"
+        app:layout_constraintStart_toEndOf="@id/guideline_66"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/gpsIndicator"
+        />
+
 
     <!-- GPS Indicator -->
     <ImageView

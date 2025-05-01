@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             Toast.makeText(this, "Location permissions denied. Speedometer disabled.", Toast.LENGTH_LONG).show()
             binding.speedNumberTextView.text = "N/A"
             binding.speedUnitsTextView.text = ""
-            binding.speedLimitTextView.text = "Speed Limit\n--"
+            binding.speedLimitTextView.text = "XX"
             isGpsActive = false
             updateGpsIndicator()
         }
@@ -133,7 +133,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
             val speedMph = location.speed * 2.23694 // m/s to MPH
             val formattedSpeed = String.format("%02d", speedMph.toInt() % 100) // Integer, padded to 2 digits
             binding.speedNumberTextView.text = formattedSpeed
-            // binding.speedNumberTextView.text = String.format("%.1f", speedMph) // Decimal with 1 decimal place
             binding.speedUnitsTextView.text = "mph"
             isGpsActive = true
             updateGpsIndicator()
@@ -148,7 +147,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     val cachedSpeedLimit = database.speedLimitDao().getSpeedLimit(newRoadId)
                     if (cachedSpeedLimit != null) {
                         val speedLimitMph = cachedSpeedLimit.speedLimit * 0.621371 // km/h to MPH
-                        binding.speedLimitTextView.text = String.format("Speed Limit: %.0f mph", speedLimitMph)
+                        binding.speedLimitTextView.text = String.format("%.0f", speedLimitMph)
                     } else {
                         fetchSpeedLimitFromOsm(newRoadId, lat, lon)
                     }
@@ -179,17 +178,17 @@ class MainActivity : AppCompatActivity(), LocationListener {
             val maxSpeedKmh = parseMaxSpeed(response)
             if (maxSpeedKmh != null) {
                 val maxSpeedMph = maxSpeedKmh * 0.621371 // km/h to MPH
-                binding.speedLimitTextView.text = String.format("Speed Limit: %.0f mph", maxSpeedMph)
+                binding.speedLimitTextView.text = String.format("%.0f", maxSpeedMph)
                 database.speedLimitDao().insert(
                     SpeedLimitEntity(roadId = roadId, speedLimit = maxSpeedKmh) // Store km/h in DB
                 )
             } else {
                 Log.w("MainActivity", "No valid maxspeed found in response")
-                binding.speedLimitTextView.text = "Speed Limit\n--"
+                binding.speedLimitTextView.text = "XX"
             }
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to fetch speed limit: ${e.message}", e)
-            binding.speedLimitTextView.text = "Speed Limit\n--"
+            binding.speedLimitTextView.text = "XX"
             Toast.makeText(this, "Failed to fetch speed limit: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
@@ -222,7 +221,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
     }
 
-  //  override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+    //  override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
 
     override fun onDestroy() {
         super.onDestroy()
