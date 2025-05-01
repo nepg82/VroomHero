@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.66" />
+        app:layout_constraintGuide_percent="0.75" />
 
     <!-- Speed Number (large) -->
     <TextView
@@ -22,6 +22,7 @@
         android:fontFamily="@font/dseg14_font_family"
         android:text="00"
         android:textSize="200sp"
+        android:maxLines="1"
         android:textStyle="italic"
         android:gravity="top|center_horizontal"
         app:layout_constraintTop_toTopOf="parent"
