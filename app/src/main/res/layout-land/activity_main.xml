@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="0dp">
 
     <!-- Guideline for 66% horizontal split -->
     <androidx.constraintlayout.widget.Guideline
@@ -18,17 +18,15 @@
     <TextView
         android:id="@+id/speedNumberTextView"
         android:layout_width="380dp"
-        android:layout_height="230dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/dseg14_font_family"
         android:text="00"
-        android:textSize="150sp"
+        android:textSize="200sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline_66"
+        android:gravity="top|center_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintEnd_toStartOf="@id/guideline_66" />
 
     <!-- Speed Units (smaller) -->
     <TextView
@@ -45,16 +43,17 @@
     <TextView
         android:id="@+id/speedLimitTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text=""
-        android:textSize="24sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_66"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="0dp"
+    android:gravity="center_horizontal|top"
+    android:maxLines="2"
+    android:text=""
+    android:textSize="24sp"
+    android:visibility="visible"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toEndOf="@id/guideline_66"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintVertical_bias="0"
+    app:layout_constraintBottom_toTopOf="@id/gpsIndicator" />
 
     <!-- GPS Indicator -->
     <ImageView
