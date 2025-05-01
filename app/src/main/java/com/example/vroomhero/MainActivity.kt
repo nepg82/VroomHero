@@ -222,7 +222,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
     }
 
-    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+  //  override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
 
     override fun onDestroy() {
         super.onDestroy()
