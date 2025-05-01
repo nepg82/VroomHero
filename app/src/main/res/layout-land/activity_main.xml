@@ -49,12 +49,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SPEED\nLIMIT"
-        android:textAllCaps="true"
         android:textSize="24sp"
-        android:gravity="center"
-        android:typeface="sans"
         android:fontFamily="sans-serif-condensed"
-        android:textStyle="bold"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline_66"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,18 +62,15 @@
         android:id="@+id/speedLimitTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="XX"
+        android:text="--"
         android:textSize="48sp"
-        android:gravity="center"
-        android:typeface="sans"
-        android:fontFamily="sans-serif-condensed"
         android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/speedLimitLabelTextView"
-        app:layout_constraintStart_toEndOf="@id/guideline_66"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/gpsIndicator"
+        app:layout_constraintStart_toStartOf="@id/speedLimitLabelTextView"
+        app:layout_constraintEnd_toEndOf="@id/speedLimitLabelTextView"
         />
-
 
     <!-- GPS Indicator -->
     <ImageView
