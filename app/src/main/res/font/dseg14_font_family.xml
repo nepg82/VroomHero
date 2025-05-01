@@ -8,5 +8,5 @@
     <font
         android:fontStyle="italic"
         android:fontWeight="400"
-        android:font="@font/dseg14classic_italic" />
+        android:font="@font/dseg7classicmini_italic" />
 </font-family>
