@@ -43,18 +43,33 @@
         app:layout_constraintStart_toEndOf="@id/speedNumberTextView"
         app:layout_constraintBottom_toBottomOf="@id/speedNumberTextView" />
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="140dp"
+        android:layout_height="180dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_66"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
     <!-- Speed Limit Label -->
     <TextView
         android:id="@+id/speedLimitLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:text="SPEED\nLIMIT"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_66"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@android:color/black"
         />
 
     <!-- Speed Limit Value -->
@@ -63,14 +78,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="--"
-        android:textSize="48sp"
+        android:textSize="60sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/speedLimitLabelTextView"
-        app:layout_constraintStart_toStartOf="@id/speedLimitLabelTextView"
-        app:layout_constraintEnd_toEndOf="@id/speedLimitLabelTextView"
+        android:textColor="@android:color/black"
         />
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <!-- GPS Indicator -->
     <ImageView
