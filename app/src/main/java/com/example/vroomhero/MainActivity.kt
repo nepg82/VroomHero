@@ -17,10 +17,9 @@ import com.example.vroomhero.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
+import org.json.JSONObject
 import java.util.UUID
 
 class MainActivity : AppCompatActivity(), LocationListener {
@@ -56,11 +55,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
 
         try {
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://overpass-api.de/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build()
-            apiService = retrofit.create(ApiService::class.java)
+            apiService = RetrofitClient.apiService
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to initialize Retrofit", e)
             Toast.makeText(this, "Network setup failed", Toast.LENGTH_LONG).show()
@@ -139,7 +134,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
             val lat = location.latitude
             val lon = location.longitude
-            // Toast.makeText(this, "Location: ($lat, $lon)", Toast.LENGTH_SHORT).show()
             val newRoadId = "way_${UUID.randomUUID().toString().substring(0, 8)}" // Temporary UUID
             if (newRoadId != currentRoadId) {
                 currentRoadId = newRoadId
@@ -149,7 +143,16 @@ class MainActivity : AppCompatActivity(), LocationListener {
                         val speedLimitMph = cachedSpeedLimit.speedLimit * 0.621371 // km/h to MPH
                         binding.speedLimitTextView.text = String.format("%.0f", speedLimitMph)
                     } else {
-                        fetchSpeedLimitFromOsm(newRoadId, lat, lon)
+                        val speedLimit = fetchSpeedLimitFromOsm(lat, lon)
+                        if (speedLimit != null) {
+                            database.speedLimitDao().insert(
+                                SpeedLimitEntity(roadId = newRoadId, speedLimit = speedLimit)
+                            )
+                            val speedLimitMph = speedLimit * 0.621371 // km/h to MPH
+                            binding.speedLimitTextView.text = String.format("%.0f", speedLimitMph)
+                        } else {
+                            binding.speedLimitTextView.text = "XX"
+                        }
                     }
                 }
             }
@@ -161,42 +164,36 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
     }
 
-    private suspend fun fetchSpeedLimitFromOsm(roadId: String, lat: Double, lon: Double) {
+    suspend fun fetchSpeedLimitFromOsm(lat: Double, lon: Double): Int? = withContext(Dispatchers.IO) {
         try {
             val query = """
-                [out:json];
-                way(around:50,$lat,$lon)[highway];
+                [out:json][timeout:30];
+                way(around:25,$lat,$lon)["highway"]["maxspeed"];
                 out tags;
             """.trimIndent()
 
-            val response = withContext(Dispatchers.IO) {
-                apiService.getOsmData(query).trim()
+            val response = apiService.getOsmData(query)
+            if (response.isEmpty()) {
+                Log.e("VroomHero", "Empty response from Overpass API")
+                return@withContext null
             }
 
-            Log.d("MainActivity", "OSM Response for ($lat, $lon): $response")
-
-            val maxSpeedKmh = parseMaxSpeed(response)
-            if (maxSpeedKmh != null) {
-                val maxSpeedMph = maxSpeedKmh * 0.621371 // km/h to MPH
-                binding.speedLimitTextView.text = String.format("%.0f", maxSpeedMph)
-                database.speedLimitDao().insert(
-                    SpeedLimitEntity(roadId = roadId, speedLimit = maxSpeedKmh) // Store km/h in DB
-                )
-            } else {
-                Log.w("MainActivity", "No valid maxspeed found in response")
-                binding.speedLimitTextView.text = "XX"
+            val json = JSONObject(response)
+            val elements = json.optJSONArray("elements") ?: return@withContext null
+            if (elements.length() > 0) {
+                val tags = elements.getJSONObject(0).optJSONObject("tags") ?: return@withContext null
+                val maxSpeed = tags.optString("maxspeed").toIntOrNull()
+                if (maxSpeed != null) {
+                    Log.d("VroomHero", "Fetched speed limit: $maxSpeed")
+                    return@withContext maxSpeed
+                }
             }
+            Log.w("VroomHero", "No valid speed limit found in response")
+            return@withContext null
         } catch (e: Exception) {
-            Log.e("MainActivity", "Failed to fetch speed limit: ${e.message}", e)
-            binding.speedLimitTextView.text = "XX"
-            Toast.makeText(this, "Failed to fetch speed limit: ${e.message}", Toast.LENGTH_SHORT).show()
+            Log.e("VroomHero", "Error fetching speed limit: ${e.message}")
+            return@withContext null
         }
-    }
-
-    private fun parseMaxSpeed(response: String): Int? {
-        val maxSpeedRegex = """"maxspeed":"(\d+)"""".toRegex()
-        val match = maxSpeedRegex.find(response)
-        return match?.groupValues?.get(1)?.toIntOrNull()
     }
 
     private fun updateGpsIndicator() {
@@ -220,8 +217,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
             Toast.makeText(this, "GPS disabled", Toast.LENGTH_SHORT).show()
         }
     }
-
-    //  override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
 
     override fun onDestroy() {
         super.onDestroy()

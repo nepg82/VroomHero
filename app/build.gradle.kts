@@ -24,7 +24,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true // Ensure View Binding is enabled
+        viewBinding = true
     }
 
     compileOptions {
@@ -50,6 +50,8 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0") // Added for timeouts
+    implementation("org.json:json:20231013") // Added for JSONObject
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
