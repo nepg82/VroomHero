@@ -141,19 +141,21 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     Toast.makeText(this@MainActivity, "Checking database for speed limit", Toast.LENGTH_SHORT).show()
                     val cachedSpeedLimit = database.speedLimitDao().getSpeedLimit(newRoadId)
                     if (cachedSpeedLimit != null) {
-                        val speedLimitMph = cachedSpeedLimit.speedLimit * 0.621371 // km/h to MPH
-                        binding.speedLimitTextView.text = String.format("%.0f", speedLimitMph)
+                        binding.speedLimitTextView.text = String.format("%.0f", cachedSpeedLimit.speedLimit.toFloat())
                         Toast.makeText(this@MainActivity, "Found cached speed limit: ${cachedSpeedLimit.speedLimit} km/h", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this@MainActivity, "No cached speed limit, fetching from API", Toast.LENGTH_SHORT).show()
-                        val speedLimit = fetchSpeedLimitFromOsm(lat, lon)
-                        if (speedLimit != null) {
-                            database.speedLimitDao().insert(
-                                SpeedLimitEntity(roadId = newRoadId, speedLimit = speedLimit)
-                            )
-                            val speedLimitMph = speedLimit * 0.621371 // km/h to MPH
-                            binding.speedLimitTextView.text = String.format("%.0f", speedLimitMph)
-                            Toast.makeText(this@MainActivity, "Saved new speed limit: $speedLimit km/h", Toast.LENGTH_SHORT).show()
+                        val (speedLimit, wayId) = fetchSpeedLimitFromOsm(lat, lon)
+                        if (speedLimit != null && wayId != null) {
+                            val roadId = "way_$wayId"
+                            val cachedSpeedLimit = database.speedLimitDao().getSpeedLimit(roadId)
+                            if (cachedSpeedLimit == null) {
+                                database.speedLimitDao().insert(
+                                    SpeedLimitEntity(roadId = roadId, speedLimit = speedLimit)
+                                )
+                                Toast.makeText(this@MainActivity, "Saved new speed limit: $speedLimit mph", Toast.LENGTH_SHORT).show()
+                            }
+                            binding.speedLimitTextView.text = String.format("%.0f", speedLimit.toFloat())
                         } else {
                             binding.speedLimitTextView.text = "XX"
                             Toast.makeText(this@MainActivity, "No speed limit found", Toast.LENGTH_SHORT).show()
@@ -169,14 +171,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
     }
 
-    suspend fun fetchSpeedLimitFromOsm(lat: Double, lon: Double): Int? = withContext(Dispatchers.IO) {
-        try {
+    suspend fun fetchSpeedLimitFromOsm(lat: Double, lon: Double): Pair<Int?, String?> = withContext(Dispatchers.IO) {        try {
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@MainActivity, "Calling Overpass API", Toast.LENGTH_SHORT).show()
             }
             val query = """
             [out:json][timeout:30];
-            way(around:10,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
+            way(around:200,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
             out tags;
         """.trimIndent()
 
@@ -189,7 +190,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@MainActivity, "API returned empty response", Toast.LENGTH_SHORT).show()
                 }
-                return@withContext null
+                return@withContext Pair(null, null)
             }
 
             val json = JSONObject(response)
@@ -198,7 +199,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@MainActivity, "No roads found in API response", Toast.LENGTH_SHORT).show()
                 }
-                return@withContext null
+                return@withContext Pair(null, null)
             }
             Log.d("VroomHero", "Elements array length: ${elements.length()}")
 
@@ -209,7 +210,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(this@MainActivity, "No tags in API response", Toast.LENGTH_SHORT).show()
                     }
-                    return@withContext null
+                    return@withContext Pair(null, null)
                 }
                 Log.d("VroomHero", "Tags: $tags")
                 val maxSpeedStr = tags.optString("maxspeed")
@@ -217,18 +218,22 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
                 val maxSpeed = when {
                     maxSpeedStr.endsWith("mph", ignoreCase = true) -> {
-                        (maxSpeedStr.replace(" mph", "", ignoreCase = true).toIntOrNull()?.times(1.60934))?.toInt()
+                        maxSpeedStr.replace(" mph", "", ignoreCase = true).toIntOrNull()
                     }
-                    maxSpeedStr.isNotEmpty() -> maxSpeedStr.toIntOrNull()
+                    maxSpeedStr.isNotEmpty() -> {
+                        // Convert km/h to mph for storage
+                        maxSpeedStr.toIntOrNull()?.div(1.60934)?.toInt()
+                    }
                     else -> null
                 }
 
                 if (maxSpeed != null) {
                     Log.d("VroomHero", "Parsed speed limit: $maxSpeed km/h")
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(this@MainActivity, "API success: Speed limit $maxSpeed km/h", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "API success: Speed limit $maxSpeed mph", Toast.LENGTH_SHORT).show()
                     }
-                    return@withContext maxSpeed
+                    val wayId = elements.getJSONObject(0).optString("id")
+                    return@withContext Pair(maxSpeed, wayId)
                 } else {
                     Log.w("VroomHero", "No valid maxspeed value in tags: $maxSpeedStr")
                     // Fallback for residential roads without maxspeed
@@ -237,8 +242,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
                         withContext(Dispatchers.Main) {
                             Toast.makeText(this@MainActivity, "Default residential speed limit: 40 km/h", Toast.LENGTH_SHORT).show()
                         }
-                        return@withContext 40 // Default 25 mph ≈ 40 km/h
-                    }
+                        val wayId = elements.getJSONObject(0).optString("id")
+                        return@withContext Pair(40, wayId)                    }
                     withContext(Dispatchers.Main) {
                         Toast.makeText(this@MainActivity, "No maxspeed tag in API response", Toast.LENGTH_SHORT).show()
                     }
@@ -250,13 +255,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 }
             }
             Log.w("VroomHero", "No valid speed limit found in response")
-            return@withContext null
+            return@withContext Pair(null, null)
         } catch (e: Exception) {
             Log.e("VroomHero", "Error fetching speed limit: ${e.message}", e)
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@MainActivity, "API error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
-            return@withContext null
+            return@withContext Pair(null, null)
         }
     }
 
