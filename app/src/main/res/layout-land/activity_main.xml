@@ -113,7 +113,7 @@
         app:layout_constraintEnd_toEndOf="@id/speedLimitCardView"
         tools:text="Hatter Rd" />
 
-    <!-- GPS Indicator -->
+    <!-- GPS Indicator
     <ImageView
         android:id="@+id/gpsIndicator"
         android:layout_width="24dp"
@@ -122,5 +122,6 @@
         android:src="@drawable/ic_gps_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+    -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

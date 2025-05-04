@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var locationManager: LocationManager
     private lateinit var apiService: ApiService
-    private var isGpsActive: Boolean = false
+    // private var isGpsActive: Boolean = false
     private var lastSpeedLimit: Double? = null
     private var lastApiCallTime: Long = 0
     private var lastToastTime: Long = 0
@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
             binding.speedNumberTextView.setTextColor(ContextCompat.getColor(this, R.color.retro_red))
-            updateGpsIndicator()
             showToast("VroomHero Started! YAHTZEE!")
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to inflate layout", e)
@@ -53,8 +52,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        isGpsActive = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        updateGpsIndicator()
+     //   isGpsActive = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         requestLocationPermissions()
     }
 
@@ -71,8 +69,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             binding.speedUnitsTextView.text = ""
             binding.speedLimitTextView.text = "XX"
             binding.roadNameTextView?.text = ""
-            isGpsActive = false
-            updateGpsIndicator()
+       //     isGpsActive = false
         }
     }
 
@@ -100,18 +97,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     10f,
                     this
                 )
-                isGpsActive = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                updateGpsIndicator()
             } else {
                 Log.w("MainActivity", "Location permission not granted")
-                isGpsActive = false
-                updateGpsIndicator()
             }
         } catch (e: SecurityException) {
             Log.e("MainActivity", "Security exception in location updates", e)
             showToast("Location permission error")
-            isGpsActive = false
-            updateGpsIndicator()
+        //    isGpsActive = false
         }
     }
 
@@ -121,15 +113,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
             val formattedSpeed = String.format("%02d", speedMph.toInt() % 100) // Integer, padded to 2 digits
             binding.speedNumberTextView.text = formattedSpeed
             binding.speedUnitsTextView.text = "mph"
-            isGpsActive = true
-            updateGpsIndicator()
 
             val lat = location.latitude
             val lon = location.longitude
             val currentTime = System.currentTimeMillis()
 
             // Throttle API calls to every 90 seconds
-            if (currentTime - lastApiCallTime < 90_000) {
+            if (currentTime - lastApiCallTime < 10_000) {
                 Log.d("VroomHero", "API call throttled, last call: ${(currentTime - lastApiCallTime)/1000}s ago")
                 if (lastSpeedLimit != null) {
                     binding.speedLimitTextView.text = String.format("%.0f", lastSpeedLimit!!.toFloat())
@@ -137,7 +127,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 } else {
                     binding.speedLimitTextView.text = "XX"
                     binding.roadNameTextView?.text = ""
-                    showToast("Waiting for speed limit")
+                    // showToast("Waiting for speed limit")
                 }
                 return
             }
@@ -163,19 +153,17 @@ class MainActivity : AppCompatActivity(), LocationListener {
             Log.e("MainActivity", "Error processing location update", e)
             showToast("Error updating speed: ${e.message}")
             binding.roadNameTextView?.text = ""
-            isGpsActive = false
-            updateGpsIndicator()
         }
     }
 
     suspend fun fetchSpeedLimitFromOsm(lat: Double, lon: Double): Triple<Double?, String?, String?> = withContext(Dispatchers.IO) {
         try {
             withContext(Dispatchers.Main) {
-                showToast("Calling Overpass API")
+//                showToast("Calling Overpass API")
             }
             val query = """
                 [out:json][timeout:30];
-                way(around:200,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
+                way(around:10,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
                 out tags;
             """.trimIndent()
 
@@ -236,14 +224,14 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 } else {
                     Log.w("VroomHero", "No valid maxspeed value in tags: $maxSpeedStr")
                     // Fallback for residential roads without maxspeed
-                    if (tags.optString("highway") == "residential") {
-                        Log.d("VroomHero", "Assuming default residential speed limit: 25 mph")
-                        withContext(Dispatchers.Main) {
-                            showToast("Default residential speed limit: 25 mph")
-                        }
-                        val wayId = element.optString("id")
-                        return@withContext Triple(25.0, wayId, roadName.takeIf { it.isNotEmpty() })
-                    }
+//                    if (tags.optString("highway") == "residential") {
+//                        Log.d("VroomHero", "Assuming default residential speed limit: 25 mph")
+//                        withContext(Dispatchers.Main) {
+//                            showToast("Default residential speed limit: 25 mph")
+//                        }
+//                        val wayId = element.optString("id")
+//                        return@withContext Triple(25.0, wayId, roadName.takeIf { it.isNotEmpty() })
+//                    }
                     withContext(Dispatchers.Main) {
                         showToast("No maxspeed tag in API response")
                     }
@@ -265,12 +253,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
     }
 
-    private fun updateGpsIndicator() {
-        binding.gpsIndicator.setImageResource(
-            if (isGpsActive) R.drawable.ic_gps_green else R.drawable.ic_gps_red
-        )
-    }
-
     private fun showToast(message: String) {
         val now = System.currentTimeMillis()
         if (now - lastToastTime > 2000) { // 2-second debounce
@@ -280,19 +262,15 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     override fun onProviderEnabled(provider: String) {
-        if (provider == LocationManager.GPS_PROVIDER) {
-            isGpsActive = true
-            updateGpsIndicator()
-            showToast("GPS enabled")
-        }
+//        if (provider == LocationManager.GPS_PROVIDER) {
+//            showToast("GPS enabled")
+//        }
     }
 
     override fun onProviderDisabled(provider: String) {
-        if (provider == LocationManager.GPS_PROVIDER) {
-            isGpsActive = false
-            updateGpsIndicator()
-            showToast("GPS disabled")
-        }
+//        if (provider == LocationManager.GPS_PROVIDER) {
+//            showToast("GPS disabled")
+//        }
     }
 
     override fun onDestroy() {
