@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.vroomhero.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -25,10 +27,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var locationManager: LocationManager
     private lateinit var apiService: ApiService
-    // private var isGpsActive: Boolean = false
     private var lastSpeedLimit: Double? = null
     private var lastApiCallTime: Long = 0
     private var lastToastTime: Long = 0
+    private var lastMovementTime: Long = 0
+    private var speedCheckJob: Job? = null
+    private val speedThreshold = 0.5 // mph, below this is considered stopped
+    private val timeoutDuration = 3000L // 3 seconds
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +57,25 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-     //   isGpsActive = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         requestLocationPermissions()
+        startSpeedTimeoutCheck()
+    }
+
+    private fun startSpeedTimeoutCheck() {
+        speedCheckJob?.cancel() // Cancel any existing job
+        speedCheckJob = lifecycleScope.launch {
+            while (true) {
+                delay(1000L) // Check every second
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastMovementTime > timeoutDuration) {
+                    withContext(Dispatchers.Main) {
+                        binding.speedNumberTextView.text = "00"
+                        binding.speedUnitsTextView.text = "mph"
+                        Log.d("VroomHero", "Speed reset to 00 due to timeout")
+                    }
+                }
+            }
+        }
     }
 
     private val permissionLauncher = registerForActivityResult(
@@ -69,7 +91,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
             binding.speedUnitsTextView.text = ""
             binding.speedLimitTextView.text = "XX"
             binding.roadNameTextView?.text = ""
-       //     isGpsActive = false
         }
     }
 
@@ -103,31 +124,35 @@ class MainActivity : AppCompatActivity(), LocationListener {
         } catch (e: SecurityException) {
             Log.e("MainActivity", "Security exception in location updates", e)
             showToast("Location permission error")
-        //    isGpsActive = false
         }
     }
 
     override fun onLocationChanged(location: Location) {
         try {
             val speedMph = location.speed * 2.23694 // m/s to MPH
-            val formattedSpeed = String.format("%02d", speedMph.toInt() % 100) // Integer, padded to 2 digits
-            binding.speedNumberTextView.text = formattedSpeed
-            binding.speedUnitsTextView.text = "mph"
+            val currentTime = System.currentTimeMillis()
+            if (speedMph > speedThreshold) {
+                lastMovementTime = currentTime
+                val formattedSpeed = String.format("%02d", speedMph.toInt() % 100) // Integer, padded to 2 digits
+                binding.speedNumberTextView.text = formattedSpeed
+                binding.speedUnitsTextView.text = "mph"
+            } else {
+                // If speed is low, rely on timeout to set "00"
+                Log.d("VroomHero", "Speed below threshold: $speedMph mph")
+            }
 
             val lat = location.latitude
             val lon = location.longitude
-            val currentTime = System.currentTimeMillis()
 
-            // Throttle API calls to every 90 seconds
+            // Throttle API calls to every 10 seconds
             if (currentTime - lastApiCallTime < 10_000) {
                 Log.d("VroomHero", "API call throttled, last call: ${(currentTime - lastApiCallTime)/1000}s ago")
                 if (lastSpeedLimit != null) {
                     binding.speedLimitTextView.text = String.format("%.0f", lastSpeedLimit!!.toFloat())
-                    showToast("Used last speed limit: $lastSpeedLimit mph")
+//                    showToast("Used last speed limit: $lastSpeedLimit mph")
                 } else {
                     binding.speedLimitTextView.text = "XX"
                     binding.roadNameTextView?.text = ""
-                    // showToast("Waiting for speed limit")
                 }
                 return
             }
@@ -139,7 +164,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 if (speedLimit != null && wayId != null) {
                     binding.speedLimitTextView.text = String.format("%.0f", speedLimit.toFloat())
                     binding.roadNameTextView?.text = roadName ?: "Unknown Road"
-                    showToast("New speed limit: $speedLimit mph, road: ${roadName ?: "Unknown"}")
+//                    showToast("New speed limit: $speedLimit mph, road: ${roadName ?: "Unknown"}")
                     lastSpeedLimit = speedLimit
                 } else {
                     binding.speedLimitTextView.text = "XX"
@@ -159,7 +184,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
     suspend fun fetchSpeedLimitFromOsm(lat: Double, lon: Double): Triple<Double?, String?, String?> = withContext(Dispatchers.IO) {
         try {
             withContext(Dispatchers.Main) {
-//                showToast("Calling Overpass API")
             }
             val query = """
                 [out:json][timeout:30];
@@ -217,21 +241,12 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 if (maxSpeed != null) {
                     Log.d("VroomHero", "Parsed speed limit: $maxSpeed mph")
                     withContext(Dispatchers.Main) {
-                        showToast("API success: Speed limit $maxSpeed mph")
+//                        showToast("API success: Speed limit $maxSpeed mph")
                     }
                     val wayId = element.optString("id")
                     return@withContext Triple(maxSpeed, wayId, roadName.takeIf { it.isNotEmpty() })
                 } else {
                     Log.w("VroomHero", "No valid maxspeed value in tags: $maxSpeedStr")
-                    // Fallback for residential roads without maxspeed
-//                    if (tags.optString("highway") == "residential") {
-//                        Log.d("VroomHero", "Assuming default residential speed limit: 25 mph")
-//                        withContext(Dispatchers.Main) {
-//                            showToast("Default residential speed limit: 25 mph")
-//                        }
-//                        val wayId = element.optString("id")
-//                        return@withContext Triple(25.0, wayId, roadName.takeIf { it.isNotEmpty() })
-//                    }
                     withContext(Dispatchers.Main) {
                         showToast("No maxspeed tag in API response")
                     }
@@ -262,23 +277,18 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     override fun onProviderEnabled(provider: String) {
-//        if (provider == LocationManager.GPS_PROVIDER) {
-//            showToast("GPS enabled")
-//        }
     }
 
     override fun onProviderDisabled(provider: String) {
-//        if (provider == LocationManager.GPS_PROVIDER) {
-//            showToast("GPS disabled")
-//        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         try {
             locationManager.removeUpdates(this)
+            speedCheckJob?.cancel()
         } catch (e: Exception) {
-            Log.e("MainActivity", "Error removing location updates", e)
+            Log.e("MainActivity", "Error removing location updates or cancelling job", e)
         }
     }
 }

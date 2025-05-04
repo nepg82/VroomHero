@@ -52,7 +52,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/speedLimitCardView"
-        android:layout_width="180dp"
+        android:layout_width="160dp"
         android:layout_height="200dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp"
