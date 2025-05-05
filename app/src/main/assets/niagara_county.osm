@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><osm version="0.6" generator="Overpass API 0.7.62.5 1bd436f1">
 <note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
-<meta osm_base="2025-05-05T19:48:59Z" areas="2025-02-06T02:17:44Z"/>
+<meta osm_base="2025-05-05T22:56:24Z" areas="2025-02-06T02:17:44Z"/>
 
   <way id="4350443">
     <bounds minlat="43.1506175" minlon="-79.0336757" maxlat="43.1517117" maxlon="-79.0294148"/>
@@ -1121,6 +1121,7 @@
     <tag k="highway" v="residential"/>
     <tag k="lanes" v="2"/>
     <tag k="maxspeed" v="35 mph"/>
+    <tag k="maxspeed:conditional" v="25 mph @ (Mo-Fr 07:00-18:00; school)"/>
     <tag k="name" v="East Avenue"/>
     <tag k="surface" v="asphalt"/>
     <tag k="tiger:cfcc" v="A41"/>
@@ -5068,27 +5069,6 @@
     <tag k="tiger:name_type" v="Rd"/>
     <tag k="tiger:reviewed" v="no"/>
   </way>
-  <way id="51048122">
-    <bounds minlat="43.0799355" minlon="-79.0716538" maxlat="43.0814314" maxlon="-79.0713311"/>
-    <nd ref="2447590528" lat="43.0814314" lon="-79.0715178"/>
-    <nd ref="940348625" lat="43.0812851" lon="-79.0715535"/>
-    <nd ref="2447590503" lat="43.0812300" lon="-79.0715681"/>
-    <nd ref="43029820" lat="43.0811619" lon="-79.0715862"/>
-    <nd ref="2447590479" lat="43.0810578" lon="-79.0716052"/>
-    <nd ref="2447590449" lat="43.0808725" lon="-79.0716391"/>
-    <nd ref="7732180830" lat="43.0808376" lon="-79.0716455"/>
-    <nd ref="1339113781" lat="43.0807919" lon="-79.0716538"/>
-    <nd ref="7732180766" lat="43.0807314" lon="-79.0716469"/>
-    <nd ref="2447590421" lat="43.0807048" lon="-79.0716439"/>
-    <nd ref="432765453" lat="43.0805496" lon="-79.0716263"/>
-    <nd ref="940348612" lat="43.0803956" lon="-79.0716139"/>
-    <nd ref="2447590368" lat="43.0803489" lon="-79.0715952"/>
-    <nd ref="650937671" lat="43.0799355" lon="-79.0713311"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="10 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
   <way id="51048124">
     <bounds minlat="43.0810220" minlon="-79.0644437" maxlat="43.0813649" maxlon="-79.0643376"/>
     <nd ref="655722336" lat="43.0810220" lon="-79.0644437"/>
@@ -6072,6 +6052,46 @@
     <tag k="tiger:zip_left" v="14094"/>
     <tag k="tiger:zip_left_1" v="14094"/>
     <tag k="tiger:zip_right" v="14094"/>
+  </way>
+  <way id="74096993">
+    <bounds minlat="43.3127315" minlon="-78.7148425" maxlat="43.3279094" maxlon="-78.7128618"/>
+    <nd ref="12812745498" lat="43.3279094" lon="-78.7138393"/>
+    <nd ref="2272232396" lat="43.3278503" lon="-78.7138290"/>
+    <nd ref="7462603408" lat="43.3264133" lon="-78.7136436"/>
+    <nd ref="7478014878" lat="43.3243219" lon="-78.7133737"/>
+    <nd ref="7462156037" lat="43.3239837" lon="-78.7133301"/>
+    <nd ref="7483824918" lat="43.3234869" lon="-78.7132660"/>
+    <nd ref="43014231" lat="43.3233482" lon="-78.7132481"/>
+    <nd ref="7483824915" lat="43.3232551" lon="-78.7132347"/>
+    <nd ref="43014236" lat="43.3230803" lon="-78.7132094"/>
+    <nd ref="7451450793" lat="43.3222609" lon="-78.7131011"/>
+    <nd ref="43014240" lat="43.3218599" lon="-78.7130481"/>
+    <nd ref="43014244" lat="43.3212449" lon="-78.7129258"/>
+    <nd ref="2274585260" lat="43.3205531" lon="-78.7128618"/>
+    <nd ref="935561333" lat="43.3187245" lon="-78.7129344"/>
+    <nd ref="7452275869" lat="43.3186968" lon="-78.7129415"/>
+    <nd ref="2274585259" lat="43.3184288" lon="-78.7130106"/>
+    <nd ref="7452275861" lat="43.3183596" lon="-78.7130441"/>
+    <nd ref="7452275852" lat="43.3182849" lon="-78.7130802"/>
+    <nd ref="7479798227" lat="43.3181600" lon="-78.7131407"/>
+    <nd ref="2274585258" lat="43.3181367" lon="-78.7131520"/>
+    <nd ref="43008641" lat="43.3175485" lon="-78.7134114"/>
+    <nd ref="2295915156" lat="43.3171830" lon="-78.7135581"/>
+    <nd ref="43012626" lat="43.3169228" lon="-78.7136626"/>
+    <nd ref="43014251" lat="43.3161945" lon="-78.7140036"/>
+    <nd ref="2272232302" lat="43.3153650" lon="-78.7143200"/>
+    <nd ref="2272232301" lat="43.3145067" lon="-78.7145290"/>
+    <nd ref="43014254" lat="43.3127315" lon="-78.7148425"/>
+    <tag k="highway" v="primary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="40 mph"/>
+    <tag k="name" v="Lockport-Olcott Road"/>
+    <tag k="ref" v="NY 78"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Lockport Olcott"/>
+    <tag k="tiger:name_base_1" v="State Highway 78"/>
+    <tag k="tiger:name_type" v="Rd"/>
   </way>
   <way id="77453613">
     <bounds minlat="43.1526740" minlon="-79.0444175" maxlat="43.1529790" maxlon="-79.0414634"/>
@@ -7884,19 +7904,6 @@
     <tag k="tiger:reviewed" v="no"/>
     <tag k="tiger:zip_left" v="14120"/>
   </way>
-  <way id="114200978">
-    <bounds minlat="43.0993517" minlon="-78.9423240" maxlat="43.0994418" maxlon="-78.9415594"/>
-    <nd ref="7822981226" lat="43.0993517" lon="-78.9415594"/>
-    <nd ref="1293968910" lat="43.0994167" lon="-78.9418383"/>
-    <nd ref="10281168197" lat="43.0994418" lon="-78.9423240"/>
-    <tag k="destination" v="porter road"/>
-    <tag k="destination:ref" v="NY 182"/>
-    <tag k="highway" v="secondary_link"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="45 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
   <way id="114200981">
     <bounds minlat="43.0629611" minlon="-78.8290341" maxlat="43.0660558" maxlon="-78.8233399"/>
     <nd ref="11509502688" lat="43.0629611" lon="-78.8290318"/>
@@ -9058,6 +9065,96 @@
     <tag k="tiger:reviewed" v="no"/>
     <tag k="tiger:zip_left" v="14120"/>
   </way>
+  <way id="139324081">
+    <bounds minlat="43.2266653" minlon="-78.6997892" maxlat="43.2696650" maxlon="-78.6786276"/>
+    <nd ref="7483947583" lat="43.2696650" lon="-78.6997892"/>
+    <nd ref="2295958121" lat="43.2688398" lon="-78.6996243"/>
+    <nd ref="7457024854" lat="43.2686641" lon="-78.6995757"/>
+    <nd ref="7462554926" lat="43.2677524" lon="-78.6993233"/>
+    <nd ref="7462554934" lat="43.2673062" lon="-78.6991997"/>
+    <nd ref="2295958120" lat="43.2670616" lon="-78.6991320"/>
+    <nd ref="2295958119" lat="43.2660987" lon="-78.6989438"/>
+    <nd ref="43014289" lat="43.2652665" lon="-78.6990392"/>
+    <nd ref="7812772191" lat="43.2652154" lon="-78.6990477"/>
+    <nd ref="43009050" lat="43.2644224" lon="-78.6991799"/>
+    <nd ref="7463125237" lat="43.2637177" lon="-78.6992583"/>
+    <nd ref="7463125238" lat="43.2634691" lon="-78.6992715"/>
+    <nd ref="43014291" lat="43.2627168" lon="-78.6991567"/>
+    <nd ref="7463125239" lat="43.2623199" lon="-78.6990783"/>
+    <nd ref="7463125240" lat="43.2619731" lon="-78.6989799"/>
+    <nd ref="7463125241" lat="43.2615089" lon="-78.6987819"/>
+    <nd ref="8488553119" lat="43.2604492" lon="-78.6982150"/>
+    <nd ref="7458859143" lat="43.2600633" lon="-78.6980085"/>
+    <nd ref="7477811148" lat="43.2588759" lon="-78.6973919"/>
+    <nd ref="7484520809" lat="43.2582164" lon="-78.6970494"/>
+    <nd ref="43014295" lat="43.2578647" lon="-78.6968668"/>
+    <nd ref="7463547363" lat="43.2575721" lon="-78.6966842"/>
+    <nd ref="7455676056" lat="43.2573258" lon="-78.6965306"/>
+    <nd ref="2272232112" lat="43.2572093" lon="-78.6964579"/>
+    <nd ref="7457909439" lat="43.2569601" lon="-78.6963089"/>
+    <nd ref="7451623382" lat="43.2567634" lon="-78.6962063"/>
+    <nd ref="2272232111" lat="43.2567443" lon="-78.6961956"/>
+    <nd ref="7451683089" lat="43.2564568" lon="-78.6960340"/>
+    <nd ref="7451623377" lat="43.2558969" lon="-78.6956844"/>
+    <nd ref="2272232110" lat="43.2552626" lon="-78.6952951"/>
+    <nd ref="3355300978" lat="43.2545703" lon="-78.6948764"/>
+    <nd ref="7484317378" lat="43.2539853" lon="-78.6945273"/>
+    <nd ref="7484336385" lat="43.2533817" lon="-78.6941704"/>
+    <nd ref="43014301" lat="43.2524574" lon="-78.6936239"/>
+    <nd ref="8557294684" lat="43.2515369" lon="-78.6930688"/>
+    <nd ref="7457398138" lat="43.2513381" lon="-78.6929489"/>
+    <nd ref="7457398145" lat="43.2511197" lon="-78.6928171"/>
+    <nd ref="7456016800" lat="43.2508368" lon="-78.6926465"/>
+    <nd ref="7479517776" lat="43.2507223" lon="-78.6925775"/>
+    <nd ref="43014305" lat="43.2498560" lon="-78.6920550"/>
+    <nd ref="7479517773" lat="43.2498462" lon="-78.6920491"/>
+    <nd ref="7479517781" lat="43.2495184" lon="-78.6918510"/>
+    <nd ref="7456016797" lat="43.2493253" lon="-78.6917344"/>
+    <nd ref="7455981584" lat="43.2483861" lon="-78.6911669"/>
+    <nd ref="10696253090" lat="43.2477610" lon="-78.6908391"/>
+    <nd ref="7456016789" lat="43.2474479" lon="-78.6906748"/>
+    <nd ref="7456016788" lat="43.2470152" lon="-78.6904477"/>
+    <nd ref="7456664630" lat="43.2469087" lon="-78.6903775"/>
+    <nd ref="7456664633" lat="43.2461200" lon="-78.6898952"/>
+    <nd ref="7456664640" lat="43.2457661" lon="-78.6896235"/>
+    <nd ref="43014308" lat="43.2450605" lon="-78.6892659"/>
+    <nd ref="7456905461" lat="43.2434476" lon="-78.6883792"/>
+    <nd ref="7455642797" lat="43.2406617" lon="-78.6867322"/>
+    <nd ref="7455642804" lat="43.2404090" lon="-78.6865784"/>
+    <nd ref="7455642803" lat="43.2402406" lon="-78.6864760"/>
+    <nd ref="7455642813" lat="43.2401055" lon="-78.6863983"/>
+    <nd ref="7463224519" lat="43.2396974" lon="-78.6861636"/>
+    <nd ref="7478443042" lat="43.2387602" lon="-78.6856247"/>
+    <nd ref="7547082070" lat="43.2372261" lon="-78.6847424"/>
+    <nd ref="8556252513" lat="43.2357798" lon="-78.6839107"/>
+    <nd ref="7461869005" lat="43.2353897" lon="-78.6836864"/>
+    <nd ref="7457283984" lat="43.2344825" lon="-78.6831647"/>
+    <nd ref="7462607260" lat="43.2340213" lon="-78.6828995"/>
+    <nd ref="7466236427" lat="43.2336097" lon="-78.6826628"/>
+    <nd ref="43014313" lat="43.2322391" lon="-78.6818747"/>
+    <nd ref="7457035317" lat="43.2308517" lon="-78.6810390"/>
+    <nd ref="43014317" lat="43.2304177" lon="-78.6807776"/>
+    <nd ref="7457035312" lat="43.2302859" lon="-78.6807027"/>
+    <nd ref="7465314002" lat="43.2302300" lon="-78.6806709"/>
+    <nd ref="7477676827" lat="43.2291379" lon="-78.6800504"/>
+    <nd ref="7477676816" lat="43.2290803" lon="-78.6800177"/>
+    <nd ref="7457421041" lat="43.2279773" lon="-78.6793911"/>
+    <nd ref="43007316" lat="43.2269810" lon="-78.6788250"/>
+    <nd ref="7463643555" lat="43.2266653" lon="-78.6786276"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="primary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="45 mph"/>
+    <tag k="name" v="Lockport-Olcott Road"/>
+    <tag k="ref" v="NY 78"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Lockport Olcott"/>
+    <tag k="tiger:name_base_1" v="State Highway 78"/>
+    <tag k="tiger:name_type" v="Rd"/>
+  </way>
   <way id="139437842">
     <bounds minlat="43.1599016" minlon="-79.0380503" maxlat="43.1650908" maxlon="-79.0353982"/>
     <nd ref="266975042" lat="43.1599016" lon="-79.0380503"/>
@@ -9407,154 +9504,6 @@
     <tag k="oneway" v="no"/>
     <tag k="ref" v="NY 78"/>
     <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="167514681">
-    <bounds minlat="43.0998060" minlon="-78.9409494" maxlat="43.1001285" maxlon="-78.9409319"/>
-    <nd ref="1789034075" lat="43.1001285" lon="-78.9409494"/>
-    <nd ref="1789034099" lat="43.1000247" lon="-78.9409333"/>
-    <nd ref="10925183310" lat="43.0998060" lon="-78.9409319"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-    <tag k="turn:lanes" v="left|through|through;right"/>
-  </way>
-  <way id="167514684">
-    <bounds minlat="43.1002608" minlon="-78.9406058" maxlat="43.1005726" maxlon="-78.9400750"/>
-    <nd ref="1789034108" lat="43.1002608" lon="-78.9406058"/>
-    <nd ref="1789034082" lat="43.1002922" lon="-78.9405410"/>
-    <nd ref="7509927614" lat="43.1003125" lon="-78.9404923"/>
-    <nd ref="1789034101" lat="43.1003470" lon="-78.9404041"/>
-    <nd ref="10925183303" lat="43.1003791" lon="-78.9403047"/>
-    <nd ref="10925183304" lat="43.1004003" lon="-78.9402527"/>
-    <nd ref="1789034078" lat="43.1004315" lon="-78.9402023"/>
-    <nd ref="1789034093" lat="43.1005726" lon="-78.9400750"/>
-    <tag k="destination" v="Terminal;Parking Lot 1;Free Waiting Are"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="167514688">
-    <bounds minlat="43.1005726" minlon="-78.9400750" maxlat="43.1009322" maxlon="-78.9396028"/>
-    <nd ref="1789034093" lat="43.1005726" lon="-78.9400750"/>
-    <nd ref="6058156388" lat="43.1009322" lon="-78.9396028"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="3"/>
-    <tag k="lanes:backward" v="1"/>
-    <tag k="lanes:forward" v="2"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="no"/>
-    <tag k="surface" v="asphalt"/>
-    <tag k="turn:lanes:forward" v="left;through|"/>
-  </way>
-  <way id="167514689">
-    <bounds minlat="43.1004433" minlon="-78.9406426" maxlat="43.1005726" maxlon="-78.9400750"/>
-    <nd ref="1789034093" lat="43.1005726" lon="-78.9400750"/>
-    <nd ref="10925183308" lat="43.1005371" lon="-78.9401832"/>
-    <nd ref="10925183309" lat="43.1005062" lon="-78.9402319"/>
-    <nd ref="1789034115" lat="43.1004801" lon="-78.9402819"/>
-    <nd ref="10925183305" lat="43.1004619" lon="-78.9403261"/>
-    <nd ref="1789034119" lat="43.1004506" lon="-78.9403781"/>
-    <nd ref="10925183306" lat="43.1004433" lon="-78.9404356"/>
-    <nd ref="1789034118" lat="43.1004478" lon="-78.9405113"/>
-    <nd ref="1789034094" lat="43.1004630" lon="-78.9405831"/>
-    <nd ref="1789034079" lat="43.1004820" lon="-78.9406426"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="167514690">
-    <bounds minlat="43.1002608" minlon="-78.9411064" maxlat="43.1005467" maxlon="-78.9405793"/>
-    <nd ref="1789034108" lat="43.1002608" lon="-78.9406058"/>
-    <nd ref="1789034083" lat="43.1003427" lon="-78.9405793"/>
-    <nd ref="1789034074" lat="43.1003978" lon="-78.9405855"/>
-    <nd ref="10925183307" lat="43.1004438" lon="-78.9406092"/>
-    <nd ref="1789034079" lat="43.1004820" lon="-78.9406426"/>
-    <nd ref="10925167988" lat="43.1005122" lon="-78.9406926"/>
-    <nd ref="1789034089" lat="43.1005400" lon="-78.9407814"/>
-    <nd ref="10925167989" lat="43.1005467" lon="-78.9408337"/>
-    <nd ref="1789034086" lat="43.1005428" lon="-78.9408860"/>
-    <nd ref="10925167990" lat="43.1005316" lon="-78.9409463"/>
-    <nd ref="1789034098" lat="43.1005057" lon="-78.9410040"/>
-    <nd ref="1789034117" lat="43.1004621" lon="-78.9410571"/>
-    <nd ref="6691285832" lat="43.1004179" lon="-78.9410886"/>
-    <nd ref="1789034073" lat="43.1003768" lon="-78.9411064"/>
-    <tag k="destination" v="Car Rental;Parking Lot 2,3"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="junction" v="roundabout"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="167515985">
-    <bounds minlat="43.0993884" minlon="-78.9440802" maxlat="43.0998590" maxlon="-78.9438380"/>
-    <nd ref="1789049345" lat="43.0998590" lon="-78.9438380"/>
-    <nd ref="5010391906" lat="43.0997666" lon="-78.9438615"/>
-    <nd ref="1789049360" lat="43.0996056" lon="-78.9438642"/>
-    <nd ref="1789049355" lat="43.0995641" lon="-78.9438720"/>
-    <nd ref="1789049369" lat="43.0995274" lon="-78.9438915"/>
-    <nd ref="10925183227" lat="43.0994818" lon="-78.9439398"/>
-    <nd ref="1789049350" lat="43.0994449" lon="-78.9439908"/>
-    <nd ref="1789049338" lat="43.0993884" lon="-78.9440802"/>
-    <tag k="destination:ref" v="NY 182 West"/>
-    <tag k="destination:ref:to" v="I 190 North"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="167515986">
-    <bounds minlat="43.0993918" minlon="-78.9437604" maxlat="43.0995879" maxlon="-78.9431798"/>
-    <nd ref="1789049374" lat="43.0993918" lon="-78.9437524"/>
-    <nd ref="1789049358" lat="43.0994665" lon="-78.9437604"/>
-    <nd ref="1789049343" lat="43.0995150" lon="-78.9437567"/>
-    <nd ref="10925183226" lat="43.0995446" lon="-78.9437299"/>
-    <nd ref="1789049364" lat="43.0995613" lon="-78.9436853"/>
-    <nd ref="5010390411" lat="43.0995626" lon="-78.9435765"/>
-    <nd ref="1789049357" lat="43.0995879" lon="-78.9431798"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="167515988">
-    <bounds minlat="43.1000127" minlon="-78.9412183" maxlat="43.1002092" maxlon="-78.9410060"/>
-    <nd ref="1789049365" lat="43.1000127" lon="-78.9411821"/>
-    <nd ref="5010392075" lat="43.1000703" lon="-78.9412159"/>
-    <nd ref="5010392078" lat="43.1001060" lon="-78.9412183"/>
-    <nd ref="5010391920" lat="43.1001576" lon="-78.9412012"/>
-    <nd ref="10925167957" lat="43.1001865" lon="-78.9411699"/>
-    <nd ref="1789049366" lat="43.1001940" lon="-78.9411469"/>
-    <nd ref="10925183311" lat="43.1002092" lon="-78.9410060"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="167515989">
-    <bounds minlat="43.0995879" minlon="-78.9438186" maxlat="43.0997907" maxlon="-78.9415689"/>
-    <nd ref="10925183231" lat="43.0997907" lon="-78.9438186"/>
-    <nd ref="5010392105" lat="43.0997505" lon="-78.9438072"/>
-    <nd ref="1789049342" lat="43.0996961" lon="-78.9437829"/>
-    <nd ref="10925183225" lat="43.0996573" lon="-78.9437441"/>
-    <nd ref="1789049367" lat="43.0996319" lon="-78.9436890"/>
-    <nd ref="5010392073" lat="43.0996171" lon="-78.9436296"/>
-    <nd ref="5010392045" lat="43.0996116" lon="-78.9435498"/>
-    <nd ref="1789049357" lat="43.0995879" lon="-78.9431798"/>
-    <nd ref="1789049349" lat="43.0995973" lon="-78.9415689"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
     <tag k="surface" v="asphalt"/>
   </way>
   <way id="171474450">
@@ -10068,97 +10017,6 @@
     <tag k="tiger:name_type" v="Rd"/>
     <tag k="tiger:reviewed" v="no"/>
   </way>
-  <way id="236783166">
-    <bounds minlat="43.0802853" minlon="-79.0713850" maxlat="43.0815654" maxlon="-79.0702019"/>
-    <nd ref="2447590394" lat="43.0804689" lon="-79.0702019"/>
-    <nd ref="2447590414" lat="43.0806418" lon="-79.0702692"/>
-    <nd ref="2447590431" lat="43.0808345" lon="-79.0703440"/>
-    <nd ref="2447590457" lat="43.0809596" lon="-79.0703875"/>
-    <nd ref="7732180827" lat="43.0810295" lon="-79.0704101"/>
-    <nd ref="2447590482" lat="43.0811187" lon="-79.0704438"/>
-    <nd ref="2447590507" lat="43.0812730" lon="-79.0705050"/>
-    <nd ref="2447590526" lat="43.0815384" lon="-79.0705964"/>
-    <nd ref="2447590542" lat="43.0815654" lon="-79.0706496"/>
-    <nd ref="7847908087" lat="43.0815335" lon="-79.0708249"/>
-    <nd ref="2447590537" lat="43.0815094" lon="-79.0709575"/>
-    <nd ref="7847904081" lat="43.0814819" lon="-79.0710850"/>
-    <nd ref="5755792334" lat="43.0814464" lon="-79.0712427"/>
-    <nd ref="7847904082" lat="43.0813683" lon="-79.0712748"/>
-    <nd ref="5755792329" lat="43.0809744" lon="-79.0713850"/>
-    <nd ref="7732180829" lat="43.0808439" lon="-79.0713325"/>
-    <nd ref="5755792328" lat="43.0807629" lon="-79.0712999"/>
-    <nd ref="5755792327" lat="43.0802853" lon="-79.0711373"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="10 mph"/>
-    <tag k="service" v="parking_aisle"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="236783172">
-    <bounds minlat="43.0804689" minlon="-79.0702019" maxlat="43.0805201" maxlon="-79.0699997"/>
-    <nd ref="2447590394" lat="43.0804689" lon="-79.0702019"/>
-    <nd ref="2447590402" lat="43.0805201" lon="-79.0699997"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="10 mph"/>
-    <tag k="service" v="parking_aisle"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="236783173">
-    <bounds minlat="43.0804250" minlon="-79.0706038" maxlat="43.0809069" maxlon="-79.0704173"/>
-    <nd ref="2447590392" lat="43.0804250" lon="-79.0704173"/>
-    <nd ref="2447590407" lat="43.0809069" lon="-79.0706038"/>
-    <tag k="highway" v="service"/>
-    <tag k="lanes" v="2"/>
-    <tag k="maxspeed" v="10 mph"/>
-    <tag k="service" v="parking_aisle"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="236783175">
-    <bounds minlat="43.0812862" minlon="-79.0672316" maxlat="43.0815991" maxlon="-79.0671182"/>
-    <nd ref="655722873" lat="43.0812862" lon="-79.0672316"/>
-    <nd ref="7795884599" lat="43.0814362" lon="-79.0671599"/>
-    <nd ref="7795884600" lat="43.0814733" lon="-79.0671411"/>
-    <nd ref="7795884604" lat="43.0815049" lon="-79.0671324"/>
-    <nd ref="7795884601" lat="43.0815356" lon="-79.0671269"/>
-    <nd ref="7795884603" lat="43.0815623" lon="-79.0671228"/>
-    <nd ref="7795884602" lat="43.0815991" lon="-79.0671182"/>
-    <tag k="highway" v="tertiary_link"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="10 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="236783180">
-    <bounds minlat="43.0799355" minlon="-79.0714731" maxlat="43.0814977" maxlon="-79.0702193"/>
-    <nd ref="940348616" lat="43.0814977" lon="-79.0703386"/>
-    <nd ref="5755792331" lat="43.0812947" lon="-79.0702893"/>
-    <nd ref="8689137485" lat="43.0812477" lon="-79.0702813"/>
-    <nd ref="8689137488" lat="43.0811891" lon="-79.0702633"/>
-    <nd ref="8689137486" lat="43.0811473" lon="-79.0702708"/>
-    <nd ref="8689137493" lat="43.0811177" lon="-79.0702613"/>
-    <nd ref="2447590502" lat="43.0810806" lon="-79.0702495"/>
-    <nd ref="5755792332" lat="43.0810501" lon="-79.0702193"/>
-    <nd ref="8689137491" lat="43.0810276" lon="-79.0702211"/>
-    <nd ref="8689137487" lat="43.0810008" lon="-79.0702387"/>
-    <nd ref="2447590466" lat="43.0809870" lon="-79.0702661"/>
-    <nd ref="2447590457" lat="43.0809596" lon="-79.0703875"/>
-    <nd ref="2447590407" lat="43.0809069" lon="-79.0706038"/>
-    <nd ref="2447590453" lat="43.0808831" lon="-79.0707244"/>
-    <nd ref="7847904079" lat="43.0808550" lon="-79.0708590"/>
-    <nd ref="7847904084" lat="43.0808097" lon="-79.0710758"/>
-    <nd ref="5755792328" lat="43.0807629" lon="-79.0712999"/>
-    <nd ref="5755792333" lat="43.0807347" lon="-79.0714162"/>
-    <nd ref="8689137433" lat="43.0807024" lon="-79.0714548"/>
-    <nd ref="7847908089" lat="43.0806546" lon="-79.0714731"/>
-    <nd ref="5755792326" lat="43.0806041" lon="-79.0714710"/>
-    <nd ref="8689137508" lat="43.0804068" lon="-79.0714359"/>
-    <nd ref="8689137501" lat="43.0803153" lon="-79.0714197"/>
-    <nd ref="8689137504" lat="43.0801593" lon="-79.0713927"/>
-    <nd ref="650937671" lat="43.0799355" lon="-79.0713311"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="10 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
   <way id="246958853">
     <bounds minlat="43.2817213" minlon="-78.9659952" maxlat="43.2830022" maxlon="-78.9637689"/>
     <nd ref="2539154526" lat="43.2817213" lon="-78.9659952"/>
@@ -10179,34 +10037,6 @@
     <tag k="maxspeed" v="20 mph"/>
     <tag k="name" v="Harrison Lane"/>
     <tag k="surface" v="unpaved"/>
-  </way>
-  <way id="246959000">
-    <bounds minlat="43.2824662" minlon="-78.9596113" maxlat="43.2839408" maxlon="-78.9595394"/>
-    <nd ref="2539159797" lat="43.2824662" lon="-78.9595394"/>
-    <nd ref="2539159798" lat="43.2832231" lon="-78.9596113"/>
-    <nd ref="2539159800" lat="43.2834765" lon="-78.9596082"/>
-    <nd ref="2539159801" lat="43.2836201" lon="-78.9595836"/>
-    <nd ref="2539159803" lat="43.2838466" lon="-78.9595990"/>
-    <nd ref="2539159804" lat="43.2839408" lon="-78.9595836"/>
-    <tag k="highway" v="residential"/>
-    <tag k="maxspeed" v="20 mph"/>
-  </way>
-  <way id="246959169">
-    <bounds minlat="43.2826305" minlon="-78.9590598" maxlat="43.2844724" maxlon="-78.9577781"/>
-    <nd ref="2539160733" lat="43.2826305" lon="-78.9590070"/>
-    <nd ref="2539160734" lat="43.2827947" lon="-78.9590598"/>
-    <nd ref="2539160735" lat="43.2833576" lon="-78.9590444"/>
-    <nd ref="2539160736" lat="43.2838556" lon="-78.9590536"/>
-    <nd ref="2539160737" lat="43.2840148" lon="-78.9590382"/>
-    <nd ref="2539160738" lat="43.2841628" lon="-78.9589766"/>
-    <nd ref="2539160739" lat="43.2842055" lon="-78.9588719"/>
-    <nd ref="2539160740" lat="43.2842189" lon="-78.9587301"/>
-    <nd ref="2539160741" lat="43.2842234" lon="-78.9586069"/>
-    <nd ref="2539160742" lat="43.2842840" lon="-78.9584128"/>
-    <nd ref="2539160743" lat="43.2843894" lon="-78.9580400"/>
-    <nd ref="2539160744" lat="43.2844724" lon="-78.9577781"/>
-    <tag k="highway" v="residential"/>
-    <tag k="maxspeed" v="20 mph"/>
   </way>
   <way id="249475812">
     <bounds minlat="43.2466996" minlon="-79.0355195" maxlat="43.2467507" maxlon="-79.0351553"/>
@@ -10595,6 +10425,96 @@
     <tag k="tiger:reviewed" v="no"/>
     <tag k="tiger:zip_left" v="14304"/>
     <tag k="tiger:zip_right" v="14304"/>
+  </way>
+  <way id="261473995">
+    <bounds minlat="43.2393270" minlon="-78.5707017" maxlat="43.2435925" maxlon="-78.5241108"/>
+    <nd ref="12813050587" lat="43.2398038" lon="-78.5707017"/>
+    <nd ref="7452984257" lat="43.2396945" lon="-78.5689280"/>
+    <nd ref="43033677" lat="43.2396890" lon="-78.5688380"/>
+    <nd ref="7452984264" lat="43.2396876" lon="-78.5687865"/>
+    <nd ref="7452984265" lat="43.2396848" lon="-78.5686873"/>
+    <nd ref="7462302578" lat="43.2396309" lon="-78.5653099"/>
+    <nd ref="7477687599" lat="43.2396279" lon="-78.5651235"/>
+    <nd ref="7477687608" lat="43.2396199" lon="-78.5646220"/>
+    <nd ref="7462302577" lat="43.2396171" lon="-78.5644448"/>
+    <nd ref="43033681" lat="43.2396118" lon="-78.5641604"/>
+    <nd ref="7457483510" lat="43.2394836" lon="-78.5604675"/>
+    <nd ref="43033684" lat="43.2394810" lon="-78.5603420"/>
+    <nd ref="7457483521" lat="43.2394777" lon="-78.5601799"/>
+    <nd ref="7457483522" lat="43.2394758" lon="-78.5600881"/>
+    <nd ref="7477875243" lat="43.2394745" lon="-78.5600241"/>
+    <nd ref="7457483529" lat="43.2395267" lon="-78.5598850"/>
+    <nd ref="7477875246" lat="43.2394993" lon="-78.5586405"/>
+    <nd ref="7509085357" lat="43.2394954" lon="-78.5583991"/>
+    <nd ref="7462804853" lat="43.2394778" lon="-78.5573530"/>
+    <nd ref="7462544796" lat="43.2394778" lon="-78.5571197"/>
+    <nd ref="7462544825" lat="43.2394622" lon="-78.5565135"/>
+    <nd ref="7462544826" lat="43.2394544" lon="-78.5561755"/>
+    <nd ref="7462544835" lat="43.2394466" lon="-78.5558000"/>
+    <nd ref="7462544793" lat="43.2394466" lon="-78.5556847"/>
+    <nd ref="7462544836" lat="43.2394407" lon="-78.5555023"/>
+    <nd ref="7462544849" lat="43.2394348" lon="-78.5548183"/>
+    <nd ref="7462544850" lat="43.2394270" lon="-78.5543436"/>
+    <nd ref="7462544859" lat="43.2394192" lon="-78.5538983"/>
+    <nd ref="7462544822" lat="43.2394133" lon="-78.5534585"/>
+    <nd ref="7462573194" lat="43.2393743" lon="-78.5515299"/>
+    <nd ref="43033689" lat="43.2393642" lon="-78.5498888"/>
+    <nd ref="43033694" lat="43.2393513" lon="-78.5494361"/>
+    <nd ref="7455596788" lat="43.2393432" lon="-78.5487938"/>
+    <nd ref="7455596798" lat="43.2393410" lon="-78.5486216"/>
+    <nd ref="43033696" lat="43.2393270" lon="-78.5475195"/>
+    <nd ref="43033699" lat="43.2393342" lon="-78.5467983"/>
+    <nd ref="7456365925" lat="43.2393779" lon="-78.5464744"/>
+    <nd ref="43033704" lat="43.2394258" lon="-78.5461191"/>
+    <nd ref="43033707" lat="43.2397862" lon="-78.5445457"/>
+    <nd ref="43033712" lat="43.2404516" lon="-78.5422506"/>
+    <nd ref="43033718" lat="43.2405992" lon="-78.5417338"/>
+    <nd ref="43033721" lat="43.2407112" lon="-78.5413094"/>
+    <nd ref="7520698847" lat="43.2407586" lon="-78.5411222"/>
+    <nd ref="7478445354" lat="43.2410561" lon="-78.5399475"/>
+    <nd ref="43033727" lat="43.2411449" lon="-78.5395971"/>
+    <nd ref="7452853825" lat="43.2413020" lon="-78.5387270"/>
+    <nd ref="7478445344" lat="43.2413814" lon="-78.5383181"/>
+    <nd ref="7478445351" lat="43.2414523" lon="-78.5379535"/>
+    <nd ref="7455737258" lat="43.2416145" lon="-78.5371184"/>
+    <nd ref="43033732" lat="43.2416303" lon="-78.5370371"/>
+    <nd ref="7452365661" lat="43.2417754" lon="-78.5362658"/>
+    <nd ref="7452365673" lat="43.2421178" lon="-78.5345509"/>
+    <nd ref="7452365667" lat="43.2421791" lon="-78.5342850"/>
+    <nd ref="43033739" lat="43.2422055" lon="-78.5340901"/>
+    <nd ref="7452365679" lat="43.2423169" lon="-78.5335272"/>
+    <nd ref="7456954482" lat="43.2423429" lon="-78.5334066"/>
+    <nd ref="7452365674" lat="43.2423848" lon="-78.5332120"/>
+    <nd ref="6306459218" lat="43.2426402" lon="-78.5319473"/>
+    <nd ref="43033744" lat="43.2427525" lon="-78.5313390"/>
+    <nd ref="43033749" lat="43.2429038" lon="-78.5305520"/>
+    <nd ref="7479736118" lat="43.2429199" lon="-78.5304657"/>
+    <nd ref="43033755" lat="43.2432202" lon="-78.5288520"/>
+    <nd ref="7461439413" lat="43.2433095" lon="-78.5284370"/>
+    <nd ref="7461439414" lat="43.2433312" lon="-78.5283359"/>
+    <nd ref="7456684840" lat="43.2434187" lon="-78.5279292"/>
+    <nd ref="7510041718" lat="43.2435218" lon="-78.5268948"/>
+    <nd ref="43033758" lat="43.2435594" lon="-78.5261620"/>
+    <nd ref="8124328057" lat="43.2435692" lon="-78.5255683"/>
+    <nd ref="43033763" lat="43.2435776" lon="-78.5250611"/>
+    <nd ref="11407623061" lat="43.2435891" lon="-78.5243275"/>
+    <nd ref="8124328062" lat="43.2435925" lon="-78.5241108"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="secondary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="45 mph"/>
+    <tag k="name" v="Ridge Road"/>
+    <tag k="old_ref" v="US 104"/>
+    <tag k="ref" v="NY 104"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Ridge"/>
+    <tag k="tiger:name_base_1" v="State Highway 104"/>
+    <tag k="tiger:name_type" v="Rd"/>
+    <tag k="tiger:zip_left" v="14105"/>
+    <tag k="tiger:zip_right" v="14105"/>
   </way>
   <way id="337257088">
     <bounds minlat="43.2364050" minlon="-79.0459528" maxlat="43.2369559" maxlon="-79.0412105"/>
@@ -11694,93 +11614,6 @@
     <tag k="shoulder" v="right"/>
     <tag k="surface" v="asphalt"/>
   </way>
-  <way id="588788038">
-    <bounds minlat="43.0809985" minlon="-79.0512344" maxlat="43.0811148" maxlon="-79.0508211"/>
-    <nd ref="5608471677" lat="43.0810795" lon="-79.0508211"/>
-    <nd ref="5608471674" lat="43.0810935" lon="-79.0508518"/>
-    <nd ref="5608471700" lat="43.0811047" lon="-79.0508870"/>
-    <nd ref="5608471664" lat="43.0811111" lon="-79.0509188"/>
-    <nd ref="5608471661" lat="43.0811148" lon="-79.0509577"/>
-    <nd ref="5608471693" lat="43.0811143" lon="-79.0509942"/>
-    <nd ref="5608471670" lat="43.0811102" lon="-79.0510288"/>
-    <nd ref="5608471690" lat="43.0811021" lon="-79.0510647"/>
-    <nd ref="5608471687" lat="43.0810938" lon="-79.0510941"/>
-    <nd ref="5608471688" lat="43.0810830" lon="-79.0511257"/>
-    <nd ref="5608471717" lat="43.0810693" lon="-79.0511553"/>
-    <nd ref="5608471637" lat="43.0810534" lon="-79.0511805"/>
-    <nd ref="5608471679" lat="43.0810363" lon="-79.0512030"/>
-    <nd ref="5608471633" lat="43.0810189" lon="-79.0512194"/>
-    <nd ref="5608473510" lat="43.0809985" lon="-79.0512344"/>
-    <tag k="expressway" v="no"/>
-    <tag k="hgv" v="no"/>
-    <tag k="highway" v="trunk"/>
-    <tag k="junction" v="roundabout"/>
-    <tag k="lanes" v="1"/>
-    <tag k="lit" v="no"/>
-    <tag k="maxspeed" v="35 mph"/>
-    <tag k="maxspeed:advisory" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="596347950">
-    <bounds minlat="43.0807242" minlon="-79.0512527" maxlat="43.0809937" maxlon="-79.0509336"/>
-    <nd ref="10727045849" lat="43.0809937" lon="-79.0512367"/>
-    <nd ref="5608471709" lat="43.0809743" lon="-79.0512462"/>
-    <nd ref="5608471651" lat="43.0809468" lon="-79.0512520"/>
-    <nd ref="5608471632" lat="43.0809166" lon="-79.0512527"/>
-    <nd ref="5608471636" lat="43.0808914" lon="-79.0512485"/>
-    <nd ref="5608471692" lat="43.0808650" lon="-79.0512394"/>
-    <nd ref="5608471652" lat="43.0808400" lon="-79.0512257"/>
-    <nd ref="5608471638" lat="43.0808140" lon="-79.0512055"/>
-    <nd ref="5608471691" lat="43.0807960" lon="-79.0511870"/>
-    <nd ref="5608471704" lat="43.0807690" lon="-79.0511495"/>
-    <nd ref="5608471645" lat="43.0807520" lon="-79.0511164"/>
-    <nd ref="5608471667" lat="43.0807394" lon="-79.0510827"/>
-    <nd ref="5608471656" lat="43.0807302" lon="-79.0510470"/>
-    <nd ref="5608471630" lat="43.0807242" lon="-79.0510064"/>
-    <nd ref="5608471647" lat="43.0807245" lon="-79.0509662"/>
-    <nd ref="5608471635" lat="43.0807276" lon="-79.0509336"/>
-    <tag k="expressway" v="no"/>
-    <tag k="hgv" v="no"/>
-    <tag k="highway" v="trunk"/>
-    <tag k="junction" v="roundabout"/>
-    <tag k="lanes" v="2"/>
-    <tag k="lit" v="no"/>
-    <tag k="maxspeed" v="35 mph"/>
-    <tag k="maxspeed:advisory" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="596347951">
-    <bounds minlat="43.0810229" minlon="-79.0508211" maxlat="43.0810795" maxlon="-79.0507507"/>
-    <nd ref="5608471703" lat="43.0810229" lon="-79.0507507"/>
-    <nd ref="5608471686" lat="43.0810399" lon="-79.0507662"/>
-    <nd ref="5608471676" lat="43.0810586" lon="-79.0507880"/>
-    <nd ref="5608471677" lat="43.0810795" lon="-79.0508211"/>
-    <tag k="expressway" v="no"/>
-    <tag k="hgv" v="no"/>
-    <tag k="highway" v="trunk"/>
-    <tag k="junction" v="roundabout"/>
-    <tag k="lanes" v="1"/>
-    <tag k="lit" v="no"/>
-    <tag k="maxspeed" v="35 mph"/>
-    <tag k="maxspeed:advisory" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="607314209">
-    <bounds minlat="43.0802853" minlon="-79.0711373" maxlat="43.0804689" maxlon="-79.0702019"/>
-    <nd ref="5755792327" lat="43.0802853" lon="-79.0711373"/>
-    <nd ref="7847908085" lat="43.0803351" lon="-79.0709039"/>
-    <nd ref="7847904078" lat="43.0803830" lon="-79.0706795"/>
-    <nd ref="5755792330" lat="43.0804015" lon="-79.0705551"/>
-    <nd ref="2447590392" lat="43.0804250" lon="-79.0704173"/>
-    <nd ref="2447590394" lat="43.0804689" lon="-79.0702019"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="10 mph"/>
-    <tag k="service" v="parking_aisle"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
   <way id="615110549">
     <bounds minlat="43.1955352" minlon="-78.5905361" maxlat="43.1997858" maxlon="-78.5719646"/>
     <nd ref="43044570" lat="43.1997858" lon="-78.5719646"/>
@@ -12433,49 +12266,6 @@
     <tag k="tiger:zip_right" v="14304"/>
     <tag k="unsigned_ref" v="NY 952V"/>
   </way>
-  <way id="672181374">
-    <bounds minlat="43.1001837" minlon="-78.9411028" maxlat="43.1003534" maxlon="-78.9409675"/>
-    <nd ref="1789049353" lat="43.1003534" lon="-78.9411028"/>
-    <nd ref="10925167987" lat="43.1003325" lon="-78.9410990"/>
-    <nd ref="1789034112" lat="43.1002940" lon="-78.9410883"/>
-    <nd ref="10925183312" lat="43.1002399" lon="-78.9410523"/>
-    <nd ref="10925183311" lat="43.1002092" lon="-78.9410060"/>
-    <nd ref="1789034110" lat="43.1001837" lon="-78.9409675"/>
-    <tag k="destination" v="Parking Lot 1&amp;1A;Exit;Parking Lot 3"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="junction" v="roundabout"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="672181376">
-    <bounds minlat="43.1001855" minlon="-78.9407157" maxlat="43.1002608" maxlon="-78.9406058"/>
-    <nd ref="1789034077" lat="43.1001855" lon="-78.9407157"/>
-    <nd ref="5010391875" lat="43.1002172" lon="-78.9406612"/>
-    <nd ref="1789034108" lat="43.1002608" lon="-78.9406058"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="junction" v="roundabout"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="672181377">
-    <bounds minlat="43.1001628" minlon="-78.9409675" maxlat="43.1001855" maxlon="-78.9407157"/>
-    <nd ref="1789034110" lat="43.1001837" lon="-78.9409675"/>
-    <nd ref="1789034087" lat="43.1001694" lon="-78.9409170"/>
-    <nd ref="1789034080" lat="43.1001628" lon="-78.9408521"/>
-    <nd ref="5010392059" lat="43.1001692" lon="-78.9407765"/>
-    <nd ref="1789034077" lat="43.1001855" lon="-78.9407157"/>
-    <tag k="destination" v="Parking Lot 1&amp;1A"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="junction" v="roundabout"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
   <way id="672181384">
     <bounds minlat="43.0908713" minlon="-78.9713481" maxlat="43.0936130" maxlon="-78.9684025"/>
     <nd ref="12221910303" lat="43.0908713" lon="-78.9684025"/>
@@ -13120,27 +12910,6 @@
     <tag k="name" v="Shimer Drive"/>
     <tag k="surface" v="asphalt"/>
   </way>
-  <way id="760100994">
-    <bounds minlat="43.0608461" minlon="-78.8663408" maxlat="43.0616764" maxlon="-78.8663258"/>
-    <nd ref="7100549661" lat="43.0616764" lon="-78.8663408"/>
-    <nd ref="7100549663" lat="43.0612584" lon="-78.8663333"/>
-    <nd ref="7100549662" lat="43.0608461" lon="-78.8663258"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="5 mph"/>
-    <tag k="oneway" v="no"/>
-    <tag k="service" v="parking_aisle"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="760100995">
-    <bounds minlat="43.0612584" minlon="-78.8663333" maxlat="43.0612635" maxlon="-78.8658232"/>
-    <nd ref="7100549663" lat="43.0612584" lon="-78.8663333"/>
-    <nd ref="7100549664" lat="43.0612635" lon="-78.8658232"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="5 mph"/>
-    <tag k="oneway" v="no"/>
-    <tag k="service" v="driveway"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
   <way id="762220263">
     <bounds minlat="43.0811671" minlon="-78.8895485" maxlat="43.0868491" maxlon="-78.8740342"/>
     <nd ref="7121999333" lat="43.0811671" lon="-78.8740342"/>
@@ -13224,16 +12993,6 @@
     <tag k="tiger:zip_left" v="14120"/>
     <tag k="tiger:zip_right" v="14120"/>
   </way>
-  <way id="773095612">
-    <bounds minlat="43.0464719" minlon="-78.8668545" maxlat="43.0477776" maxlon="-78.8668114"/>
-    <nd ref="7218197700" lat="43.0464719" lon="-78.8668114"/>
-    <nd ref="7218197702" lat="43.0477776" lon="-78.8668545"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="no"/>
-    <tag k="service" v="parking_aisle"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
   <way id="776620430">
     <bounds minlat="43.0837493" minlon="-79.0648218" maxlat="43.0859927" maxlon="-79.0633744"/>
     <nd ref="3964888680" lat="43.0837493" lon="-79.0633744"/>
@@ -13296,34 +13055,6 @@
     <tag k="maxspeed" v="35 mph"/>
     <tag k="name" v="Riverway"/>
     <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="782632644">
-    <bounds minlat="43.0503688" minlon="-78.8688213" maxlat="43.0521545" maxlon="-78.8679370"/>
-    <nd ref="2364930886" lat="43.0521545" lon="-78.8687441"/>
-    <nd ref="10170019712" lat="43.0520672" lon="-78.8687497"/>
-    <nd ref="10170019710" lat="43.0516634" lon="-78.8687767"/>
-    <nd ref="10170019711" lat="43.0515479" lon="-78.8688051"/>
-    <nd ref="2364930891" lat="43.0513674" lon="-78.8688213"/>
-    <nd ref="10170058007" lat="43.0513350" lon="-78.8688164"/>
-    <nd ref="10170058006" lat="43.0512934" lon="-78.8688011"/>
-    <nd ref="10170058005" lat="43.0512592" lon="-78.8687778"/>
-    <nd ref="10170058003" lat="43.0512300" lon="-78.8687444"/>
-    <nd ref="7308637522" lat="43.0511366" lon="-78.8685294"/>
-    <nd ref="10170058022" lat="43.0511282" lon="-78.8683948"/>
-    <nd ref="7308637523" lat="43.0511268" lon="-78.8683732"/>
-    <nd ref="10170058009" lat="43.0511132" lon="-78.8682573"/>
-    <nd ref="7308637524" lat="43.0510753" lon="-78.8681355"/>
-    <nd ref="10170058010" lat="43.0510402" lon="-78.8680617"/>
-    <nd ref="7308637525" lat="43.0509918" lon="-78.8680113"/>
-    <nd ref="10170058011" lat="43.0509358" lon="-78.8679713"/>
-    <nd ref="10170058012" lat="43.0508791" lon="-78.8679444"/>
-    <nd ref="7308637526" lat="43.0508147" lon="-78.8679370"/>
-    <nd ref="7308637527" lat="43.0507544" lon="-78.8679449"/>
-    <nd ref="2364930874" lat="43.0503688" lon="-78.8680988"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="10 mph"/>
-    <tag k="oneway" v="no"/>
     <tag k="surface" v="asphalt"/>
   </way>
   <way id="784295002">
@@ -13426,23 +13157,6 @@
     <tag k="highway" v="service"/>
     <tag k="maxspeed" v="30 mph"/>
     <tag k="name" v="Robert's Way"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="802844985">
-    <bounds minlat="43.0998125" minlon="-78.9402122" maxlat="43.1003086" maxlon="-78.9377883"/>
-    <nd ref="7509927622" lat="43.0998201" lon="-78.9377883"/>
-    <nd ref="10924855803" lat="43.0998125" lon="-78.9379790"/>
-    <nd ref="7509927619" lat="43.0998137" lon="-78.9400457"/>
-    <nd ref="10924855801" lat="43.0998216" lon="-78.9401045"/>
-    <nd ref="7509927618" lat="43.0998413" lon="-78.9401425"/>
-    <nd ref="7509927617" lat="43.0998725" lon="-78.9401787"/>
-    <nd ref="10924855802" lat="43.0999199" lon="-78.9402017"/>
-    <nd ref="7509927616" lat="43.0999699" lon="-78.9402122"/>
-    <nd ref="7509927613" lat="43.1003086" lon="-78.9402102"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="10 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="service" v="parking_aisle"/>
     <tag k="surface" v="asphalt"/>
   </way>
   <way id="803479801">
@@ -15847,6 +15561,128 @@
     <tag k="tiger:zip_left" v="14120"/>
     <tag k="tiger:zip_right" v="14120"/>
   </way>
+  <way id="1106519638">
+    <bounds minlat="43.2950715" minlon="-78.7148428" maxlat="43.3127315" maxlon="-78.7115656"/>
+    <nd ref="43014254" lat="43.3127315" lon="-78.7148425"/>
+    <nd ref="2272232291" lat="43.3125450" lon="-78.7148428"/>
+    <nd ref="7456039161" lat="43.3122326" lon="-78.7148232"/>
+    <nd ref="2272232284" lat="43.3120538" lon="-78.7148120"/>
+    <nd ref="7456039167" lat="43.3119905" lon="-78.7148021"/>
+    <nd ref="7456039160" lat="43.3117455" lon="-78.7147640"/>
+    <nd ref="2272232263" lat="43.3116809" lon="-78.7147539"/>
+    <nd ref="2272232262" lat="43.3113532" lon="-78.7146261"/>
+    <nd ref="935561334" lat="43.3099738" lon="-78.7139946"/>
+    <nd ref="2300258983" lat="43.3092562" lon="-78.7139022"/>
+    <nd ref="43014256" lat="43.3086332" lon="-78.7139273"/>
+    <nd ref="7461987488" lat="43.3077628" lon="-78.7138545"/>
+    <nd ref="2300258980" lat="43.3074808" lon="-78.7138223"/>
+    <nd ref="7479756900" lat="43.3060252" lon="-78.7135763"/>
+    <nd ref="935561335" lat="43.3057314" lon="-78.7135267"/>
+    <nd ref="7811521275" lat="43.3033325" lon="-78.7132476"/>
+    <nd ref="2300258956" lat="43.3030297" lon="-78.7132124"/>
+    <nd ref="7453353534" lat="43.3028707" lon="-78.7131939"/>
+    <nd ref="7453353531" lat="43.3025948" lon="-78.7131618"/>
+    <nd ref="7466410442" lat="43.3024540" lon="-78.7131454"/>
+    <nd ref="8226449568" lat="43.3024365" lon="-78.7131434"/>
+    <nd ref="1515608498" lat="43.3022119" lon="-78.7131172"/>
+    <nd ref="7531259660" lat="43.3015278" lon="-78.7130234"/>
+    <nd ref="7452753774" lat="43.3013135" lon="-78.7129940"/>
+    <nd ref="2272241072" lat="43.3006803" lon="-78.7129072"/>
+    <nd ref="7457264047" lat="43.2999931" lon="-78.7127288"/>
+    <nd ref="935561337" lat="43.2998698" lon="-78.7126968"/>
+    <nd ref="8502281841" lat="43.2985100" lon="-78.7119941"/>
+    <nd ref="10125517084" lat="43.2981543" lon="-78.7118330"/>
+    <nd ref="43014258" lat="43.2978481" lon="-78.7117486"/>
+    <nd ref="7457170321" lat="43.2968896" lon="-78.7117017"/>
+    <nd ref="2272241071" lat="43.2957287" lon="-78.7116965"/>
+    <nd ref="12812745497" lat="43.2950715" lon="-78.7115656"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="primary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="40 mph"/>
+    <tag k="name" v="Lockport-Olcott Road"/>
+    <tag k="ref" v="NY 78"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Lockport Olcott"/>
+    <tag k="tiger:name_base_1" v="State Highway 78"/>
+    <tag k="tiger:name_type" v="Rd"/>
+  </way>
+  <way id="1106519639">
+    <bounds minlat="43.2726271" minlon="-78.7112859" maxlat="43.2925114" maxlon="-78.7002923"/>
+    <nd ref="10125517085" lat="43.2925114" lon="-78.7111921"/>
+    <nd ref="8557396019" lat="43.2907821" lon="-78.7112248"/>
+    <nd ref="8557396017" lat="43.2906350" lon="-78.7112276"/>
+    <nd ref="43014259" lat="43.2904810" lon="-78.7112305"/>
+    <nd ref="7451197514" lat="43.2897539" lon="-78.7112388"/>
+    <nd ref="43014262" lat="43.2895140" lon="-78.7112416"/>
+    <nd ref="43014264" lat="43.2883308" lon="-78.7112859"/>
+    <nd ref="2295943496" lat="43.2882776" lon="-78.7112829"/>
+    <nd ref="7456798186" lat="43.2882501" lon="-78.7112814"/>
+    <nd ref="7456790981" lat="43.2881368" lon="-78.7112752"/>
+    <nd ref="2272232251" lat="43.2880927" lon="-78.7112728"/>
+    <nd ref="7456798187" lat="43.2879827" lon="-78.7112448"/>
+    <nd ref="2272232248" lat="43.2878547" lon="-78.7112121"/>
+    <nd ref="8174315842" lat="43.2876425" lon="-78.7111580"/>
+    <nd ref="8174302883" lat="43.2875003" lon="-78.7111030"/>
+    <nd ref="2272232234" lat="43.2873947" lon="-78.7110580"/>
+    <nd ref="8174302909" lat="43.2872167" lon="-78.7109577"/>
+    <nd ref="43014266" lat="43.2865462" lon="-78.7105511"/>
+    <nd ref="43014268" lat="43.2859427" lon="-78.7102178"/>
+    <nd ref="8555764396" lat="43.2841494" lon="-78.7091490"/>
+    <nd ref="43014271" lat="43.2835471" lon="-78.7087900"/>
+    <nd ref="7461341448" lat="43.2829223" lon="-78.7084292"/>
+    <nd ref="7461341455" lat="43.2826846" lon="-78.7082857"/>
+    <nd ref="7461341438" lat="43.2824936" lon="-78.7081704"/>
+    <nd ref="43014273" lat="43.2823448" lon="-78.7080805"/>
+    <nd ref="8555764390" lat="43.2821496" lon="-78.7079683"/>
+    <nd ref="8555764393" lat="43.2819890" lon="-78.7078760"/>
+    <nd ref="8555764400" lat="43.2817883" lon="-78.7077607"/>
+    <nd ref="7886262469" lat="43.2817207" lon="-78.7077218"/>
+    <nd ref="8555764385" lat="43.2816512" lon="-78.7076818"/>
+    <nd ref="7455853798" lat="43.2811626" lon="-78.7074010"/>
+    <nd ref="43014274" lat="43.2806248" lon="-78.7070608"/>
+    <nd ref="7453536467" lat="43.2803109" lon="-78.7068692"/>
+    <nd ref="43014276" lat="43.2802240" lon="-78.7068161"/>
+    <nd ref="7542940361" lat="43.2799382" lon="-78.7065104"/>
+    <nd ref="2272232145" lat="43.2798094" lon="-78.7063726"/>
+    <nd ref="43014277" lat="43.2783736" lon="-78.7035690"/>
+    <nd ref="2272232141" lat="43.2777235" lon="-78.7023549"/>
+    <nd ref="2272232140" lat="43.2773591" lon="-78.7017972"/>
+    <nd ref="7461991498" lat="43.2772848" lon="-78.7017310"/>
+    <nd ref="7461991506" lat="43.2771260" lon="-78.7015895"/>
+    <nd ref="2272232139" lat="43.2769150" lon="-78.7014016"/>
+    <nd ref="7484684363" lat="43.2766216" lon="-78.7011863"/>
+    <nd ref="7484684381" lat="43.2764781" lon="-78.7010810"/>
+    <nd ref="2272232135" lat="43.2764083" lon="-78.7010383"/>
+    <nd ref="7484684378" lat="43.2763296" lon="-78.7009964"/>
+    <nd ref="7484684377" lat="43.2760862" lon="-78.7008619"/>
+    <nd ref="43014282" lat="43.2758734" lon="-78.7008027"/>
+    <nd ref="8560181916" lat="43.2755975" lon="-78.7007626"/>
+    <nd ref="8560181915" lat="43.2752675" lon="-78.7007184"/>
+    <nd ref="8560181897" lat="43.2748855" lon="-78.7006653"/>
+    <nd ref="8560181905" lat="43.2748129" lon="-78.7006552"/>
+    <nd ref="8560181904" lat="43.2745054" lon="-78.7006124"/>
+    <nd ref="8560181902" lat="43.2741135" lon="-78.7005578"/>
+    <nd ref="43014284" lat="43.2726271" lon="-78.7002923"/>
+    <tag k="alt_name" v="Lockport-Olcott Road"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="primary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="35 mph"/>
+    <tag k="name" v="Main Street"/>
+    <tag k="ref" v="NY 78"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="surface" v="asphalt"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Lockport Olcott"/>
+    <tag k="tiger:name_base_1" v="State Highway 78"/>
+    <tag k="tiger:name_type" v="Rd"/>
+  </way>
   <way id="1106689347">
     <bounds minlat="43.1841915" minlon="-78.6777591" maxlat="43.1845858" maxlon="-78.6777369"/>
     <nd ref="10126971848" lat="43.1845858" lon="-78.6777496"/>
@@ -15895,39 +15731,6 @@
     <tag k="ref" v="I 190"/>
     <tag k="surface" v="asphalt"/>
     <tag k="turn:lanes" v="||slight_right"/>
-  </way>
-  <way id="1111833019">
-    <bounds minlat="43.0464575" minlon="-78.8682622" maxlat="43.0464719" maxlon="-78.8668114"/>
-    <nd ref="7218197697" lat="43.0464575" lon="-78.8682622"/>
-    <nd ref="7218197711" lat="43.0464676" lon="-78.8672406"/>
-    <nd ref="7218197713" lat="43.0464697" lon="-78.8670298"/>
-    <nd ref="7218197700" lat="43.0464719" lon="-78.8668114"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="no"/>
-    <tag k="service" v="driveway"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="1111833020">
-    <bounds minlat="43.0464676" minlon="-78.8672754" maxlat="43.0477777" maxlon="-78.8672406"/>
-    <nd ref="7218197708" lat="43.0477777" lon="-78.8672754"/>
-    <nd ref="7218197711" lat="43.0464676" lon="-78.8672406"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="service" v="parking_aisle"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="1111833021">
-    <bounds minlat="43.0477776" minlon="-78.8672754" maxlat="43.0477777" maxlon="-78.8668545"/>
-    <nd ref="7218197702" lat="43.0477776" lon="-78.8668545"/>
-    <nd ref="7218197712" lat="43.0477777" lon="-78.8670660"/>
-    <nd ref="7218197708" lat="43.0477777" lon="-78.8672754"/>
-    <tag k="highway" v="service"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="no"/>
-    <tag k="service" v="parking_aisle"/>
-    <tag k="surface" v="asphalt"/>
   </way>
   <way id="1112073682">
     <bounds minlat="43.0384872" minlon="-78.8652602" maxlat="43.0385409" maxlon="-78.8649875"/>
@@ -16178,20 +15981,6 @@
     <tag k="turn:lanes:backward" v="through|right"/>
     <tag k="turn:lanes:forward" v="left|left;through;right"/>
   </way>
-  <way id="1124284022">
-    <bounds minlat="43.0994334" minlon="-78.9431674" maxlat="43.0994418" maxlon="-78.9423240"/>
-    <nd ref="10281168197" lat="43.0994418" lon="-78.9423240"/>
-    <nd ref="5010391853" lat="43.0994352" lon="-78.9429630"/>
-    <nd ref="8544082361" lat="43.0994334" lon="-78.9431674"/>
-    <tag k="destination" v="porter road"/>
-    <tag k="destination:ref" v="NY 182"/>
-    <tag k="highway" v="secondary_link"/>
-    <tag k="lanes" v="2"/>
-    <tag k="maxspeed" v="45 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-    <tag k="turn:lanes" v="through|right"/>
-  </way>
   <way id="1124284042">
     <bounds minlat="43.0991079" minlon="-78.9429654" maxlat="43.0992179" maxlon="-78.9424127"/>
     <nd ref="5010391894" lat="43.0992179" lon="-78.9424127"/>
@@ -16335,21 +16124,6 @@
     <tag k="tiger:reviewed" v="no"/>
     <tag k="tiger:zip_left" v="14303"/>
     <tag k="tiger:zip_right" v="14303"/>
-  </way>
-  <way id="1153391390">
-    <bounds minlat="43.0809937" minlon="-79.0512367" maxlat="43.0809985" maxlon="-79.0512344"/>
-    <nd ref="5608473510" lat="43.0809985" lon="-79.0512344"/>
-    <nd ref="10727045849" lat="43.0809937" lon="-79.0512367"/>
-    <tag k="expressway" v="no"/>
-    <tag k="hgv" v="no"/>
-    <tag k="highway" v="trunk"/>
-    <tag k="junction" v="roundabout"/>
-    <tag k="lanes" v="2"/>
-    <tag k="lit" v="no"/>
-    <tag k="maxspeed" v="35 mph"/>
-    <tag k="maxspeed:advisory" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
   </way>
   <way id="1157031196">
     <bounds minlat="43.0953967" minlon="-78.9342483" maxlat="43.0961035" maxlon="-78.9339464"/>
@@ -16900,18 +16674,6 @@
     <tag k="tiger:zip_left" v="14120"/>
     <tag k="turn:lanes:forward" v="left|||right"/>
   </way>
-  <way id="1175760152">
-    <bounds minlat="43.0994139" minlon="-78.9409319" maxlat="43.0998060" maxlon="-78.9409109"/>
-    <nd ref="10925183310" lat="43.0998060" lon="-78.9409319"/>
-    <nd ref="1789034072" lat="43.0995873" lon="-78.9409304"/>
-    <nd ref="43007851" lat="43.0994139" lon="-78.9409109"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="3"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-    <tag k="turn:lanes" v="left|through|through;right"/>
-  </way>
   <way id="1175980120">
     <bounds minlat="43.0977477" minlon="-78.9229088" maxlat="43.0977607" maxlon="-78.9221795"/>
     <nd ref="43046456" lat="43.0977477" lon="-78.9229088"/>
@@ -17214,18 +16976,6 @@
     <tag k="turn:lanes" v="||slight_right"/>
     <tag k="wikidata" v="Q2449594"/>
     <tag k="wikipedia" v="en:Interstate 190 (New York)"/>
-  </way>
-  <way id="1188623937">
-    <bounds minlat="43.1001285" minlon="-78.9409675" maxlat="43.1001837" maxlon="-78.9409494"/>
-    <nd ref="1789034110" lat="43.1001837" lon="-78.9409675"/>
-    <nd ref="1789034075" lat="43.1001285" lon="-78.9409494"/>
-    <tag k="destination" v="Exit;Parking Lot 3"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-    <tag k="turn:lanes" v="left|through|through;right"/>
   </way>
   <way id="1188968514">
     <bounds minlat="43.0761854" minlon="-78.9938227" maxlat="43.0763173" maxlon="-78.9932153"/>
@@ -17876,62 +17626,6 @@
     <tag k="tiger:zip_left" v="14132"/>
     <tag k="tiger:zip_right" v="14132"/>
   </way>
-  <way id="1320343809">
-    <bounds minlat="43.0995973" minlon="-78.9416575" maxlat="43.1000980" maxlon="-78.9411496"/>
-    <nd ref="1789049349" lat="43.0995973" lon="-78.9415689"/>
-    <nd ref="1789049339" lat="43.0996134" lon="-78.9414510"/>
-    <nd ref="10925183259" lat="43.0996641" lon="-78.9413601"/>
-    <nd ref="1789049344" lat="43.0997002" lon="-78.9412952"/>
-    <nd ref="10925183224" lat="43.0997515" lon="-78.9412333"/>
-    <nd ref="1789049356" lat="43.0998034" lon="-78.9411970"/>
-    <nd ref="1789049337" lat="43.0999208" lon="-78.9411496"/>
-    <nd ref="10925167961" lat="43.0999650" lon="-78.9411543"/>
-    <nd ref="1789049365" lat="43.1000127" lon="-78.9411821"/>
-    <nd ref="4733540405" lat="43.1000518" lon="-78.9412430"/>
-    <nd ref="10925167960" lat="43.1000722" lon="-78.9412975"/>
-    <nd ref="4733540406" lat="43.1000809" lon="-78.9413604"/>
-    <nd ref="5010392057" lat="43.1000825" lon="-78.9415600"/>
-    <nd ref="1789049354" lat="43.1000980" lon="-78.9416575"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="1320343810">
-    <bounds minlat="43.0998590" minlon="-78.9438380" maxlat="43.1001187" maxlon="-78.9416575"/>
-    <nd ref="1789049354" lat="43.1000980" lon="-78.9416575"/>
-    <nd ref="10925183295" lat="43.1000987" lon="-78.9417266"/>
-    <nd ref="10925183291" lat="43.1001004" lon="-78.9418789"/>
-    <nd ref="10925183301" lat="43.1001025" lon="-78.9420786"/>
-    <nd ref="1789049359" lat="43.1001187" lon="-78.9435889"/>
-    <nd ref="1789049348" lat="43.1001095" lon="-78.9436785"/>
-    <nd ref="10925183230" lat="43.1000926" lon="-78.9437269"/>
-    <nd ref="1789049340" lat="43.1000678" lon="-78.9437699"/>
-    <nd ref="10925183229" lat="43.1000418" lon="-78.9437984"/>
-    <nd ref="10925183228" lat="43.1000152" lon="-78.9438184"/>
-    <nd ref="1789049346" lat="43.0999753" lon="-78.9438374"/>
-    <nd ref="1789049345" lat="43.0998590" lon="-78.9438380"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="2"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
-  </way>
-  <way id="1320343811">
-    <bounds minlat="43.1009322" minlon="-78.9396028" maxlat="43.1012727" maxlon="-78.9391336"/>
-    <nd ref="6058156388" lat="43.1009322" lon="-78.9396028"/>
-    <nd ref="6058169015" lat="43.1010678" lon="-78.9394058"/>
-    <nd ref="6058156385" lat="43.1011144" lon="-78.9393421"/>
-    <nd ref="1789034103" lat="43.1012727" lon="-78.9391336"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="lanes" v="3"/>
-    <tag k="lanes:backward" v="1"/>
-    <tag k="lanes:forward" v="2"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="no"/>
-    <tag k="surface" v="asphalt"/>
-    <tag k="turn:lanes:forward" v="left|through"/>
-  </way>
   <way id="1320351612">
     <bounds minlat="43.1082212" minlon="-78.9837593" maxlat="43.1085848" maxlon="-78.9834693"/>
     <nd ref="7451314844" lat="43.1085848" lon="-78.9837593"/>
@@ -17956,17 +17650,6 @@
     <tag k="tiger:reviewed" v="no"/>
     <tag k="tiger:zip_left" v="14304"/>
     <tag k="tiger:zip_right" v="14304"/>
-  </way>
-  <way id="1320352084">
-    <bounds minlat="43.1003534" minlon="-78.9411064" maxlat="43.1003768" maxlon="-78.9411028"/>
-    <nd ref="1789034073" lat="43.1003768" lon="-78.9411064"/>
-    <nd ref="1789049353" lat="43.1003534" lon="-78.9411028"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="junction" v="roundabout"/>
-    <tag k="lanes" v="1"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
   </way>
   <way id="1320678638">
     <bounds minlat="43.0938807" minlon="-78.9717430" maxlat="43.0939906" maxlon="-78.9716325"/>
@@ -18230,17 +17913,6 @@
     <tag k="tiger:zip_left" v="14304"/>
     <tag k="tiger:zip_right" v="14304"/>
     <tag k="turn:lanes:forward" v="left||"/>
-  </way>
-  <way id="1320689221">
-    <bounds minlat="43.0997907" minlon="-78.9438380" maxlat="43.0998590" maxlon="-78.9438186"/>
-    <nd ref="1789049345" lat="43.0998590" lon="-78.9438380"/>
-    <nd ref="10925183231" lat="43.0997907" lon="-78.9438186"/>
-    <tag k="destination:ref" v="US 62"/>
-    <tag k="destination:ref:to" v="I 190 South"/>
-    <tag k="highway" v="tertiary"/>
-    <tag k="maxspeed" v="15 mph"/>
-    <tag k="oneway" v="yes"/>
-    <tag k="surface" v="asphalt"/>
   </way>
   <way id="1322113124">
     <bounds minlat="43.1085114" minlon="-78.9865848" maxlat="43.1090902" maxlon="-78.9859526"/>
@@ -19098,6 +18770,427 @@
     <tag k="tiger:reviewed" v="no"/>
     <tag k="tiger:zip_left" v="14108"/>
     <tag k="tiger:zip_right" v="14108"/>
+  </way>
+  <way id="1383873845">
+    <bounds minlat="43.2241785" minlon="-78.6786276" maxlat="43.2266653" maxlon="-78.6771840"/>
+    <nd ref="7463643555" lat="43.2266653" lon="-78.6786276"/>
+    <nd ref="7451268425" lat="43.2255838" lon="-78.6779515"/>
+    <nd ref="1637363326" lat="43.2251878" lon="-78.6777040"/>
+    <nd ref="43005093" lat="43.2248335" lon="-78.6774825"/>
+    <nd ref="1637361246" lat="43.2243512" lon="-78.6772470"/>
+    <nd ref="43014322" lat="43.2241785" lon="-78.6771840"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="primary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="40 mph"/>
+    <tag k="name" v="Lockport-Olcott Road"/>
+    <tag k="ref" v="NY 78"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Lockport Olcott"/>
+    <tag k="tiger:name_base_1" v="State Highway 78"/>
+    <tag k="tiger:name_type" v="Rd"/>
+  </way>
+  <way id="1383873846">
+    <bounds minlat="43.2696650" minlon="-78.7002923" maxlat="43.2726271" maxlon="-78.6997892"/>
+    <nd ref="43014284" lat="43.2726271" lon="-78.7002923"/>
+    <nd ref="7452409698" lat="43.2705338" lon="-78.6999595"/>
+    <nd ref="7452409707" lat="43.2704141" lon="-78.6999371"/>
+    <nd ref="43014287" lat="43.2702701" lon="-78.6999102"/>
+    <nd ref="7452409709" lat="43.2700839" lon="-78.6998730"/>
+    <nd ref="7452409705" lat="43.2698800" lon="-78.6998322"/>
+    <nd ref="7483947583" lat="43.2696650" lon="-78.6997892"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="primary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="35 mph"/>
+    <tag k="name" v="Lockport-Olcott Road"/>
+    <tag k="ref" v="NY 78"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Lockport Olcott"/>
+    <tag k="tiger:name_base_1" v="State Highway 78"/>
+    <tag k="tiger:name_type" v="Rd"/>
+  </way>
+  <way id="1383873847">
+    <bounds minlat="43.2925114" minlon="-78.7115656" maxlat="43.2950715" maxlon="-78.7111820"/>
+    <nd ref="12812745497" lat="43.2950715" lon="-78.7115656"/>
+    <nd ref="7478225265" lat="43.2939071" lon="-78.7113337"/>
+    <nd ref="7478225273" lat="43.2932926" lon="-78.7112262"/>
+    <nd ref="935561338" lat="43.2930403" lon="-78.7111820"/>
+    <nd ref="7478225266" lat="43.2928536" lon="-78.7111856"/>
+    <nd ref="10125517085" lat="43.2925114" lon="-78.7111921"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="primary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="35 mph"/>
+    <tag k="name" v="Lockport-Olcott Road"/>
+    <tag k="ref" v="NY 78"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Lockport Olcott"/>
+    <tag k="tiger:name_base_1" v="State Highway 78"/>
+    <tag k="tiger:name_type" v="Rd"/>
+  </way>
+  <way id="1383873848">
+    <bounds minlat="43.3279901" minlon="-78.7142531" maxlat="43.3355909" maxlon="-78.7138534"/>
+    <nd ref="43014223" lat="43.3355909" lon="-78.7142531"/>
+    <nd ref="2272196847" lat="43.3347853" lon="-78.7140754"/>
+    <nd ref="2272196845" lat="43.3339983" lon="-78.7139534"/>
+    <nd ref="2305135102" lat="43.3330781" lon="-78.7139600"/>
+    <nd ref="43014227" lat="43.3323707" lon="-78.7139650"/>
+    <nd ref="7455670767" lat="43.3302238" lon="-78.7139807"/>
+    <nd ref="2272232416" lat="43.3301041" lon="-78.7139816"/>
+    <nd ref="2272232403" lat="43.3290805" lon="-78.7139715"/>
+    <nd ref="7456461821" lat="43.3284874" lon="-78.7139404"/>
+    <nd ref="7462603406" lat="43.3281981" lon="-78.7138898"/>
+    <nd ref="12812745499" lat="43.3279901" lon="-78.7138534"/>
+    <tag k="highway" v="primary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="40 mph"/>
+    <tag k="name" v="Lockport-Olcott Road"/>
+    <tag k="ref" v="NY 78"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Lockport Olcott"/>
+    <tag k="tiger:name_base_1" v="State Highway 78"/>
+    <tag k="tiger:name_type" v="Rd"/>
+  </way>
+  <way id="1383880578">
+    <bounds minlat="43.2246918" minlon="-78.6763037" maxlat="43.2251732" maxlon="-78.6758358"/>
+    <nd ref="1637361244" lat="43.2246918" lon="-78.6763037"/>
+    <nd ref="7466962596" lat="43.2251732" lon="-78.6758358"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="secondary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="40 mph"/>
+    <tag k="name" v="Ridge Road"/>
+    <tag k="old_ref" v="US 104"/>
+    <tag k="ref" v="NY 104"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Ridge"/>
+    <tag k="tiger:name_base_1" v="State Highway 104"/>
+    <tag k="tiger:name_type" v="Rd"/>
+    <tag k="tiger:zip_left" v="14105"/>
+    <tag k="tiger:zip_right" v="14105"/>
+  </way>
+  <way id="1383880579">
+    <bounds minlat="43.2251732" minlon="-78.6758358" maxlat="43.2364781" maxlon="-78.6606213"/>
+    <nd ref="7466962596" lat="43.2251732" lon="-78.6758358"/>
+    <nd ref="7466957483" lat="43.2254015" lon="-78.6756139"/>
+    <nd ref="1637361243" lat="43.2256300" lon="-78.6753918"/>
+    <nd ref="1637361254" lat="43.2278189" lon="-78.6733533"/>
+    <nd ref="1637361234" lat="43.2284630" lon="-78.6726892"/>
+    <nd ref="1637361247" lat="43.2290384" lon="-78.6722160"/>
+    <nd ref="1637361235" lat="43.2303626" lon="-78.6714553"/>
+    <nd ref="7543224528" lat="43.2314502" lon="-78.6707443"/>
+    <nd ref="1637361236" lat="43.2327436" lon="-78.6698986"/>
+    <nd ref="1637361242" lat="43.2340881" lon="-78.6688257"/>
+    <nd ref="43033419" lat="43.2346560" lon="-78.6681540"/>
+    <nd ref="7462110872" lat="43.2350897" lon="-78.6673218"/>
+    <nd ref="7137149496" lat="43.2352283" lon="-78.6670559"/>
+    <nd ref="7137149495" lat="43.2356283" lon="-78.6657960"/>
+    <nd ref="7484348528" lat="43.2357799" lon="-78.6648000"/>
+    <nd ref="43033425" lat="43.2360925" lon="-78.6627468"/>
+    <nd ref="7137149498" lat="43.2363156" lon="-78.6614503"/>
+    <nd ref="7479137807" lat="43.2363368" lon="-78.6613421"/>
+    <nd ref="7479137804" lat="43.2363932" lon="-78.6610542"/>
+    <nd ref="7452759598" lat="43.2363993" lon="-78.6610233"/>
+    <nd ref="7452759604" lat="43.2364515" lon="-78.6607567"/>
+    <nd ref="12813050585" lat="43.2364781" lon="-78.6606213"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="secondary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="55 mph"/>
+    <tag k="name" v="Ridge Road"/>
+    <tag k="old_ref" v="US 104"/>
+    <tag k="ref" v="NY 104"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Ridge"/>
+    <tag k="tiger:name_base_1" v="State Highway 104"/>
+    <tag k="tiger:name_type" v="Rd"/>
+    <tag k="tiger:zip_left" v="14105"/>
+    <tag k="tiger:zip_right" v="14105"/>
+  </way>
+  <way id="1383880580">
+    <bounds minlat="43.2364781" minlon="-78.6606213" maxlat="43.2516838" maxlon="-78.6381421"/>
+    <nd ref="12813050585" lat="43.2364781" lon="-78.6606213"/>
+    <nd ref="7484348527" lat="43.2365389" lon="-78.6603109"/>
+    <nd ref="7137149497" lat="43.2365660" lon="-78.6601724"/>
+    <nd ref="7484348519" lat="43.2366298" lon="-78.6599441"/>
+    <nd ref="7452770567" lat="43.2368060" lon="-78.6593128"/>
+    <nd ref="7457542483" lat="43.2368632" lon="-78.6591173"/>
+    <nd ref="7457573290" lat="43.2369549" lon="-78.6588035"/>
+    <nd ref="7457542482" lat="43.2370203" lon="-78.6585799"/>
+    <nd ref="43033429" lat="43.2373079" lon="-78.6578672"/>
+    <nd ref="7453206795" lat="43.2377886" lon="-78.6572768"/>
+    <nd ref="2889600777" lat="43.2379276" lon="-78.6571257"/>
+    <nd ref="7453206789" lat="43.2380135" lon="-78.6570463"/>
+    <nd ref="2889600778" lat="43.2390025" lon="-78.6561326"/>
+    <nd ref="7484049205" lat="43.2391431" lon="-78.6560206"/>
+    <nd ref="8050835004" lat="43.2392841" lon="-78.6559083"/>
+    <nd ref="7456018881" lat="43.2397574" lon="-78.6555315"/>
+    <nd ref="7462419251" lat="43.2398682" lon="-78.6554433"/>
+    <nd ref="7462419255" lat="43.2400615" lon="-78.6552894"/>
+    <nd ref="7462419250" lat="43.2403083" lon="-78.6550929"/>
+    <nd ref="7462419245" lat="43.2403971" lon="-78.6550222"/>
+    <nd ref="7457656693" lat="43.2404168" lon="-78.6550065"/>
+    <nd ref="43019634" lat="43.2408620" lon="-78.6546520"/>
+    <nd ref="7462550290" lat="43.2414994" lon="-78.6541797"/>
+    <nd ref="2889600779" lat="43.2434699" lon="-78.6527196"/>
+    <nd ref="43033433" lat="43.2437002" lon="-78.6524530"/>
+    <nd ref="2889600780" lat="43.2438988" lon="-78.6521946"/>
+    <nd ref="2889600781" lat="43.2440952" lon="-78.6518896"/>
+    <nd ref="43033437" lat="43.2445249" lon="-78.6509757"/>
+    <nd ref="7456110889" lat="43.2446028" lon="-78.6508149"/>
+    <nd ref="7456110907" lat="43.2447189" lon="-78.6505751"/>
+    <nd ref="2889600782" lat="43.2451131" lon="-78.6497615"/>
+    <nd ref="2889600783" lat="43.2453327" lon="-78.6494707"/>
+    <nd ref="2889600784" lat="43.2455963" lon="-78.6491763"/>
+    <nd ref="7455800846" lat="43.2458722" lon="-78.6489687"/>
+    <nd ref="2889600785" lat="43.2459061" lon="-78.6489432"/>
+    <nd ref="7455800858" lat="43.2461525" lon="-78.6487753"/>
+    <nd ref="7466055747" lat="43.2462333" lon="-78.6487203"/>
+    <nd ref="7466055737" lat="43.2464307" lon="-78.6485858"/>
+    <nd ref="43033440" lat="43.2464747" lon="-78.6485558"/>
+    <nd ref="7466241307" lat="43.2465931" lon="-78.6485151"/>
+    <nd ref="7463092418" lat="43.2469950" lon="-78.6483770"/>
+    <nd ref="2889600786" lat="43.2470401" lon="-78.6483615"/>
+    <nd ref="7463638377" lat="43.2478472" lon="-78.6482025"/>
+    <nd ref="2889600788" lat="43.2494367" lon="-78.6478894"/>
+    <nd ref="7457410583" lat="43.2497034" lon="-78.6477758"/>
+    <nd ref="43033443" lat="43.2497570" lon="-78.6477530"/>
+    <nd ref="43024688" lat="43.2499736" lon="-78.6476287"/>
+    <nd ref="2889600789" lat="43.2501590" lon="-78.6474412"/>
+    <nd ref="7452271232" lat="43.2502069" lon="-78.6473744"/>
+    <nd ref="2889600790" lat="43.2504649" lon="-78.6470143"/>
+    <nd ref="2889600791" lat="43.2509149" lon="-78.6463306"/>
+    <nd ref="43033449" lat="43.2510444" lon="-78.6460426"/>
+    <nd ref="2889600792" lat="43.2511474" lon="-78.6457648"/>
+    <nd ref="2889600793" lat="43.2512207" lon="-78.6453761"/>
+    <nd ref="7452054774" lat="43.2512919" lon="-78.6449762"/>
+    <nd ref="7452054762" lat="43.2513413" lon="-78.6446987"/>
+    <nd ref="7456294125" lat="43.2514203" lon="-78.6442552"/>
+    <nd ref="7456294129" lat="43.2515658" lon="-78.6434385"/>
+    <nd ref="2889600796" lat="43.2516661" lon="-78.6428751"/>
+    <nd ref="2889600797" lat="43.2516838" lon="-78.6424794"/>
+    <nd ref="43033452" lat="43.2516570" lon="-78.6419530"/>
+    <nd ref="7457250736" lat="43.2515912" lon="-78.6415172"/>
+    <nd ref="2889600795" lat="43.2515739" lon="-78.6414029"/>
+    <nd ref="2889600794" lat="43.2514197" lon="-78.6408962"/>
+    <nd ref="43003732" lat="43.2512597" lon="-78.6404592"/>
+    <nd ref="7457250733" lat="43.2510395" lon="-78.6398610"/>
+    <nd ref="7455591647" lat="43.2508540" lon="-78.6393573"/>
+    <nd ref="7455591645" lat="43.2507814" lon="-78.6391600"/>
+    <nd ref="7462149521" lat="43.2505792" lon="-78.6386107"/>
+    <nd ref="12813050586" lat="43.2504066" lon="-78.6381421"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="secondary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="40 mph"/>
+    <tag k="name" v="Ridge Road"/>
+    <tag k="old_ref" v="US 104"/>
+    <tag k="ref" v="NY 104"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Ridge"/>
+    <tag k="tiger:name_base_1" v="State Highway 104"/>
+    <tag k="tiger:name_type" v="Rd"/>
+    <tag k="tiger:zip_left" v="14105"/>
+    <tag k="tiger:zip_right" v="14105"/>
+  </way>
+  <way id="1383880581">
+    <bounds minlat="43.2400576" minlon="-78.6381421" maxlat="43.2504066" maxlon="-78.5820230"/>
+    <nd ref="12813050586" lat="43.2504066" lon="-78.6381421"/>
+    <nd ref="7462149528" lat="43.2503272" lon="-78.6379263"/>
+    <nd ref="7477685546" lat="43.2501324" lon="-78.6373972"/>
+    <nd ref="7477685545" lat="43.2499255" lon="-78.6368352"/>
+    <nd ref="43033454" lat="43.2497733" lon="-78.6364217"/>
+    <nd ref="7477685539" lat="43.2497144" lon="-78.6362543"/>
+    <nd ref="7483586348" lat="43.2495801" lon="-78.6358725"/>
+    <nd ref="2889600787" lat="43.2492332" lon="-78.6348861"/>
+    <nd ref="43033457" lat="43.2489650" lon="-78.6341256"/>
+    <nd ref="43033463" lat="43.2486980" lon="-78.6335054"/>
+    <nd ref="43033536" lat="43.2483130" lon="-78.6328090"/>
+    <nd ref="7465658466" lat="43.2475826" lon="-78.6318046"/>
+    <nd ref="43033538" lat="43.2475450" lon="-78.6317530"/>
+    <nd ref="7484114791" lat="43.2475170" lon="-78.6316996"/>
+    <nd ref="43033542" lat="43.2473690" lon="-78.6314170"/>
+    <nd ref="43033545" lat="43.2472250" lon="-78.6310480"/>
+    <nd ref="43033548" lat="43.2470970" lon="-78.6305680"/>
+    <nd ref="43033550" lat="43.2470170" lon="-78.6297360"/>
+    <nd ref="7455715936" lat="43.2470039" lon="-78.6293801"/>
+    <nd ref="7477647603" lat="43.2469986" lon="-78.6292348"/>
+    <nd ref="7477647611" lat="43.2469706" lon="-78.6284746"/>
+    <nd ref="43033558" lat="43.2469370" lon="-78.6275600"/>
+    <nd ref="7453552153" lat="43.2468689" lon="-78.6271005"/>
+    <nd ref="43033561" lat="43.2468090" lon="-78.6266960"/>
+    <nd ref="43033564" lat="43.2465690" lon="-78.6251280"/>
+    <nd ref="43033568" lat="43.2464250" lon="-78.6246480"/>
+    <nd ref="43033570" lat="43.2462810" lon="-78.6242000"/>
+    <nd ref="43033575" lat="43.2460090" lon="-78.6231440"/>
+    <nd ref="7457251551" lat="43.2459723" lon="-78.6229817"/>
+    <nd ref="43033582" lat="43.2457050" lon="-78.6218000"/>
+    <nd ref="43032179" lat="43.2455750" lon="-78.6212074"/>
+    <nd ref="43033591" lat="43.2455290" lon="-78.6206640"/>
+    <nd ref="43033596" lat="43.2455130" lon="-78.6198000"/>
+    <nd ref="43033599" lat="43.2454330" lon="-78.6184080"/>
+    <nd ref="7467211346" lat="43.2454085" lon="-78.6182670"/>
+    <nd ref="7467211348" lat="43.2453829" lon="-78.6181197"/>
+    <nd ref="7467211354" lat="43.2453416" lon="-78.6178824"/>
+    <nd ref="7467211344" lat="43.2452881" lon="-78.6175750"/>
+    <nd ref="43033602" lat="43.2451770" lon="-78.6169360"/>
+    <nd ref="43033605" lat="43.2448890" lon="-78.6159760"/>
+    <nd ref="8595311727" lat="43.2448318" lon="-78.6157996"/>
+    <nd ref="7451238760" lat="43.2445589" lon="-78.6149581"/>
+    <nd ref="7451238773" lat="43.2444540" lon="-78.6146348"/>
+    <nd ref="7452528474" lat="43.2443208" lon="-78.6142240"/>
+    <nd ref="43033608" lat="43.2441494" lon="-78.6135744"/>
+    <nd ref="43033612" lat="43.2440895" lon="-78.6131335"/>
+    <nd ref="7456072639" lat="43.2440485" lon="-78.6128127"/>
+    <nd ref="7456072640" lat="43.2440271" lon="-78.6126455"/>
+    <nd ref="7456072634" lat="43.2439689" lon="-78.6121896"/>
+    <nd ref="43033616" lat="43.2439317" lon="-78.6118257"/>
+    <nd ref="7478418787" lat="43.2438975" lon="-78.6115545"/>
+    <nd ref="7484026093" lat="43.2438243" lon="-78.6109739"/>
+    <nd ref="7461767586" lat="43.2437486" lon="-78.6103736"/>
+    <nd ref="43033619" lat="43.2437384" lon="-78.6102928"/>
+    <nd ref="7461767592" lat="43.2437199" lon="-78.6101520"/>
+    <nd ref="7478294909" lat="43.2436349" lon="-78.6095068"/>
+    <nd ref="7461368124" lat="43.2436050" lon="-78.6092802"/>
+    <nd ref="43033621" lat="43.2435884" lon="-78.6091545"/>
+    <nd ref="43033624" lat="43.2432665" lon="-78.6077523"/>
+    <nd ref="7510108585" lat="43.2432488" lon="-78.6076834"/>
+    <nd ref="7478358938" lat="43.2431076" lon="-78.6071349"/>
+    <nd ref="43033628" lat="43.2428987" lon="-78.6063228"/>
+    <nd ref="7478026212" lat="43.2428824" lon="-78.6062509"/>
+    <nd ref="43033632" lat="43.2427269" lon="-78.6055661"/>
+    <nd ref="7510090278" lat="43.2427069" lon="-78.6054752"/>
+    <nd ref="7510090284" lat="43.2426483" lon="-78.6052083"/>
+    <nd ref="7477967401" lat="43.2424411" lon="-78.6042652"/>
+    <nd ref="7477967388" lat="43.2423822" lon="-78.6039975"/>
+    <nd ref="43033635" lat="43.2422469" lon="-78.6033817"/>
+    <nd ref="7465669527" lat="43.2421629" lon="-78.6030219"/>
+    <nd ref="7540016608" lat="43.2419206" lon="-78.6019837"/>
+    <nd ref="7465301819" lat="43.2416947" lon="-78.6010159"/>
+    <nd ref="7820331418" lat="43.2416722" lon="-78.6009022"/>
+    <nd ref="7477783704" lat="43.2416468" lon="-78.6007737"/>
+    <nd ref="7477783709" lat="43.2415393" lon="-78.6002300"/>
+    <nd ref="43033639" lat="43.2413370" lon="-78.5992070"/>
+    <nd ref="7461865985" lat="43.2410735" lon="-78.5981475"/>
+    <nd ref="7461865992" lat="43.2410328" lon="-78.5979838"/>
+    <nd ref="43018257" lat="43.2406596" lon="-78.5960905"/>
+    <nd ref="7478325718" lat="43.2403317" lon="-78.5945456"/>
+    <nd ref="43033644" lat="43.2402010" lon="-78.5937190"/>
+    <nd ref="7478325719" lat="43.2401012" lon="-78.5925312"/>
+    <nd ref="7478424195" lat="43.2400663" lon="-78.5918236"/>
+    <nd ref="43033647" lat="43.2400576" lon="-78.5916483"/>
+    <nd ref="7516237262" lat="43.2400602" lon="-78.5915008"/>
+    <nd ref="7516237269" lat="43.2400656" lon="-78.5912013"/>
+    <nd ref="43033650" lat="43.2400730" lon="-78.5907910"/>
+    <nd ref="43033653" lat="43.2403426" lon="-78.5887148"/>
+    <nd ref="7456947800" lat="43.2404140" lon="-78.5882254"/>
+    <nd ref="7456947807" lat="43.2404699" lon="-78.5878658"/>
+    <nd ref="43033656" lat="43.2405127" lon="-78.5874511"/>
+    <nd ref="7456947808" lat="43.2405943" lon="-78.5865593"/>
+    <nd ref="7479936008" lat="43.2406079" lon="-78.5860333"/>
+    <nd ref="7479935998" lat="43.2406143" lon="-78.5857864"/>
+    <nd ref="7466093535" lat="43.2406222" lon="-78.5854802"/>
+    <nd ref="43033660" lat="43.2406053" lon="-78.5850177"/>
+    <nd ref="7451202928" lat="43.2405806" lon="-78.5840421"/>
+    <nd ref="7457354122" lat="43.2405693" lon="-78.5837410"/>
+    <nd ref="7457354133" lat="43.2405453" lon="-78.5830986"/>
+    <nd ref="7467182327" lat="43.2405332" lon="-78.5827749"/>
+    <nd ref="43033663" lat="43.2405050" lon="-78.5820230"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="secondary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="55 mph"/>
+    <tag k="name" v="Ridge Road"/>
+    <tag k="old_ref" v="US 104"/>
+    <tag k="ref" v="NY 104"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Ridge"/>
+    <tag k="tiger:name_base_1" v="State Highway 104"/>
+    <tag k="tiger:name_type" v="Rd"/>
+    <tag k="tiger:zip_left" v="14105"/>
+    <tag k="tiger:zip_right" v="14105"/>
+  </way>
+  <way id="1383880582">
+    <bounds minlat="43.2398038" minlon="-78.5820230" maxlat="43.2405050" maxlon="-78.5707017"/>
+    <nd ref="43033663" lat="43.2405050" lon="-78.5820230"/>
+    <nd ref="43033667" lat="43.2403930" lon="-78.5791590"/>
+    <nd ref="43033672" lat="43.2402172" lon="-78.5759522"/>
+    <nd ref="5779244106" lat="43.2401112" lon="-78.5752638"/>
+    <nd ref="7465829211" lat="43.2400945" lon="-78.5750399"/>
+    <nd ref="7465829217" lat="43.2400560" lon="-78.5745250"/>
+    <nd ref="7451283866" lat="43.2400247" lon="-78.5741065"/>
+    <nd ref="43033675" lat="43.2399610" lon="-78.5732540"/>
+    <nd ref="7461553805" lat="43.2399219" lon="-78.5726187"/>
+    <nd ref="7477909666" lat="43.2399109" lon="-78.5724409"/>
+    <nd ref="7461553809" lat="43.2398740" lon="-78.5718413"/>
+    <nd ref="12813050587" lat="43.2398038" lon="-78.5707017"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="secondary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="40 mph"/>
+    <tag k="name" v="Ridge Road"/>
+    <tag k="old_ref" v="US 104"/>
+    <tag k="ref" v="NY 104"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Ridge"/>
+    <tag k="tiger:name_base_1" v="State Highway 104"/>
+    <tag k="tiger:name_type" v="Rd"/>
+    <tag k="tiger:zip_left" v="14105"/>
+    <tag k="tiger:zip_right" v="14105"/>
+  </way>
+  <way id="1383880583">
+    <bounds minlat="43.2435925" minlon="-78.5241108" maxlat="43.2441301" maxlon="-78.5209045"/>
+    <nd ref="8124328062" lat="43.2435925" lon="-78.5241108"/>
+    <nd ref="11407629269" lat="43.2435930" lon="-78.5240786"/>
+    <nd ref="43022572" lat="43.2436084" lon="-78.5230902"/>
+    <nd ref="8248864548" lat="43.2436155" lon="-78.5230094"/>
+    <nd ref="43033771" lat="43.2436445" lon="-78.5226814"/>
+    <nd ref="43033773" lat="43.2437022" lon="-78.5222791"/>
+    <nd ref="43033776" lat="43.2438175" lon="-78.5217695"/>
+    <nd ref="43033778" lat="43.2440297" lon="-78.5211438"/>
+    <nd ref="43033783" lat="43.2441301" lon="-78.5209045"/>
+    <tag k="hgv" v="designated"/>
+    <tag k="hgv:state_network" v="yes"/>
+    <tag k="highway" v="secondary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="35 mph"/>
+    <tag k="name" v="Ridge Road"/>
+    <tag k="old_ref" v="US 104"/>
+    <tag k="ref" v="NY 104"/>
+    <tag k="source:hgv:state_network" v="NYSDOT https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/2010%20trk%20access%20bk.pdf"/>
+    <tag k="tiger:cfcc" v="A21"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Ridge"/>
+    <tag k="tiger:name_base_1" v="State Highway 104"/>
+    <tag k="tiger:name_type" v="Rd"/>
+    <tag k="tiger:zip_left" v="14105"/>
+    <tag k="tiger:zip_right" v="14105"/>
   </way>
 
 </osm>
