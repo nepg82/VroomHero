@@ -22,6 +22,17 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.http.Body
 import retrofit2.http.POST
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Switch
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SwitchCompat
+import android.content.SharedPreferences
+import java.io.InputStream
+import android.content.res.AssetManager
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserFactory
+import java.io.StringReader
 
 class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMainBinding
@@ -32,6 +43,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private var lastToastTime: Long = 0
     private var lastMovementTime: Long = 0
     private var speedCheckJob: Job? = null
+    private lateinit var preferences: SharedPreferences
     private val speedThreshold = 0.5 // mph, below this is considered stopped
     private val timeoutDuration = 3000L // 3 seconds
 
@@ -59,6 +71,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         requestLocationPermissions()
         startSpeedTimeoutCheck()
+        preferences = getSharedPreferences("VroomHeroPrefs", Context.MODE_PRIVATE)
+
     }
 
     private fun startSpeedTimeoutCheck() {
@@ -183,82 +197,202 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     suspend fun fetchSpeedLimitFromOsm(lat: Double, lon: Double): Triple<Double?, String?, String?> = withContext(Dispatchers.IO) {
         try {
-            withContext(Dispatchers.Main) {
-            }
-            val query = """
+            val isLiveApi = preferences.getBoolean("useLiveApi", true)
+            if (isLiveApi) {
+                // Existing Live API logic
+                val query = """
                 [out:json][timeout:30];
                 way(around:10,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
                 out tags;
             """.trimIndent()
 
-            Log.d("VroomHero", "Sending Overpass query: $query")
-            val response = apiService.getOsmData(query)
-            Log.d("VroomHero", "Raw API response: $response")
+                Log.d("VroomHero", "Sending Overpass query: $query")
+                val response = apiService.getOsmData(query)
+                Log.d("VroomHero", "Raw API response: $response")
 
-            if (response.isEmpty()) {
-                Log.e("VroomHero", "Empty response from Overpass API")
-                withContext(Dispatchers.Main) {
-                    showToast("API returned empty response")
-                }
-                return@withContext Triple(null, null, null)
-            }
-
-            val json = JSONObject(response)
-            val elements = json.optJSONArray("elements") ?: run {
-                Log.w("VroomHero", "No elements array in API response")
-                withContext(Dispatchers.Main) {
-                    showToast("No roads found in API response")
-                }
-                return@withContext Triple(null, null, null)
-            }
-            Log.d("VroomHero", "Elements array length: ${elements.length()}")
-
-            if (elements.length() > 0) {
-                val element = elements.getJSONObject(0)
-                val tags = element.optJSONObject("tags") ?: run {
-                    Log.w("VroomHero", "No tags in first element")
+                if (response.isEmpty()) {
+                    Log.e("VroomHero", "Empty response from Overpass API")
                     withContext(Dispatchers.Main) {
-                        showToast("No tags in API response")
+                        showToast("API returned empty response")
                     }
                     return@withContext Triple(null, null, null)
                 }
-                Log.d("VroomHero", "Tags: $tags")
-                val maxSpeedStr = tags.optString("maxspeed")
-                val roadName = tags.optString("name")
-                Log.d("VroomHero", "Raw maxspeed value: $maxSpeedStr, roadName: $roadName")
 
-                val maxSpeed = when {
-                    maxSpeedStr.endsWith("mph", ignoreCase = true) -> {
-                        maxSpeedStr.replace("[^0-9]".toRegex(), "").toDoubleOrNull()
-                    }
-                    maxSpeedStr.isNotEmpty() -> {
-                        // Convert km/h to mph
-                        maxSpeedStr.replace("[^0-9]".toRegex(), "").toDoubleOrNull()?.div(1.60934)
-                    }
-                    else -> null
-                }
-
-                if (maxSpeed != null) {
-                    Log.d("VroomHero", "Parsed speed limit: $maxSpeed mph")
+                val json = JSONObject(response)
+                val elements = json.optJSONArray("elements") ?: run {
+                    Log.w("VroomHero", "No elements array in API response")
                     withContext(Dispatchers.Main) {
-//                        showToast("API success: Speed limit $maxSpeed mph")
+//                        showToast("No roads found in API response")
                     }
-                    val wayId = element.optString("id")
-                    return@withContext Triple(maxSpeed, wayId, roadName.takeIf { it.isNotEmpty() })
+                    return@withContext Triple(null, null, null)
+                }
+                Log.d("VroomHero", "Elements array length: ${elements.length()}")
+
+                if (elements.length() > 0) {
+                    val element = elements.getJSONObject(0)
+                    val tags = element.optJSONObject("tags") ?: run {
+                        Log.w("VroomHero", "No tags in first element")
+                        withContext(Dispatchers.Main) {
+                            showToast("No tags in API response")
+                        }
+                        return@withContext Triple(null, null, null)
+                    }
+                    Log.d("VroomHero", "Tags: $tags")
+                    val maxSpeedStr = tags.optString("maxspeed")
+                    val roadName = tags.optString("name")
+                    Log.d("VroomHero", "Raw maxspeed value: $maxSpeedStr, roadName: $roadName")
+
+                    val maxSpeed = when {
+                        maxSpeedStr.endsWith("mph", ignoreCase = true) -> {
+                            maxSpeedStr.replace("[^0-9]".toRegex(), "").toDoubleOrNull()
+                        }
+                        maxSpeedStr.isNotEmpty() -> {
+                            maxSpeedStr.replace("[^0-9]".toRegex(), "").toDoubleOrNull()?.div(1.60934)
+                        }
+                        else -> null
+                    }
+
+                    if (maxSpeed != null) {
+                        Log.d("VroomHero", "Parsed speed limit: $maxSpeed mph")
+                        withContext(Dispatchers.Main) {
+                            // showToast("API success: Speed limit $maxSpeed mph")
+                        }
+                        val wayId = element.optString("id")
+                        return@withContext Triple(maxSpeed, wayId, roadName.takeIf { it.isNotEmpty() })
+                    } else {
+                        Log.w("VroomHero", "No valid maxspeed value in tags: $maxSpeedStr")
+                        withContext(Dispatchers.Main) {
+                            showToast("No maxspeed tag in API response")
+                        }
+                    }
                 } else {
-                    Log.w("VroomHero", "No valid maxspeed value in tags: $maxSpeedStr")
+                    Log.w("VroomHero", "No roads found in API response")
                     withContext(Dispatchers.Main) {
-                        showToast("No maxspeed tag in API response")
+                        showToast("No roads found in API response")
                     }
                 }
+                Log.w("VroomHero", "No valid speed limit found in response")
+                return@withContext Triple(null, null, null)
             } else {
-                Log.w("VroomHero", "No roads found in API response")
-                withContext(Dispatchers.Main) {
-                    showToast("No roads found in API response")
+                // Local Data mode: Parse niagara_county.osm
+                try {
+                    val assetManager: AssetManager = assets
+                    val inputStream: InputStream = assetManager.open("niagara_county.osm")
+                    val osmData = inputStream.bufferedReader().use { it.readText() }
+                    Log.d("VroomHero", "Local OSM file read, size: ${osmData.length} chars")
+                    withContext(Dispatchers.Main) {
+                        showToast("Parsing local OSM file")
+                    }
+
+                    // Parse OSM XML from string
+                    val parser = XmlPullParserFactory.newInstance().newPullParser()
+                    parser.setInput(StringReader(osmData))
+                    var eventType = parser.eventType
+                    var wayId: String? = null
+                    var maxSpeed: Double? = null
+                    var roadName: String? = null
+                    val nodes = mutableMapOf<String, Pair<Double, Double>>() // node id -> (lat, lon)
+                    var wayNodes = mutableListOf<String>() // node refs for current way
+                    var closestWay: Triple<Double?, String?, String?>? = null
+                    var minDistance = Double.MAX_VALUE
+
+                    while (eventType != XmlPullParser.END_DOCUMENT) {
+                        when (eventType) {
+                            XmlPullParser.START_TAG -> {
+                                when (parser.name) {
+                                    "node" -> {
+                                        val nodeId = parser.getAttributeValue(null, "id")
+                                        val nodeLat = parser.getAttributeValue(null, "lat")?.toDoubleOrNull()
+                                        val nodeLon = parser.getAttributeValue(null, "lon")?.toDoubleOrNull()
+                                        if (nodeId != null && nodeLat != null && nodeLon != null) {
+                                            nodes[nodeId] = Pair(nodeLat, nodeLon)
+                                        }
+                                    }
+                                    "way" -> {
+                                        wayId = parser.getAttributeValue(null, "id")
+                                        wayNodes = mutableListOf()
+                                    }
+                                    "nd" -> {
+                                        val ref = parser.getAttributeValue(null, "ref")
+                                        if (ref != null) {
+                                            wayNodes.add(ref)
+                                        }
+                                    }
+                                    "tag" -> {
+                                        val key = parser.getAttributeValue(null, "k")
+                                        val value = parser.getAttributeValue(null, "v")
+                                        if (key == "maxspeed" && value.isNotEmpty()) {
+                                            maxSpeed = when {
+                                                value.endsWith("mph", ignoreCase = true) -> {
+                                                    value.replace("[^0-9]".toRegex(), "").toDoubleOrNull()
+                                                }
+                                                else -> {
+                                                    value.replace("[^0-9]".toRegex(), "").toDoubleOrNull()?.div(1.60934)
+                                                }
+                                            }
+                                        } else if (key == "name") {
+                                            roadName = value
+                                        }
+                                    }
+                                }
+                            }
+                            XmlPullParser.END_TAG -> {
+                                if (parser.name == "way" && maxSpeed != null && wayNodes.isNotEmpty()) {
+                                    // Calculate distance to way
+                                    var wayDistance = Double.MAX_VALUE
+                                    for (nodeId in wayNodes) {
+                                        val node = nodes[nodeId]
+                                        if (node != null) {
+                                            val nodeLocation = Location("").apply {
+                                                latitude = node.first
+                                                longitude = node.second
+                                            }
+                                            val currentLocation = Location("").apply {
+                                                latitude = lat
+                                                longitude = lon
+                                            }
+                                            val distance = currentLocation.distanceTo(nodeLocation).toDouble() // meters
+                                            if (distance < wayDistance) {
+                                                wayDistance = distance
+                                            }
+                                        }
+                                    }
+                                    if (wayDistance < minDistance && wayDistance <= 10.0) { // 10m radius
+                                        minDistance = wayDistance
+                                        closestWay = Triple(maxSpeed, wayId, roadName?.takeIf { it.isNotEmpty() })
+                                    }
+                                    // Reset for next way
+                                    maxSpeed = null
+                                    roadName = null
+                                    wayId = null
+                                    wayNodes.clear()
+                                }
+                            }
+                        }
+                        eventType = parser.next()
+                    }
+
+                    if (closestWay != null) {
+                        Log.d("VroomHero", "Found closest way: speed=${closestWay.first}, id=${closestWay.second}, name=${closestWay.third}")
+                        withContext(Dispatchers.Main) {
+                            showToast("Local speed limit: ${closestWay.first?.toInt()} mph")
+                        }
+                            return@withContext closestWay
+                    } else {
+                        Log.w("VroomHero", "No matching way found within 10m")
+                        withContext(Dispatchers.Main) {
+                            showToast("No local speed limit found")
+                        }
+                        return@withContext Triple(null, null, null)
+                    }
+                } catch (e: Exception) {
+                    Log.e("VroomHero", "Error parsing local OSM file: ${e.message}", e)
+                    withContext(Dispatchers.Main) {
+                        showToast("Error parsing local OSM: ${e.message}")
+                    }
+                    return@withContext Triple(null, null, null)
                 }
             }
-            Log.w("VroomHero", "No valid speed limit found in response")
-            return@withContext Triple(null, null, null)
         } catch (e: Exception) {
             Log.e("VroomHero", "Error fetching speed limit: ${e.message}", e)
             withContext(Dispatchers.Main) {
@@ -289,6 +423,42 @@ class MainActivity : AppCompatActivity(), LocationListener {
             speedCheckJob?.cancel()
         } catch (e: Exception) {
             Log.e("MainActivity", "Error removing location updates or cancelling job", e)
+        }
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_mode_switch -> {
+                showModeSwitchDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    private fun showModeSwitchDialog() {
+        val isLiveApi = preferences.getBoolean("useLiveApi", true) // Default to Live API
+        val dialogBuilder = AlertDialog.Builder(this)
+        val switch = SwitchCompat(this).apply {
+            text = if (isLiveApi) "Live API" else "Local Data"
+            isChecked = isLiveApi
+        }
+
+        dialogBuilder.setTitle("Select Data Mode")
+            .setView(switch)
+            .setPositiveButton("OK") { _, _ ->
+                val newMode = switch.isChecked
+                preferences.edit().putBoolean("useLiveApi", newMode).apply()
+                showToast("Mode set to ${if (newMode) "Live API" else "Local Data"}")
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .show()
+
+        switch.setOnCheckedChangeListener { _, isChecked ->
+            switch.text = if (isChecked) "Live API" else "Local Data"
         }
     }
 }
