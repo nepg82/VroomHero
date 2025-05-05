@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
             binding.speedNumberTextView.setTextColor(ContextCompat.getColor(this, R.color.retro_red))
-            showToast("VroomHero Started! YAHTZEE!")
+            showToast("VroomHero Started! YAHTZEE!!")
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to inflate layout", e)
             showToast("UI initialization failed")

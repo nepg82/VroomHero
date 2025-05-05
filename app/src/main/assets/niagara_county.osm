@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><osm version="0.6" generator="Overpass API 0.7.62.5 1bd436f1">
 <note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
-<meta osm_base="2025-05-05T22:56:24Z" areas="2025-02-06T02:17:44Z"/>
+<meta osm_base="2025-05-05T23:19:43Z" areas="2025-02-06T02:17:44Z"/>
 
   <way id="4350443">
     <bounds minlat="43.1506175" minlon="-79.0336757" maxlat="43.1517117" maxlon="-79.0294148"/>
@@ -709,6 +709,39 @@
     <tag k="tiger:zip_left" v="14304"/>
     <tag k="tiger:zip_right" v="14304"/>
   </way>
+  <way id="5716513">
+    <bounds minlat="43.2102217" minlon="-78.5963585" maxlat="43.2359533" maxlon="-78.5960912"/>
+    <nd ref="43018259" lat="43.2359533" lon="-78.5961670"/>
+    <nd ref="7457174174" lat="43.2346363" lon="-78.5961918"/>
+    <nd ref="7457174168" lat="43.2340254" lon="-78.5962035"/>
+    <nd ref="7487710069" lat="43.2327976" lon="-78.5961755"/>
+    <nd ref="7487710061" lat="43.2326513" lon="-78.5961722"/>
+    <nd ref="7487710071" lat="43.2320904" lon="-78.5961594"/>
+    <nd ref="43006489" lat="43.2309874" lon="-78.5961343"/>
+    <nd ref="7465949807" lat="43.2285305" lon="-78.5960918"/>
+    <nd ref="43018262" lat="43.2284982" lon="-78.5960912"/>
+    <nd ref="7465949805" lat="43.2272954" lon="-78.5961058"/>
+    <nd ref="7462265385" lat="43.2234235" lon="-78.5961530"/>
+    <nd ref="43018264" lat="43.2201811" lon="-78.5961654"/>
+    <nd ref="43018266" lat="43.2173926" lon="-78.5963119"/>
+    <nd ref="7465353189" lat="43.2161988" lon="-78.5963585"/>
+    <nd ref="43018270" lat="43.2102581" lon="-78.5962585"/>
+    <nd ref="12813090919" lat="43.2102217" lon="-78.5962570"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="55 mph"/>
+    <tag k="name" v="Orangeport Road"/>
+    <tag k="name_1" v="County Road 118"/>
+    <tag k="ref" v="CR 118"/>
+    <tag k="tiger:cfcc" v="A31"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="County Road 118"/>
+    <tag k="tiger:name_base_1" v="Orangeport"/>
+    <tag k="tiger:name_type_1" v="Rd"/>
+    <tag k="tiger:reviewed" v="no"/>
+    <tag k="tiger:zip_left" v="14067"/>
+    <tag k="tiger:zip_right" v="14067"/>
+  </way>
   <way id="5716727">
     <bounds minlat="43.0482077" minlon="-78.8509108" maxlat="43.0484101" maxlon="-78.8351420"/>
     <nd ref="43019903" lat="43.0484101" lon="-78.8509108"/>
@@ -971,13 +1004,13 @@
     <nd ref="43027355" lat="43.1940350" lon="-78.5777425"/>
     <tag k="NHS" v="yes"/>
     <tag k="bicycle" v="yes"/>
+    <tag k="expressway" v="yes"/>
     <tag k="foot" v="yes"/>
     <tag k="highway" v="trunk"/>
     <tag k="lanes" v="2"/>
     <tag k="maxspeed" v="55 mph"/>
     <tag k="name" v="Rochester Road"/>
     <tag k="name_1" v="State Highway 31"/>
-    <tag k="oneway" v="no"/>
     <tag k="rcn_ref" v="5"/>
     <tag k="ref" v="NY 31"/>
     <tag k="source:hgv" v="https://www.dot.ny.gov/divisions/operating/oom/transportation-systems/repository/Truck%20Book%202020.pdf"/>
@@ -5765,6 +5798,45 @@
     <tag k="old_name" v="Robert Moses State Parkway"/>
     <tag k="oneway" v="yes"/>
     <tag k="surface" v="asphalt"/>
+  </way>
+  <way id="53192350">
+    <bounds minlat="43.2007563" minlon="-78.5961019" maxlat="43.2064811" maxlon="-78.5957201"/>
+    <nd ref="43059731" lat="43.2007563" lon="-78.5957201"/>
+    <nd ref="7514943778" lat="43.2022844" lon="-78.5958088"/>
+    <nd ref="673049606" lat="43.2029637" lon="-78.5958483"/>
+    <nd ref="7517492193" lat="43.2035148" lon="-78.5958896"/>
+    <nd ref="7882821735" lat="43.2050890" lon="-78.5960074"/>
+    <nd ref="8153286415" lat="43.2059344" lon="-78.5960707"/>
+    <nd ref="43018274" lat="43.2064811" lon="-78.5961019"/>
+    <tag k="highway" v="residential"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="55 mph"/>
+    <tag k="name" v="Orangeport Road"/>
+    <tag k="tiger:cfcc" v="A41"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Orangeport"/>
+    <tag k="tiger:name_type" v="Rd"/>
+    <tag k="tiger:reviewed" v="no"/>
+    <tag k="tiger:zip_left" v="14067"/>
+    <tag k="tiger:zip_right" v="14067"/>
+  </way>
+  <way id="53192411">
+    <bounds minlat="43.1972227" minlon="-78.5962470" maxlat="43.1979937" maxlon="-78.5956775"/>
+    <nd ref="43059701" lat="43.1972227" lon="-78.5956775"/>
+    <nd ref="43059708" lat="43.1979937" lon="-78.5962470"/>
+    <tag k="bridge" v="yes"/>
+    <tag k="highway" v="residential"/>
+    <tag k="lanes" v="2"/>
+    <tag k="layer" v="1"/>
+    <tag k="maxspeed" v="45 mph"/>
+    <tag k="name" v="Orangeport Road"/>
+    <tag k="tiger:cfcc" v="A41"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Orangeport"/>
+    <tag k="tiger:name_type" v="Rd"/>
+    <tag k="tiger:reviewed" v="no"/>
+    <tag k="tiger:zip_left" v="14067"/>
+    <tag k="tiger:zip_right" v="14067"/>
   </way>
   <way id="53634146">
     <bounds minlat="43.0359953" minlon="-78.8644343" maxlat="43.0386522" maxlon="-78.8627150"/>
@@ -14130,6 +14202,29 @@
     <tag k="tiger:zip_left" v="14304"/>
     <tag k="tiger:zip_right" v="14304"/>
   </way>
+  <way id="918422766">
+    <bounds minlat="43.2361106" minlon="-78.5961585" maxlat="43.2406596" maxlon="-78.5960905"/>
+    <nd ref="43018257" lat="43.2406596" lon="-78.5960905"/>
+    <nd ref="7462246449" lat="43.2390632" lon="-78.5961117"/>
+    <nd ref="7456199659" lat="43.2390074" lon="-78.5960982"/>
+    <nd ref="7484259440" lat="43.2371285" lon="-78.5961402"/>
+    <nd ref="7484259446" lat="43.2369831" lon="-78.5961434"/>
+    <nd ref="8529810952" lat="43.2361106" lon="-78.5961585"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="55 mph"/>
+    <tag k="name" v="Orangeport Road"/>
+    <tag k="name_1" v="County Road 118"/>
+    <tag k="ref" v="CR 118"/>
+    <tag k="tiger:cfcc" v="A31"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="County Road 118"/>
+    <tag k="tiger:name_base_1" v="Orangeport"/>
+    <tag k="tiger:name_type_1" v="Rd"/>
+    <tag k="tiger:reviewed" v="no"/>
+    <tag k="tiger:zip_left" v="14067"/>
+    <tag k="tiger:zip_right" v="14067"/>
+  </way>
   <way id="919960363">
     <bounds minlat="43.1502045" minlon="-79.0380625" maxlat="43.1508457" maxlon="-79.0380169"/>
     <nd ref="1322320567" lat="43.1508457" lon="-79.0380182"/>
@@ -19191,6 +19286,68 @@
     <tag k="tiger:name_type" v="Rd"/>
     <tag k="tiger:zip_left" v="14105"/>
     <tag k="tiger:zip_right" v="14105"/>
+  </way>
+  <way id="1383884814">
+    <bounds minlat="43.2064811" minlon="-78.5962536" maxlat="43.2101398" maxlon="-78.5961019"/>
+    <nd ref="12813090918" lat="43.2101398" lon="-78.5962536"/>
+    <nd ref="43018274" lat="43.2064811" lon="-78.5961019"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="55 mph"/>
+    <tag k="name" v="Orangeport Road"/>
+    <tag k="name_1" v="County Road 118"/>
+    <tag k="ref" v="CR 118"/>
+    <tag k="tiger:cfcc" v="A31"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="County Road 118"/>
+    <tag k="tiger:name_base_1" v="Orangeport"/>
+    <tag k="tiger:name_type_1" v="Rd"/>
+    <tag k="tiger:reviewed" v="no"/>
+    <tag k="tiger:zip_left" v="14067"/>
+    <tag k="tiger:zip_right" v="14067"/>
+  </way>
+  <way id="1383884815">
+    <bounds minlat="43.2101398" minlon="-78.5962570" maxlat="43.2102217" maxlon="-78.5962536"/>
+    <nd ref="12813090919" lat="43.2102217" lon="-78.5962570"/>
+    <nd ref="12813090918" lat="43.2101398" lon="-78.5962536"/>
+    <tag k="bridge" v="yes"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="lanes" v="2"/>
+    <tag k="layer" v="1"/>
+    <tag k="maxspeed" v="55 mph"/>
+    <tag k="name" v="Orangeport Road"/>
+    <tag k="name_1" v="County Road 118"/>
+    <tag k="ref" v="CR 118"/>
+    <tag k="tiger:cfcc" v="A31"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="County Road 118"/>
+    <tag k="tiger:name_base_1" v="Orangeport"/>
+    <tag k="tiger:name_type_1" v="Rd"/>
+    <tag k="tiger:reviewed" v="no"/>
+    <tag k="tiger:zip_left" v="14067"/>
+    <tag k="tiger:zip_right" v="14067"/>
+  </way>
+  <way id="1383884816">
+    <bounds minlat="43.1979937" minlon="-78.5966919" maxlat="43.2007563" maxlon="-78.5957201"/>
+    <nd ref="43059708" lat="43.1979937" lon="-78.5962470"/>
+    <nd ref="43003065" lat="43.1982768" lon="-78.5964325"/>
+    <nd ref="43059712" lat="43.1988425" lon="-78.5966919"/>
+    <nd ref="43059718" lat="43.1993050" lon="-78.5966210"/>
+    <nd ref="43059723" lat="43.1997518" lon="-78.5963745"/>
+    <nd ref="43012670" lat="43.2001041" lon="-78.5960849"/>
+    <nd ref="43059728" lat="43.2002321" lon="-78.5960209"/>
+    <nd ref="43059731" lat="43.2007563" lon="-78.5957201"/>
+    <tag k="highway" v="residential"/>
+    <tag k="lanes" v="2"/>
+    <tag k="maxspeed" v="45 mph"/>
+    <tag k="name" v="Orangeport Road"/>
+    <tag k="tiger:cfcc" v="A41"/>
+    <tag k="tiger:county" v="Niagara, NY"/>
+    <tag k="tiger:name_base" v="Orangeport"/>
+    <tag k="tiger:name_type" v="Rd"/>
+    <tag k="tiger:reviewed" v="no"/>
+    <tag k="tiger:zip_left" v="14067"/>
+    <tag k="tiger:zip_right" v="14067"/>
   </way>
 
 </osm>
