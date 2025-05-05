@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 if (currentTime - lastMovementTime > timeoutDuration) {
                     withContext(Dispatchers.Main) {
                         binding.speedNumberTextView.text = "00"
-                        binding.speedUnitsTextView.text = "mph"
+ //                       binding.speedUnitsTextView.text = "mph"
                         Log.d("VroomHero", "Speed reset to 00 due to timeout")
                     }
                 }
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         } else {
             showToast("Location permissions denied. Speedometer disabled.")
             binding.speedNumberTextView.text = "N/A"
-            binding.speedUnitsTextView.text = ""
+//            binding.speedUnitsTextView.text = ""
             binding.speedLimitTextView.text = "XX"
             binding.roadNameTextView?.text = ""
         }
@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 lastMovementTime = currentTime
                 val formattedSpeed = String.format("%02d", speedMph.toInt() % 100) // Integer, padded to 2 digits
                 binding.speedNumberTextView.text = formattedSpeed
-                binding.speedUnitsTextView.text = "mph"
+//                binding.speedUnitsTextView.text = "mph"
             } else {
                 // If speed is low, rely on timeout to set "00"
                 Log.d("VroomHero", "Speed below threshold: $speedMph mph")
