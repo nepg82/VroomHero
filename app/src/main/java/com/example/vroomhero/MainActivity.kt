@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 } else {
                     binding.speedLimitTextView.text = "XX"
                     binding.roadNameTextView?.text = ""
-                    showToast("No speed limit or road name found")
+//                    showToast("No speed limit or road name found")
                     lastSpeedLimit = null
                 }
                 lastApiCallTime = currentTime

@@ -111,8 +111,8 @@
         android:textStyle="bold"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/speedLimitCardView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/speedLimitCardView"
+        app:layout_constraintEnd_toEndOf="@id/speedLimitCardView"
         tools:text="Hatter Rd" />
 
     <!-- GPS Indicator
