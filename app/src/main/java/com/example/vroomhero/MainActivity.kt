@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private var lastMovementTime: Long = 0
     private var speedCheckJob: Job? = null
     private lateinit var preferences: SharedPreferences
+    private data class WayData(val id: String, val maxSpeed: Double?, val name: String?, val nodes: List<Pair<Double, Double>>)
+    private var cachedWays: List<WayData>? = null
     private val speedThreshold = 0.5 // mph, below this is considered stopped
     private val timeoutDuration = 3000L // 3 seconds
 
@@ -222,7 +224,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 val elements = json.optJSONArray("elements") ?: run {
                     Log.w("VroomHero", "No elements array in API response")
                     withContext(Dispatchers.Main) {
-//                        showToast("No roads found in API response")
+                        showToast("No roads found in API response")
                     }
                     return@withContext Triple(null, null, null)
                 }
@@ -274,121 +276,51 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 Log.w("VroomHero", "No valid speed limit found in response")
                 return@withContext Triple(null, null, null)
             } else {
-                // Local Data mode: Parse niagara_county.osm
-                try {
-                    val assetManager: AssetManager = assets
-                    val inputStream: InputStream = assetManager.open("niagara_county.osm")
-                    val osmData = inputStream.bufferedReader().use { it.readText() }
-                    Log.d("VroomHero", "Local OSM file read, size: ${osmData.length} chars")
+                // Local Data mode: Use cached ways
+                val ways = cachedWays
+                if (ways.isNullOrEmpty()) {
+                    Log.w("VroomHero", "No cached ways available")
                     withContext(Dispatchers.Main) {
-                        showToast("Parsing local OSM file")
+                        showToast("No local data loaded")
                     }
+                    return@withContext Triple(null, null, null)
+                }
 
-                    // Parse OSM XML from string
-                    val parser = XmlPullParserFactory.newInstance().newPullParser()
-                    parser.setInput(StringReader(osmData))
-                    var eventType = parser.eventType
-                    var wayId: String? = null
-                    var maxSpeed: Double? = null
-                    var roadName: String? = null
-                    val nodes = mutableMapOf<String, Pair<Double, Double>>() // node id -> (lat, lon)
-                    var wayNodes = mutableListOf<String>() // node refs for current way
-                    var closestWay: Triple<Double?, String?, String?>? = null
-                    var minDistance = Double.MAX_VALUE
+                var closestWay: Triple<Double?, String?, String?>? = null
+                var minDistance = Double.MAX_VALUE
+                val currentLocation = Location("").apply {
+                    latitude = lat
+                    longitude = lon
+                }
 
-                    while (eventType != XmlPullParser.END_DOCUMENT) {
-                        when (eventType) {
-                            XmlPullParser.START_TAG -> {
-                                when (parser.name) {
-                                    "node" -> {
-                                        val nodeId = parser.getAttributeValue(null, "id")
-                                        val nodeLat = parser.getAttributeValue(null, "lat")?.toDoubleOrNull()
-                                        val nodeLon = parser.getAttributeValue(null, "lon")?.toDoubleOrNull()
-                                        if (nodeId != null && nodeLat != null && nodeLon != null) {
-                                            nodes[nodeId] = Pair(nodeLat, nodeLon)
-                                        }
-                                    }
-                                    "way" -> {
-                                        wayId = parser.getAttributeValue(null, "id")
-                                        wayNodes = mutableListOf()
-                                    }
-                                    "nd" -> {
-                                        val ref = parser.getAttributeValue(null, "ref")
-                                        if (ref != null) {
-                                            wayNodes.add(ref)
-                                        }
-                                    }
-                                    "tag" -> {
-                                        val key = parser.getAttributeValue(null, "k")
-                                        val value = parser.getAttributeValue(null, "v")
-                                        if (key == "maxspeed" && value.isNotEmpty()) {
-                                            maxSpeed = when {
-                                                value.endsWith("mph", ignoreCase = true) -> {
-                                                    value.replace("[^0-9]".toRegex(), "").toDoubleOrNull()
-                                                }
-                                                else -> {
-                                                    value.replace("[^0-9]".toRegex(), "").toDoubleOrNull()?.div(1.60934)
-                                                }
-                                            }
-                                        } else if (key == "name") {
-                                            roadName = value
-                                        }
-                                    }
-                                }
-                            }
-                            XmlPullParser.END_TAG -> {
-                                if (parser.name == "way" && maxSpeed != null && wayNodes.isNotEmpty()) {
-                                    // Calculate distance to way
-                                    var wayDistance = Double.MAX_VALUE
-                                    for (nodeId in wayNodes) {
-                                        val node = nodes[nodeId]
-                                        if (node != null) {
-                                            val nodeLocation = Location("").apply {
-                                                latitude = node.first
-                                                longitude = node.second
-                                            }
-                                            val currentLocation = Location("").apply {
-                                                latitude = lat
-                                                longitude = lon
-                                            }
-                                            val distance = currentLocation.distanceTo(nodeLocation).toDouble() // meters
-                                            if (distance < wayDistance) {
-                                                wayDistance = distance
-                                            }
-                                        }
-                                    }
-                                    if (wayDistance < minDistance && wayDistance <= 10.0) { // 10m radius
-                                        minDistance = wayDistance
-                                        closestWay = Triple(maxSpeed, wayId, roadName?.takeIf { it.isNotEmpty() })
-                                    }
-                                    // Reset for next way
-                                    maxSpeed = null
-                                    roadName = null
-                                    wayId = null
-                                    wayNodes.clear()
-                                }
-                            }
+                for (way in ways) {
+                    var wayDistance = Double.MAX_VALUE
+                    for (node in way.nodes) {
+                        val nodeLocation = Location("").apply {
+                            latitude = node.first
+                            longitude = node.second
                         }
-                        eventType = parser.next()
+                        val distance = currentLocation.distanceTo(nodeLocation).toDouble() // meters
+                        if (distance < wayDistance) {
+                            wayDistance = distance
+                        }
                     }
-
-                    if (closestWay != null) {
-                        Log.d("VroomHero", "Found closest way: speed=${closestWay.first}, id=${closestWay.second}, name=${closestWay.third}")
-                        withContext(Dispatchers.Main) {
-                            showToast("Local speed limit: ${closestWay.first?.toInt()} mph")
-                        }
-                            return@withContext closestWay
-                    } else {
-                        Log.w("VroomHero", "No matching way found within 10m")
-                        withContext(Dispatchers.Main) {
-                            showToast("No local speed limit found")
-                        }
-                        return@withContext Triple(null, null, null)
+                    if (wayDistance < minDistance && wayDistance <= 10.0) {
+                        minDistance = wayDistance
+                        closestWay = Triple(way.maxSpeed, way.id, way.name?.takeIf { it.isNotEmpty() })
                     }
-                } catch (e: Exception) {
-                    Log.e("VroomHero", "Error parsing local OSM file: ${e.message}", e)
+                }
+
+                if (closestWay != null) {
+                    Log.d("VroomHero", "Found closest way: speed=${closestWay.first}, id=${closestWay.second}, name=${closestWay.third}")
                     withContext(Dispatchers.Main) {
-                        showToast("Error parsing local OSM: ${e.message}")
+                        showToast("Local speed limit: ${closestWay.first?.toInt()} mph")
+                    }
+                    return@withContext closestWay
+                } else {
+                    Log.w("VroomHero", "No matching way found within 10m")
+                    withContext(Dispatchers.Main) {
+                        showToast("No local speed limit found")
                     }
                     return@withContext Triple(null, null, null)
                 }
@@ -439,8 +371,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     private fun showModeSwitchDialog() {
-        val isLiveApi = preferences.getBoolean("useLiveApi", true) // Default to Live API
+        val isLiveApi = preferences.getBoolean("useLiveApi", true)
         val dialogBuilder = AlertDialog.Builder(this)
         val switch = SwitchCompat(this).apply {
             text = if (isLiveApi) "Live API" else "Local Data"
@@ -452,7 +385,16 @@ class MainActivity : AppCompatActivity(), LocationListener {
             .setPositiveButton("OK") { _, _ ->
                 val newMode = switch.isChecked
                 preferences.edit().putBoolean("useLiveApi", newMode).apply()
-                showToast("Mode set to ${if (newMode) "Live API" else "Local Data"}")
+                if (!newMode) {
+                    // Parse OSM file when switching to Local Data
+                    lifecycleScope.launch {
+                        cachedWays = parseOsmFile()
+                        showToast("Local Data mode ready, ${cachedWays?.size ?: 0} ways loaded")
+                    }
+                } else {
+                    cachedWays = null // Clear cache in Live API mode
+                    showToast("Mode set to Live API")
+                }
             }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .show()
@@ -460,6 +402,83 @@ class MainActivity : AppCompatActivity(), LocationListener {
         switch.setOnCheckedChangeListener { _, isChecked ->
             switch.text = if (isChecked) "Live API" else "Local Data"
         }
+    }
+
+    private suspend fun parseOsmFile(): List<WayData> = withContext(Dispatchers.IO) {
+        val ways = mutableListOf<WayData>()
+        try {
+            val assetManager: AssetManager = assets
+            val inputStream: InputStream = assetManager.open("niagara_county.osm")
+            val osmData = inputStream.bufferedReader().use { it.readText() }
+            val parser = XmlPullParserFactory.newInstance().newPullParser()
+            parser.setInput(StringReader(osmData))
+            var eventType = parser.eventType
+            var wayId: String? = null
+            var maxSpeed: Double? = null
+            var roadName: String? = null
+            val nodes = mutableMapOf<String, Pair<Double, Double>>()
+            var wayNodes = mutableListOf<String>()
+
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                when (eventType) {
+                    XmlPullParser.START_TAG -> {
+                        when (parser.name) {
+                            "node" -> {
+                                val nodeId = parser.getAttributeValue(null, "id")
+                                val nodeLat = parser.getAttributeValue(null, "lat")?.toDoubleOrNull()
+                                val nodeLon = parser.getAttributeValue(null, "lon")?.toDoubleOrNull()
+                                if (nodeId != null && nodeLat != null && nodeLon != null) {
+                                    nodes[nodeId] = Pair(nodeLat, nodeLon)
+                                }
+                            }
+                            "way" -> {
+                                wayId = parser.getAttributeValue(null, "id")
+                                wayNodes = mutableListOf()
+                            }
+                            "nd" -> {
+                                val ref = parser.getAttributeValue(null, "ref")
+                                if (ref != null) {
+                                    wayNodes.add(ref)
+                                }
+                            }
+                            "tag" -> {
+                                val key = parser.getAttributeValue(null, "k")
+                                val value = parser.getAttributeValue(null, "v")
+                                if (key == "maxspeed" && value.isNotEmpty()) {
+                                    maxSpeed = when {
+                                        value.endsWith("mph", ignoreCase = true) -> {
+                                            value.replace("[^0-9]".toRegex(), "").toDoubleOrNull()
+                                        }
+                                        else -> {
+                                            value.replace("[^0-9]".toRegex(), "").toDoubleOrNull()?.div(1.60934)
+                                        }
+                                    }
+                                } else if (key == "name") {
+                                    roadName = value
+                                }
+                            }
+                        }
+                    }
+                    XmlPullParser.END_TAG -> {
+                        if (parser.name == "way" && maxSpeed != null && wayId != null && wayNodes.isNotEmpty()) {
+                            val nodeCoords = wayNodes.mapNotNull { nodes[it] }
+                            ways.add(WayData(wayId, maxSpeed, roadName, nodeCoords))
+                            wayId = null
+                            maxSpeed = null
+                            roadName = null
+                            wayNodes.clear()
+                        }
+                    }
+                }
+                eventType = parser.next()
+            }
+        } catch (e: Exception) {
+            Log.e("VroomHero", "Error parsing OSM file for cache: ${e.message}", e)
+            withContext(Dispatchers.Main) {
+                showToast("Error parsing OSM for cache: ${e.message}")
+            }
+        }
+        ways
     }
 }
 
