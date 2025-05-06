@@ -305,12 +305,15 @@ class MainActivity : AppCompatActivity(), LocationListener {
                             wayDistance = distance
                         }
                     }
-                    if (wayDistance < minDistance && wayDistance <= 10.0) {
+                    if (wayDistance < minDistance) {
                         minDistance = wayDistance
-                        closestWay = Triple(way.maxSpeed, way.id, way.name?.takeIf { it.isNotEmpty() })
+                        if (wayDistance <= 50.0) { // Increased to 50m
+                            closestWay = Triple(way.maxSpeed, way.id, way.name?.takeIf { it.isNotEmpty() })
+                        }
                     }
                 }
 
+                Log.d("VroomHero", "Checked ${ways.size} ways, closest distance: $minDistance meters")
                 if (closestWay != null) {
                     Log.d("VroomHero", "Found closest way: speed=${closestWay.first}, id=${closestWay.second}, name=${closestWay.third}")
                     withContext(Dispatchers.Main) {
@@ -318,7 +321,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     }
                     return@withContext closestWay
                 } else {
-                    Log.w("VroomHero", "No matching way found within 10m")
+                    Log.w("VroomHero", "No matching way found within 50m")
                     withContext(Dispatchers.Main) {
                         showToast("No local speed limit found")
                     }
