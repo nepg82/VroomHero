@@ -207,7 +207,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             val elements = json.optJSONArray("elements") ?: run {
                 Log.w("VroomHero", "No elements array in API response")
                 withContext(Dispatchers.Main) {
-                    showToast("No roads found in API response")
+//                    showToast("No roads found in API response")
                 }
                 return@withContext Triple(null, null, null)
             }
@@ -254,7 +254,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             } else {
                 Log.w("VroomHero", "No roads found in API response")
                 withContext(Dispatchers.Main) {
-                    showToast("No roads found in API response")
+//                    showToast("No roads found in API response")
                 }
             }
             Log.w("VroomHero", "No valid speed limit found in response")
