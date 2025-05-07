@@ -248,7 +248,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 } else {
                     Log.w("VroomHero", "No valid maxspeed value in tags: $maxSpeedStr")
                     withContext(Dispatchers.Main) {
-                        showToast("No maxspeed tag in API response")
+//                        showToast("No maxspeed tag in API response")
                     }
                 }
             } else {
