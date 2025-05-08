@@ -22,6 +22,10 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.http.Body
 import retrofit2.http.POST
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 
 class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMainBinding
@@ -32,6 +36,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private var lastToastTime: Long = 0
     private var lastMovementTime: Long = 0
     private var speedCheckJob: Job? = null
+    private var isSpeedTextRed = true // Tracks if text is red (true) or white (false)
+    private var isSpeedLimitCardVisible = true // Tracks if card is visible and API is active
     private val speedThreshold = 0.5 // mph, below this is considered stopped
     private val timeoutDuration = 3000L // 3 seconds
 
@@ -59,6 +65,43 @@ class MainActivity : AppCompatActivity(), LocationListener {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         requestLocationPermissions()
         startSpeedTimeoutCheck()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_toggle_color -> {
+                isSpeedTextRed = !isSpeedTextRed
+                binding.speedNumberTextView.setTextColor(
+                    ContextCompat.getColor(this, if (isSpeedTextRed) R.color.retro_red else android.R.color.white)
+                )
+                true
+            }
+            R.id.action_toggle_card -> {
+                isSpeedLimitCardVisible = !isSpeedLimitCardVisible
+                binding.speedLimitCardView.visibility = if (isSpeedLimitCardVisible) View.VISIBLE else View.GONE
+                // Adjust speedNumberTextView constraints
+                val layoutParams = binding.speedNumberTextView.layoutParams as ConstraintLayout.LayoutParams
+                if (isSpeedLimitCardVisible) {
+                    layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                    layoutParams.endToStart = R.id.guideline_66
+                    layoutParams.endToEnd = ConstraintLayout.LayoutParams.UNSET
+                } else {
+                    layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                    layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+                    layoutParams.endToStart = ConstraintLayout.LayoutParams.UNSET
+                    layoutParams.horizontalBias = 0.5f // Center horizontally
+                }
+                binding.speedNumberTextView.layoutParams = layoutParams
+                binding.speedNumberTextView.requestLayout() // Force layout update
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun startSpeedTimeoutCheck() {
@@ -157,23 +200,26 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 return
             }
 
-            // Fetch speed limit and road name from API
-            lifecycleScope.launch {
-                val (speedLimit, wayId, roadName) = fetchSpeedLimitFromOsm(lat, lon)
-                Log.d("VroomHero", "Fetched speedLimit: $speedLimit, wayId: $wayId, roadName: $roadName")
-                if (speedLimit != null && wayId != null) {
-                    binding.speedLimitTextView.text = String.format("%.0f", speedLimit.toFloat())
-                    binding.roadNameTextView?.text = roadName ?: "Unknown Road"
-//                    showToast("New speed limit: $speedLimit mph, road: ${roadName ?: "Unknown"}")
-                    lastSpeedLimit = speedLimit
-                } else {
-                    binding.speedLimitTextView.text = "XX"
-                    binding.roadNameTextView?.text = ""
-//                    showToast("No speed limit or road name found")
-                    lastSpeedLimit = null
+            // Fetch speed limit and road name from API if card is visible
+            if (isSpeedLimitCardVisible) {
+                lifecycleScope.launch {
+                    val (speedLimit, wayId, roadName) = fetchSpeedLimitFromOsm(lat, lon)
+                    Log.d("VroomHero", "Fetched speedLimit: $speedLimit, wayId: $wayId, roadName: $roadName")
+                    if (speedLimit != null && wayId != null) {
+                        binding.speedLimitTextView.text = String.format("%.0f", speedLimit.toFloat())
+                        binding.roadNameTextView?.text = roadName ?: "Unknown Road"
+                        lastSpeedLimit = speedLimit
+                    } else {
+                        binding.speedLimitTextView.text = "XX"
+                        binding.roadNameTextView?.text = ""
+                        lastSpeedLimit = null
+                    }
+                    lastApiCallTime = currentTime
                 }
-                lastApiCallTime = currentTime
+            } else {
+                Log.d("VroomHero", "API call skipped: Speed limit card is hidden")
             }
+
         } catch (e: Exception) {
             Log.e("MainActivity", "Error processing location update", e)
             showToast("Error updating speed: ${e.message}")

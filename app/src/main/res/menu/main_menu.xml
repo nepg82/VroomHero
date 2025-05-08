@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_mode_switch"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Switch Mode"
-        app:showAsAction="always" />
+        android:id="@+id/action_toggle_color"
+        android:title="Toggle Speed Color"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_toggle_card"
+        android:title="Toggle Speed Limit Card"
+        app:showAsAction="never" />
 </menu>
