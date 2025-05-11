@@ -26,6 +26,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import android.content.SharedPreferences
 
 class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMainBinding
@@ -37,16 +38,23 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private var lastMovementTime: Long = 0
     private var speedCheckJob: Job? = null
     private var isSpeedTextRed = true // Tracks if text is red (true) or white (false)
-    private var isSpeedLimitCardVisible = true // Tracks if card is visible and API is active
+    private var isSpeedLimitCardVisible = true // Tracks if card is toggled via menu
     private val speedThreshold = 0.5 // mph, below this is considered stopped
     private val timeoutDuration = 3000L // 3 seconds
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
-            binding.speedNumberTextView.setTextColor(ContextCompat.getColor(this, R.color.retro_red))
+            // Initialize SharedPreferences
+            sharedPreferences = getSharedPreferences("VroomHeroPrefs", Context.MODE_PRIVATE)
+            // Load saved color preference
+            isSpeedTextRed = sharedPreferences.getBoolean("isSpeedTextRed", true)
+            binding.speedNumberTextView.setTextColor(
+                ContextCompat.getColor(this, if (isSpeedTextRed) R.color.retro_red else android.R.color.white)
+            )
             showToast("VroomHero Started! YAHTZEE!")
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to inflate layout", e)
@@ -54,7 +62,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
             finish()
             return
         }
-// just to make an edit so I can save changes
         try {
             apiService = RetrofitClient.apiService
         } catch (e: Exception) {
@@ -79,29 +86,36 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 binding.speedNumberTextView.setTextColor(
                     ContextCompat.getColor(this, if (isSpeedTextRed) R.color.retro_red else android.R.color.white)
                 )
+                // Save color preference
+                sharedPreferences.edit().putBoolean("isSpeedTextRed", isSpeedTextRed).apply()
                 true
             }
             R.id.action_toggle_card -> {
                 isSpeedLimitCardVisible = !isSpeedLimitCardVisible
-                binding.speedLimitCardView.visibility = if (isSpeedLimitCardVisible) View.VISIBLE else View.GONE
-                // Adjust speedNumberTextView constraints
-                val layoutParams = binding.speedNumberTextView.layoutParams as ConstraintLayout.LayoutParams
-                if (isSpeedLimitCardVisible) {
-                    layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-                    layoutParams.endToStart = R.id.guideline_66
-                    layoutParams.endToEnd = ConstraintLayout.LayoutParams.UNSET
-                } else {
-                    layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-                    layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-                    layoutParams.endToStart = ConstraintLayout.LayoutParams.UNSET
-                    layoutParams.horizontalBias = 0.5f // Center horizontally
-                }
-                binding.speedNumberTextView.layoutParams = layoutParams
-                binding.speedNumberTextView.requestLayout() // Force layout update
+                updateCardVisibility()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun updateCardVisibility() {
+        val shouldShowCard = isSpeedLimitCardVisible && lastSpeedLimit != null
+        binding.speedLimitCardView.visibility = if (shouldShowCard) View.VISIBLE else View.GONE
+        // Adjust speedNumberTextView constraints
+        val layoutParams = binding.speedNumberTextView.layoutParams as ConstraintLayout.LayoutParams
+        if (shouldShowCard) {
+            layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            layoutParams.endToStart = R.id.guideline_66
+            layoutParams.endToEnd = ConstraintLayout.LayoutParams.UNSET
+        } else {
+            layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+            layoutParams.endToStart = ConstraintLayout.LayoutParams.UNSET
+            layoutParams.horizontalBias = 0.5f // Center horizontally
+        }
+        binding.speedNumberTextView.layoutParams = layoutParams
+        binding.speedNumberTextView.requestLayout() // Force layout update
     }
 
     private fun startSpeedTimeoutCheck() {
@@ -113,7 +127,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 if (currentTime - lastMovementTime > timeoutDuration) {
                     withContext(Dispatchers.Main) {
                         binding.speedNumberTextView.text = "00"
- //                       binding.speedUnitsTextView.text = "mph"
                         Log.d("VroomHero", "Speed reset to 00 due to timeout")
                     }
                 }
@@ -131,7 +144,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
         } else {
             showToast("Location permissions denied. Speedometer disabled.")
             binding.speedNumberTextView.text = "N/A"
-//            binding.speedUnitsTextView.text = ""
             binding.speedLimitTextView.text = "XX"
             binding.roadNameTextView?.text = ""
         }
@@ -178,9 +190,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 lastMovementTime = currentTime
                 val formattedSpeed = String.format("%02d", speedMph.toInt() % 100) // Integer, padded to 2 digits
                 binding.speedNumberTextView.text = formattedSpeed
-//                binding.speedUnitsTextView.text = "mph"
             } else {
-                // If speed is low, rely on timeout to set "00"
                 Log.d("VroomHero", "Speed below threshold: $speedMph mph")
             }
 
@@ -192,15 +202,15 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 Log.d("VroomHero", "API call throttled, last call: ${(currentTime - lastApiCallTime)/1000}s ago")
                 if (lastSpeedLimit != null) {
                     binding.speedLimitTextView.text = String.format("%.0f", lastSpeedLimit!!.toFloat())
-//                    showToast("Used last speed limit: $lastSpeedLimit mph")
                 } else {
                     binding.speedLimitTextView.text = "XX"
                     binding.roadNameTextView?.text = ""
                 }
+                updateCardVisibility()
                 return
             }
 
-            // Fetch speed limit and road name from API if card is visible
+            // Fetch speed limit and road name from API if card is toggled on
             if (isSpeedLimitCardVisible) {
                 lifecycleScope.launch {
                     val (speedLimit, wayId, roadName) = fetchSpeedLimitFromOsm(lat, lon)
@@ -215,15 +225,19 @@ class MainActivity : AppCompatActivity(), LocationListener {
                         lastSpeedLimit = null
                     }
                     lastApiCallTime = currentTime
+                    updateCardVisibility()
                 }
             } else {
-                Log.d("VroomHero", "API call skipped: Speed limit card is hidden")
+                Log.d("VroomHero", "API call skipped: Speed limit card is toggled off")
+                updateCardVisibility()
             }
 
         } catch (e: Exception) {
             Log.e("MainActivity", "Error processing location update", e)
             showToast("Error updating speed: ${e.message}")
             binding.roadNameTextView?.text = ""
+            lastSpeedLimit = null
+            updateCardVisibility()
         }
     }
 
@@ -253,7 +267,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
             val elements = json.optJSONArray("elements") ?: run {
                 Log.w("VroomHero", "No elements array in API response")
                 withContext(Dispatchers.Main) {
-//                    showToast("No roads found in API response")
                 }
                 return@withContext Triple(null, null, null)
             }
@@ -287,20 +300,17 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 if (maxSpeed != null) {
                     Log.d("VroomHero", "Parsed speed limit: $maxSpeed mph")
                     withContext(Dispatchers.Main) {
-//                        showToast("API success: Speed limit $maxSpeed mph")
                     }
                     val wayId = element.optString("id")
                     return@withContext Triple(maxSpeed, wayId, roadName.takeIf { it.isNotEmpty() })
                 } else {
                     Log.w("VroomHero", "No valid maxspeed value in tags: $maxSpeedStr")
                     withContext(Dispatchers.Main) {
-//                        showToast("No maxspeed tag in API response")
                     }
                 }
             } else {
                 Log.w("VroomHero", "No roads found in API response")
                 withContext(Dispatchers.Main) {
-//                    showToast("No roads found in API response")
                 }
             }
             Log.w("VroomHero", "No valid speed limit found in response")
