@@ -92,4 +92,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Hatter Rd" />
 
+    <!-- API Indicator -->
+    <ImageView
+        android:id="@+id/gpsIndicator"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="API call Indicator"
+        android:src="@drawable/ic_gps_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

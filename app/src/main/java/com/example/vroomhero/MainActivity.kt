@@ -31,16 +31,16 @@ import android.content.SharedPreferences
 class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var locationManager: LocationManager
-    private lateinit var apiService: ApiService
+    private var apiService: ApiService? = null
     private var lastSpeedLimit: Double? = null
     private var lastApiCallTime: Long = 0
     private var lastToastTime: Long = 0
     private var lastMovementTime: Long = 0
     private var speedCheckJob: Job? = null
-    private var isSpeedTextRed = true // Tracks if text is red (true) or white (false)
-    private var isSpeedLimitCardVisible = true // Tracks if card is toggled via menu
-    private val speedThreshold = 0.5 // mph, below this is considered stopped
-    private val timeoutDuration = 3000L // 3 seconds
+    private var isSpeedTextRed = true
+    private var isSpeedLimitCardVisible = true
+    private val speedThreshold = 0.5
+    private val timeoutDuration = 3000L
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,9 +48,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         try {
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
-            // Initialize SharedPreferences
             sharedPreferences = getSharedPreferences("VroomHeroPrefs", Context.MODE_PRIVATE)
-            // Load saved color preference
             isSpeedTextRed = sharedPreferences.getBoolean("isSpeedTextRed", true)
             binding.speedNumberTextView.setTextColor(
                 ContextCompat.getColor(this, if (isSpeedTextRed) R.color.retro_red else android.R.color.white)
@@ -67,6 +65,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to initialize Retrofit", e)
             showToast("Network setup failed")
+            apiService = null
+            updateCardVisibility()
         }
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 binding.speedNumberTextView.setTextColor(
                     ContextCompat.getColor(this, if (isSpeedTextRed) R.color.retro_red else android.R.color.white)
                 )
-                // Save color preference
                 sharedPreferences.edit().putBoolean("isSpeedTextRed", isSpeedTextRed).apply()
                 true
             }
@@ -100,9 +99,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     private fun updateCardVisibility() {
-        val shouldShowCard = isSpeedLimitCardVisible && lastSpeedLimit != null
+        val shouldShowCard = isSpeedLimitCardVisible && lastSpeedLimit != null && apiService != null
         binding.speedLimitCardView.visibility = if (shouldShowCard) View.VISIBLE else View.GONE
-        // Adjust speedNumberTextView constraints
         val layoutParams = binding.speedNumberTextView.layoutParams as ConstraintLayout.LayoutParams
         if (shouldShowCard) {
             layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
@@ -112,17 +110,30 @@ class MainActivity : AppCompatActivity(), LocationListener {
             layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
             layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
             layoutParams.endToStart = ConstraintLayout.LayoutParams.UNSET
-            layoutParams.horizontalBias = 0.5f // Center horizontally
+            layoutParams.horizontalBias = 0.5f
         }
         binding.speedNumberTextView.layoutParams = layoutParams
-        binding.speedNumberTextView.requestLayout() // Force layout update
+        binding.speedNumberTextView.requestLayout()
+
+        // Update GPS indicator
+        binding.gpsIndicator.visibility = when {
+            shouldShowCard -> View.GONE
+            !isSpeedLimitCardVisible || apiService == null -> {
+                binding.gpsIndicator.setImageResource(R.drawable.ic_gps_red)
+                View.VISIBLE
+            }
+            else -> {
+                binding.gpsIndicator.setImageResource(R.drawable.ic_gps_green)
+                View.VISIBLE
+            }
+        }
     }
 
     private fun startSpeedTimeoutCheck() {
-        speedCheckJob?.cancel() // Cancel any existing job
+        speedCheckJob?.cancel()
         speedCheckJob = lifecycleScope.launch {
             while (true) {
-                delay(1000L) // Check every second
+                delay(1000L)
                 val currentTime = System.currentTimeMillis()
                 if (currentTime - lastMovementTime > timeoutDuration) {
                     withContext(Dispatchers.Main) {
@@ -146,6 +157,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
             binding.speedNumberTextView.text = "N/A"
             binding.speedLimitTextView.text = "XX"
             binding.roadNameTextView?.text = ""
+            binding.gpsIndicator.setImageResource(R.drawable.ic_gps_red)
+            binding.gpsIndicator.visibility = View.VISIBLE
+            updateCardVisibility()
         }
     }
 
@@ -179,16 +193,18 @@ class MainActivity : AppCompatActivity(), LocationListener {
         } catch (e: SecurityException) {
             Log.e("MainActivity", "Security exception in location updates", e)
             showToast("Location permission error")
+            binding.gpsIndicator.setImageResource(R.drawable.ic_gps_red)
+            binding.gpsIndicator.visibility = View.VISIBLE
         }
     }
 
     override fun onLocationChanged(location: Location) {
         try {
-            val speedMph = location.speed * 2.23694 // m/s to MPH
+            val speedMph = location.speed * 2.23694
             val currentTime = System.currentTimeMillis()
             if (speedMph > speedThreshold) {
                 lastMovementTime = currentTime
-                val formattedSpeed = String.format("%02d", speedMph.toInt() % 100) // Integer, padded to 2 digits
+                val formattedSpeed = String.format("%02d", speedMph.toInt() % 100)
                 binding.speedNumberTextView.text = formattedSpeed
             } else {
                 Log.d("VroomHero", "Speed below threshold: $speedMph mph")
@@ -197,7 +213,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
             val lat = location.latitude
             val lon = location.longitude
 
-            // Throttle API calls to every 10 seconds
             if (currentTime - lastApiCallTime < 10_000) {
                 Log.d("VroomHero", "API call throttled, last call: ${(currentTime - lastApiCallTime)/1000}s ago")
                 if (lastSpeedLimit != null) {
@@ -210,8 +225,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 return
             }
 
-            // Fetch speed limit and road name from API if card is toggled on
-            if (isSpeedLimitCardVisible) {
+            if (isSpeedLimitCardVisible && apiService != null) {
                 lifecycleScope.launch {
                     val (speedLimit, wayId, roadName) = fetchSpeedLimitFromOsm(lat, lon)
                     Log.d("VroomHero", "Fetched speedLimit: $speedLimit, wayId: $wayId, roadName: $roadName")
@@ -228,7 +242,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     updateCardVisibility()
                 }
             } else {
-                Log.d("VroomHero", "API call skipped: Speed limit card is toggled off")
+                Log.d("VroomHero", "API call skipped: ${if (apiService == null) "API not initialized" else "Speed limit card toggled off"}")
                 updateCardVisibility()
             }
 
@@ -237,14 +251,14 @@ class MainActivity : AppCompatActivity(), LocationListener {
             showToast("Error updating speed: ${e.message}")
             binding.roadNameTextView?.text = ""
             lastSpeedLimit = null
+            binding.gpsIndicator.setImageResource(R.drawable.ic_gps_red)
+            binding.gpsIndicator.visibility = View.VISIBLE
             updateCardVisibility()
         }
     }
 
     suspend fun fetchSpeedLimitFromOsm(lat: Double, lon: Double): Triple<Double?, String?, String?> = withContext(Dispatchers.IO) {
         try {
-            withContext(Dispatchers.Main) {
-            }
             val query = """
                 [out:json][timeout:30];
                 way(around:10,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
@@ -252,7 +266,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             """.trimIndent()
 
             Log.d("VroomHero", "Sending Overpass query: $query")
-            val response = apiService.getOsmData(query)
+            val response = apiService!!.getOsmData(query)
             Log.d("VroomHero", "Raw API response: $response")
 
             if (response.isEmpty()) {
@@ -291,7 +305,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
                         maxSpeedStr.replace("[^0-9]".toRegex(), "").toDoubleOrNull()
                     }
                     maxSpeedStr.isNotEmpty() -> {
-                        // Convert km/h to mph
                         maxSpeedStr.replace("[^0-9]".toRegex(), "").toDoubleOrNull()?.div(1.60934)
                     }
                     else -> null
@@ -299,8 +312,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
                 if (maxSpeed != null) {
                     Log.d("VroomHero", "Parsed speed limit: $maxSpeed mph")
-                    withContext(Dispatchers.Main) {
-                    }
                     val wayId = element.optString("id")
                     return@withContext Triple(maxSpeed, wayId, roadName.takeIf { it.isNotEmpty() })
                 } else {
@@ -326,17 +337,15 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     private fun showToast(message: String) {
         val now = System.currentTimeMillis()
-        if (now - lastToastTime > 2000) { // 2-second debounce
+        if (now - lastToastTime > 2000) {
             Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
             lastToastTime = now
         }
     }
 
-    override fun onProviderEnabled(provider: String) {
-    }
+    override fun onProviderEnabled(provider: String) {}
 
-    override fun onProviderDisabled(provider: String) {
-    }
+    override fun onProviderDisabled(provider: String) {}
 
     override fun onDestroy() {
         super.onDestroy()
