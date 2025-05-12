@@ -289,7 +289,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         try {
             val query = """
                 [out:json][timeout:30];
-                way(around:200,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
+                way(around:10,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
                 out tags;
             """.trimIndent()
 
