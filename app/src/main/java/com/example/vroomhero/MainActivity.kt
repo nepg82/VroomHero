@@ -71,7 +71,28 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         requestLocationPermissions()
-        startSpeedTimeoutCheck()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Resume location updates and speed timeout check if permissions are granted
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            startLocationUpdates()
+            startSpeedTimeoutCheck()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Pause location updates and speed timeout check
+        try {
+            locationManager.removeUpdates(this)
+            speedCheckJob?.cancel()
+            Log.d("VroomHero", "Location updates and speed timeout check paused")
+        } catch (e: SecurityException) {
+            Log.e("MainActivity", "Error pausing location updates", e)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -116,16 +137,20 @@ class MainActivity : AppCompatActivity(), LocationListener {
         binding.speedNumberTextView.requestLayout()
 
         // Update GPS indicator
-        binding.gpsIndicator.visibility = when {
-            shouldShowCard -> View.GONE
-            !isSpeedLimitCardVisible || apiService == null -> {
-                binding.gpsIndicator.setImageResource(R.drawable.ic_gps_red)
-                View.VISIBLE
+        binding.gpsIndicator?.let { indicator ->
+            indicator.visibility = when {
+                shouldShowCard -> View.GONE
+                !isSpeedLimitCardVisible || apiService == null -> {
+                    indicator.setImageResource(R.drawable.ic_gps_red)
+                    View.VISIBLE
+                }
+                else -> {
+                    indicator.setImageResource(R.drawable.ic_gps_green)
+                    View.VISIBLE
+                }
             }
-            else -> {
-                binding.gpsIndicator.setImageResource(R.drawable.ic_gps_green)
-                View.VISIBLE
-            }
+        } ?: run {
+            Log.e("MainActivity", "gpsIndicator is null in binding")
         }
     }
 
@@ -152,13 +177,14 @@ class MainActivity : AppCompatActivity(), LocationListener {
         val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
         if (fineLocationGranted && coarseLocationGranted) {
             startLocationUpdates()
+            startSpeedTimeoutCheck()
         } else {
             showToast("Location permissions denied. Speedometer disabled.")
             binding.speedNumberTextView.text = "N/A"
             binding.speedLimitTextView.text = "XX"
             binding.roadNameTextView?.text = ""
-            binding.gpsIndicator.setImageResource(R.drawable.ic_gps_red)
-            binding.gpsIndicator.visibility = View.VISIBLE
+            binding.gpsIndicator?.setImageResource(R.drawable.ic_gps_red)
+            binding.gpsIndicator?.visibility = View.VISIBLE
             updateCardVisibility()
         }
     }
@@ -168,6 +194,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         val coarseLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
         if (fineLocation == PackageManager.PERMISSION_GRANTED && coarseLocation == PackageManager.PERMISSION_GRANTED) {
             startLocationUpdates()
+            startSpeedTimeoutCheck()
         } else {
             permissionLauncher.launch(
                 arrayOf(
@@ -187,14 +214,15 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     10f,
                     this
                 )
+                Log.d("VroomHero", "Location updates started")
             } else {
                 Log.w("MainActivity", "Location permission not granted")
             }
         } catch (e: SecurityException) {
             Log.e("MainActivity", "Security exception in location updates", e)
             showToast("Location permission error")
-            binding.gpsIndicator.setImageResource(R.drawable.ic_gps_red)
-            binding.gpsIndicator.visibility = View.VISIBLE
+            binding.gpsIndicator?.setImageResource(R.drawable.ic_gps_red)
+            binding.gpsIndicator?.visibility = View.VISIBLE
         }
     }
 
@@ -251,8 +279,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
             showToast("Error updating speed: ${e.message}")
             binding.roadNameTextView?.text = ""
             lastSpeedLimit = null
-            binding.gpsIndicator.setImageResource(R.drawable.ic_gps_red)
-            binding.gpsIndicator.visibility = View.VISIBLE
+            binding.gpsIndicator?.setImageResource(R.drawable.ic_gps_red)
+            binding.gpsIndicator?.visibility = View.VISIBLE
             updateCardVisibility()
         }
     }
@@ -261,7 +289,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         try {
             val query = """
                 [out:json][timeout:30];
-                way(around:10,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
+                way(around:200,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
                 out tags;
             """.trimIndent()
 
