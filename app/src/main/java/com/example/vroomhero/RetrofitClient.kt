@@ -9,20 +9,13 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-    private const val BASE_URL = "https://router.hereapi.com/v8/routes"
-    private const val API_KEY = "YOUR_API_KEY_HERE" // Replace with your HERE API key
+    private const val BASE_URL = "https://revgeocode.search.hereapi.com/v1/"
+    const val API_KEY = "nqPqdm7bGP5gKUMgx1WfEl3ntF7_ZfcZ0_bgsD_lA_U"
 
-    private val authInterceptor = Interceptor { chain ->
-        val request = chain.request().newBuilder()
-            .addHeader("Authorization", "Bearer $API_KEY")
-            .build()
-        chain.proceed(request)
-    }
 
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
-        .addInterceptor(authInterceptor)
         .build()
 
     val apiService: ApiService by lazy {

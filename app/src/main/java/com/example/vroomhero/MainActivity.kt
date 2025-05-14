@@ -26,6 +26,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.room.Room
+import retrofit2.http.GET
+import retrofit2.http.Query
+import org.json.JSONArray
 
 class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMainBinding
@@ -38,6 +42,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private var speedCheckJob: Job? = null
     private var isSpeedTextRed = true // Tracks if text is red (true) or white (false)
     private var isSpeedLimitCardVisible = true // Tracks if card is visible and API is active
+    private lateinit var db: AppDatabase
     private val speedThreshold = 0.5 // mph, below this is considered stopped
     private val timeoutDuration = 3000L // 3 seconds
 
@@ -65,6 +70,12 @@ class MainActivity : AppCompatActivity(), LocationListener {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         requestLocationPermissions()
         startSpeedTimeoutCheck()
+
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "vroomhero-database"
+        ).build()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -203,9 +214,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
             // Fetch speed limit and road name from API if card is visible
             if (isSpeedLimitCardVisible) {
                 lifecycleScope.launch {
-                    val (speedLimit, wayId, roadName) = fetchSpeedLimitFromOsm(lat, lon)
-                    Log.d("VroomHero", "Fetched speedLimit: $speedLimit, wayId: $wayId, roadName: $roadName")
-                    if (speedLimit != null && wayId != null) {
+                    val (speedLimit, _, roadName) = fetchRoadDataFromHere(lat, lon)
+                    Log.d("VroomHero", "Fetched speedLimit: $speedLimit, roadName: $roadName")
+                    if (speedLimit != null) {
                         binding.speedLimitTextView.text = String.format("%.0f", speedLimit.toFloat())
                         binding.roadNameTextView?.text = roadName ?: "Unknown Road"
                         lastSpeedLimit = speedLimit
@@ -227,93 +238,57 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
     }
 
-    suspend fun fetchSpeedLimitFromOsm(lat: Double, lon: Double): Triple<Double?, String?, String?> = withContext(Dispatchers.IO) {
+    suspend fun fetchRoadDataFromHere(lat: Double, lon: Double): Triple<Double?, String?, String?> = withContext(Dispatchers.IO) {
         try {
-            withContext(Dispatchers.Main) {
+            // Check cache first
+            val cachedData = db.roadDataDao().getRoadDataByLocation(lat, lon)
+            if (cachedData != null && System.currentTimeMillis() - cachedData.timestamp < 24 * 60 * 60 * 1000) { // 24-hour cache validity
+                Log.d("VroomHero", "Using cached data: speedLimit=${cachedData.speedLimit}, roadName=${cachedData.roadName}")
+                return@withContext Triple(cachedData.speedLimit, null, cachedData.roadName)
             }
-            val query = """
-                [out:json][timeout:30];
-                way(around:10,$lat,$lon)["highway"~"^(residential|primary|secondary|tertiary|motorway)$"]["maxspeed"];
-                out tags;
-            """.trimIndent()
 
-            Log.d("VroomHero", "Sending Overpass query: $query")
-            val response = apiService.getOsmData(query)
-            Log.d("VroomHero", "Raw API response: $response")
-
-            if (response.isEmpty()) {
-                Log.e("VroomHero", "Empty response from Overpass API")
-                withContext(Dispatchers.Main) {
-                    showToast("API returned empty response")
-                }
-                return@withContext Triple(null, null, null)
-            }
+            // Fetch from HERE API
+            val coordinates = "$lat,$lon"
+            val response = apiService.getRoadData(coordinates, RetrofitClient.API_KEY)
+            Log.d("VroomHero", "Raw HERE API response: $response")
 
             val json = JSONObject(response)
-            val elements = json.optJSONArray("elements") ?: run {
-                Log.w("VroomHero", "No elements array in API response")
-                withContext(Dispatchers.Main) {
-//                    showToast("No roads found in API response")
-                }
-                return@withContext Triple(null, null, null)
+            val items = json.getJSONArray("items")
+            if (items.length() > 0) {
+                val item = items.getJSONObject(0)
+                val address = item.getJSONObject("address")
+                val roadName = address.optString("street", "Unknown Road")
+                val speedLimit = item.optJSONObject("speedLimit")?.optDouble("value")?.div(1.60934) // km/h to mph
+
+                // Cache the result
+                val roadData = RoadData(
+                    latitude = lat,
+                    longitude = lon,
+                    speedLimit = speedLimit,
+                    roadName = roadName,
+                    timestamp = System.currentTimeMillis()
+                )
+                db.roadDataDao().insert(roadData)
+                Log.d("VroomHero", "Fetched and cached: speedLimit=$speedLimit, roadName=$roadName")
+
+                return@withContext Triple(speedLimit, null, roadName)
             }
-            Log.d("VroomHero", "Elements array length: ${elements.length()}")
-
-            if (elements.length() > 0) {
-                val element = elements.getJSONObject(0)
-                val tags = element.optJSONObject("tags") ?: run {
-                    Log.w("VroomHero", "No tags in first element")
-                    withContext(Dispatchers.Main) {
-                        showToast("No tags in API response")
-                    }
-                    return@withContext Triple(null, null, null)
-                }
-                Log.d("VroomHero", "Tags: $tags")
-                val maxSpeedStr = tags.optString("maxspeed")
-                val roadName = tags.optString("name")
-                Log.d("VroomHero", "Raw maxspeed value: $maxSpeedStr, roadName: $roadName")
-
-                val maxSpeed = when {
-                    maxSpeedStr.endsWith("mph", ignoreCase = true) -> {
-                        maxSpeedStr.replace("[^0-9]".toRegex(), "").toDoubleOrNull()
-                    }
-                    maxSpeedStr.isNotEmpty() -> {
-                        // Convert km/h to mph
-                        maxSpeedStr.replace("[^0-9]".toRegex(), "").toDoubleOrNull()?.div(1.60934)
-                    }
-                    else -> null
-                }
-
-                if (maxSpeed != null) {
-                    Log.d("VroomHero", "Parsed speed limit: $maxSpeed mph")
-                    withContext(Dispatchers.Main) {
-//                        showToast("API success: Speed limit $maxSpeed mph")
-                    }
-                    val wayId = element.optString("id")
-                    return@withContext Triple(maxSpeed, wayId, roadName.takeIf { it.isNotEmpty() })
-                } else {
-                    Log.w("VroomHero", "No valid maxspeed value in tags: $maxSpeedStr")
-                    withContext(Dispatchers.Main) {
-//                        showToast("No maxspeed tag in API response")
-                    }
-                }
-            } else {
-                Log.w("VroomHero", "No roads found in API response")
-                withContext(Dispatchers.Main) {
-//                    showToast("No roads found in API response")
-                }
-            }
-            Log.w("VroomHero", "No valid speed limit found in response")
+            Log.w("VroomHero", "No road data found in HERE API response")
             return@withContext Triple(null, null, null)
         } catch (e: Exception) {
-            Log.e("VroomHero", "Error fetching speed limit: ${e.message}", e)
+            Log.e("VroomHero", "Error fetching road data: ${e.message}", e)
             withContext(Dispatchers.Main) {
                 showToast("API error: ${e.message}")
+            }
+            // Fallback to cache if available
+            val cachedData = db.roadDataDao().getRoadDataByLocation(lat, lon)
+            if (cachedData != null) {
+                Log.d("VroomHero", "Using cached data on error: speedLimit=${cachedData.speedLimit}, roadName=${cachedData.roadName}")
+                return@withContext Triple(cachedData.speedLimit, null, cachedData.roadName)
             }
             return@withContext Triple(null, null, null)
         }
     }
-
     private fun showToast(message: String) {
         val now = System.currentTimeMillis()
         if (now - lastToastTime > 2000) { // 2-second debounce
@@ -340,6 +315,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
 }
 
 interface ApiService {
-    @POST("interpreter")
-    suspend fun getOsmData(@Body query: String): String
+    @GET("revgeocode")
+    suspend fun getRoadData(
+        @Query("at") coordinates: String,
+        @Query("apiKey") apiKey: String = RetrofitClient.API_KEY
+    ): String
 }
