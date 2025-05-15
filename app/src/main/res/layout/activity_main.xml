@@ -4,41 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="0dp">
 
     <!-- Speed Number (large) -->
     <TextView
         android:id="@+id/speedNumberTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/dseg14_font_family"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:maxLines="1"
         android:text="00"
+        android:textSize="300sp"
         android:textStyle="italic"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="50sp"
-        android:autoSizeMaxTextSize="200sp"
-        android:autoSizeStepGranularity="2sp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintWidth_percent="0.9"
-        app:layout_constraintHeight_percent="0.4"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_66"
+        app:layout_constraintHorizontal_bias=".5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/speedLimitCardView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Speed Limit Card -->
+    <!-- Guideline for 66% horizontal split -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_66"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <!-- Speed Units (smaller)
+    <TextView
+        android:id="@+id/speedUnitsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="mph"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_66"
+        app:layout_constraintStart_toEndOf="@id/speedNumberTextView"
+        app:layout_constraintBottom_toBottomOf="@id/speedNumberTextView" />
+    -->
+
     <androidx.cardview.widget.CardView
         android:id="@+id/speedLimitCardView"
         android:layout_width="160dp"
         android:layout_height="200dp"
-        android:layout_marginTop="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp"
         app:cardBackgroundColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/speedNumberTextView"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline_top_20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_66"
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
@@ -57,7 +79,8 @@
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                />
 
             <!-- Speed Limit Value -->
             <TextView
@@ -70,7 +93,8 @@
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -88,8 +112,8 @@
         android:textStyle="bold"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/speedLimitCardView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/speedLimitCardView"
+        app:layout_constraintEnd_toEndOf="@id/speedLimitCardView"
         tools:text="Hatter Rd" />
 
     <!-- API Indicator -->
@@ -101,5 +125,6 @@
         android:src="@drawable/ic_gps_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
