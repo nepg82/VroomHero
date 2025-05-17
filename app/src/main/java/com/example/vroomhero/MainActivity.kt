@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             setContentView(binding.root)
             sharedPreferences = getSharedPreferences("VroomHeroPrefs", Context.MODE_PRIVATE)
             isSpeedTextRed = sharedPreferences.getBoolean("isSpeedTextRed", true)
+            isSpeedLimitCardVisible = sharedPreferences.getBoolean("isSpeedLimitCardVisible", true)
             binding.speedNumberTextView.setTextColor(
                 ContextCompat.getColor(this, if (isSpeedTextRed) R.color.retro_red else android.R.color.white)
             )
@@ -75,7 +76,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     override fun onResume() {
         super.onResume()
-        // Resume location updates and speed timeout check if permissions are granted
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             startLocationUpdates()
@@ -85,7 +85,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     override fun onPause() {
         super.onPause()
-        // Pause location updates and speed timeout check
         try {
             locationManager.removeUpdates(this)
             speedCheckJob?.cancel()
@@ -112,6 +111,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             }
             R.id.action_toggle_card -> {
                 isSpeedLimitCardVisible = !isSpeedLimitCardVisible
+                sharedPreferences.edit().putBoolean("isSpeedLimitCardVisible", isSpeedLimitCardVisible).apply()
                 updateCardVisibility()
                 true
             }
@@ -122,6 +122,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private fun updateCardVisibility() {
         val shouldShowCard = isSpeedLimitCardVisible && lastSpeedLimit != null && apiService != null
         binding.speedLimitCardView.visibility = if (shouldShowCard) View.VISIBLE else View.GONE
+        binding.roadNameTextView?.visibility = if (shouldShowCard) View.VISIBLE else View.GONE
         val layoutParams = binding.speedNumberTextView.layoutParams as ConstraintLayout.LayoutParams
         if (shouldShowCard) {
             layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
@@ -136,7 +137,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
         binding.speedNumberTextView.layoutParams = layoutParams
         binding.speedNumberTextView.requestLayout()
 
-        // Update GPS indicator
         binding.gpsIndicator?.let { indicator ->
             indicator.visibility = when {
                 shouldShowCard -> View.GONE
@@ -241,7 +241,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             val lat = location.latitude
             val lon = location.longitude
 
-            if (currentTime - lastApiCallTime < 10_000) {
+            if (currentTime - lastApiCallTime < 12_000) {
                 Log.d("VroomHero", "API call throttled, last call: ${(currentTime - lastApiCallTime)/1000}s ago")
                 if (lastSpeedLimit != null) {
                     binding.speedLimitTextView.text = String.format("%.0f", lastSpeedLimit!!.toFloat())
